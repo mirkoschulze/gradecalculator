@@ -6,6 +6,8 @@ package eu.ggnet.calculatorui.model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import javafx.scene.control.ComboBox;
+import lombok.Getter;
 
 /**
  * Represents the evaluation for a finished course or module.
@@ -13,10 +15,12 @@ import java.time.format.DateTimeFormatter;
  * Combines a {@link Note} with a {@link Subject} and adds the {@link LocalDate}
  * at which it was created.
  * <p>
- * Contains a method to present data in a human-readable format.
+ * Contains a method to present data in a human-readable format. Overrides
+ * {@link Object#toString()} for presentation purposes.
  *
  * @author Administrator
  */
+@Getter
 public class Grade {
 
     private final Subject subject;
@@ -29,21 +33,14 @@ public class Grade {
         this.localDate = LocalDate.now();
     }
 
-    public Subject getSubject() {
-        return subject;
-    }
-
-    public Note getNote() {
-        return note;
-    }
-
-    public LocalDate getLocalDate() {
-        return localDate;
-    }
-
+    /**
+     * {@link ComboBox} uses {@link Object#toString()} to display data.
+     *
+     * @return Returns the grades subject and miidleschoolNote.
+     */
     @Override
     public String toString() {
-        return "Grade{" + "subject=" + subject + ", note=" + note + ", localDate=" + localDate + '}';
+        return this.subject.theme + ": " + this.note.middleschoolNote;
     }
 
     /**
@@ -62,9 +59,9 @@ public class Grade {
      */
     public enum Subject {
 
-        ENGLISH("English"), IT_SYSTEMS("IT-systems"),
-        IT_WORKSHOP("IT-workshop"), WUG("Economy and society"),
-        AE("software development"), OUG("Organization and business processes");
+        ENG("Business english"), IT_S("IT systems"),
+        IT_W("IT workshop"), SOC("Economics and society"),
+        DEV("software development"), ORGA("Organization and business processes");
 
         private final String theme;
 
@@ -75,6 +72,17 @@ public class Grade {
         public String getTheme() {
             return this.theme;
         }
+
+        /**
+         * {@link ComboBox} uses {@link Object#toString()} to display data.
+         *
+         * @return Returns a Subjects theme.
+         */
+        @Override
+        public String toString() {
+            return theme;
+        }
+
     }
 
     /**

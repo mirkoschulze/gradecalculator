@@ -5,42 +5,37 @@
 package eu.ggnet.calculatorui.model;
 
 import java.util.List;
+import javafx.scene.control.ComboBox;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * Represents the classbook of a schoolclass.
  * <p>
- * Contains a String to hold the name of a {@link Schoolclass} and a list with
- * instances of [@link Pupil}.
+ * Contains a String to hold the name of a schoolclass and a list with instances
+ * of [@link Pupil}.
  * <p>
- * Contains a method to present data in a human-readable format.
+ * Contains a method to present data in a human-readable format. Overrides
+ * {@link Object#toString()} for presentation purposes.
  *
  * @author mirko.schulze
  */
+@Getter
+@AllArgsConstructor
 public class Classbook {
 
-    private String classbookName;
+    private String classbookTitle;
     private List<Pupil> pupils;
 
-    public Classbook(String className, List<Pupil> pupils) {
-        this.classbookName = className;
-        this.pupils = pupils;
-    }
-
-    public String getClassbookName() {
-        return classbookName;
-    }
-
-    public List<Pupil> getPupils() {
-        return pupils;
-    }
-
+    /**
+     * {@link ComboBox} uses {@link Object#toString()} to display data.
+     *
+     * @return Returns the classbooks title.
+     */
     @Override
-    public String toString(){
-        return this.classbookName;
+    public String toString() {
+        return this.classbookTitle;
     }
-//    public String toString() {
-//        return "Classbook{" + "name=" + classbookName + ", pupils=" + pupils + '}';
-//    }
 
     /**
      * Joins and returns a human-readable String with all data in this object.
@@ -49,8 +44,8 @@ public class Classbook {
      */
     public String toEnhancedLine() {
         StringBuilder sb = new StringBuilder();
-        if (this.classbookName != null) {
-            sb.append("Klasse: ").append(this.classbookName).append("\n");
+        if (this.classbookTitle != null) {
+            sb.append("Klasse: ").append(this.classbookTitle).append("\n");
             sb.append("\n");
         }
         if (this.pupils != null) {

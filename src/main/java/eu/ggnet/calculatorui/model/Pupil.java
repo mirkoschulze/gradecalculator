@@ -4,21 +4,30 @@
  */
 package eu.ggnet.calculatorui.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Represents a pupil at school.
  * <p>
- * Contains {@link Sex} sex, int age, String name and a {@link Certification}.
+ * Contains {@link Sex} sex, int age, Strings forename and surname, and a
+ * {@link Certification}.
  * <p>
- * Contains a method to present data in a human-readable format.
+ * Contains a method to present data in a human-readable format. Overrides
+ * {@link Object#toString()} for presentation purposes.
+ * <p>
+ * Implements {@link Comparable} by comparing the first letter of surename.
  *
  * @author Administrator
  */
+@Getter
 public class Pupil implements Comparable<Pupil> {
 
     private Sex sex;
     private final int age;
     private String forename;
     private String surname;
+    @Setter
     private Certification certification;
 
     public Pupil(Sex sex, int age, String forename, String surename) {
@@ -28,33 +37,14 @@ public class Pupil implements Comparable<Pupil> {
         this.surname = surename;
     }
 
-    public Sex getSex() {
-        return sex;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public String getForename() {
-        return forename;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public Certification getCertification() {
-        return certification;
-    }
-
-    public void setCertification(Certification certification) {
-        this.certification = certification;
-    }
-
+    /**
+     * {@link ComboBox} uses {@link Object#toString()} to display data.
+     *
+     * @return Returns the pupils name.
+     */
     @Override
     public String toString() {
-        return "Pupil{" + "sex=" + sex + ", age=" + age + ", forename=" + forename + ", surname=" + surname + ", certification=" + certification + '}';
+        return this.forename + " " + this.surname;
     }
 
     @Override
