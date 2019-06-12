@@ -9,11 +9,11 @@ import eu.ggnet.calculatorui.model.Classbook;
 import eu.ggnet.calculatorui.model.Grade;
 import eu.ggnet.calculatorui.model.Grade.Note;
 import eu.ggnet.calculatorui.model.Grade.Subject;
-import static eu.ggnet.calculatorui.model.Grade.Subject.AE;
-import static eu.ggnet.calculatorui.model.Grade.Subject.ENGLISH;
-import static eu.ggnet.calculatorui.model.Grade.Subject.IT_SYSTEMS;
-import static eu.ggnet.calculatorui.model.Grade.Subject.IT_WORKSHOP;
-import static eu.ggnet.calculatorui.model.Grade.Subject.WUG;
+import static eu.ggnet.calculatorui.model.Grade.Subject.DEV;
+import static eu.ggnet.calculatorui.model.Grade.Subject.SOC;
+import static eu.ggnet.calculatorui.model.Grade.Subject.ENG;
+import static eu.ggnet.calculatorui.model.Grade.Subject.IT_W;
+import static eu.ggnet.calculatorui.model.Grade.Subject.IT_S;
 
 /**
  * Static class to generate new instances of {@link CalculatedGrade}.
@@ -24,9 +24,8 @@ public class Calculator {
 
     /**
      * Counts how often each individual {@link Note} is given to the
-     * {@link Pupil} mentioned in a {@link Classbook}.
-     * <p>
-     * Saves the note with the most occurencies.
+     * {@link Pupil} mentioned in a {@link Classbook}. Saves the note with the
+     * most occurencies.
      * <p>
      * Generates and returns a new {@link CalculatedGrade} with the calculated
      * note and its occurencies as suffix.
@@ -36,7 +35,7 @@ public class Calculator {
      * @return Returns the calculated grade.
      */
     public static CalculatedGrade calculateAccumulatedGrade(Classbook classbook, Subject subject) {
-        String calculation = "Häufigste Note";
+        String calculation = "Accumulated grade in " + subject.getTheme() + " for " + classbook.toString() + "= ";
         int mostOccurencies = 0;
         int iterationStep = 0;
         if (classbook.getPupils() != null) {
@@ -55,7 +54,7 @@ public class Calculator {
                 }
             }
         }
-        String suffix = "(" + mostOccurencies + " mal)";
+        String suffix = "(" + mostOccurencies + " times)";
         return new CalculatedGrade(calculation, new Grade(subject, Note.values()[iterationStep]), suffix);
     }
 
@@ -72,7 +71,7 @@ public class Calculator {
      * @return Returns the calculated grade.
      */
     public static CalculatedGrade calculateAverageGrade(Classbook classbook, Subject subject) {
-        String calculation = "Durchschnittsnote";
+        String calculation = "Average note in " + subject.getTheme() + " for " + classbook.getClassbookTitle();
         int total = 0;
         int average = 0;
         if (classbook.getPupils() != null) {
@@ -80,19 +79,19 @@ public class Calculator {
                 for (Pupil pupil : classbook.getPupils()) {
                     if (pupil.getCertification() != null) {
                         switch (subject) {
-                            case ENGLISH:
+                            case ENG:
                                 total += pupil.getCertification().getGrades().get(subject.ordinal()).getNote().getHighschoolNote();
                                 break;
-                            case IT_SYSTEMS:
+                            case IT_S:
                                 total += pupil.getCertification().getGrades().get(subject.ordinal()).getNote().getHighschoolNote();
                                 break;
-                            case IT_WORKSHOP:
+                            case IT_W:
                                 total += pupil.getCertification().getGrades().get(subject.ordinal()).getNote().getHighschoolNote();
                                 break;
-                            case WUG:
+                            case SOC:
                                 total += pupil.getCertification().getGrades().get(subject.ordinal()).getNote().getHighschoolNote();
                                 break;
-                            case AE:
+                            case DEV:
                                 total += pupil.getCertification().getGrades().get(subject.ordinal()).getNote().getHighschoolNote();
                                 break;
                             default:
