@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>eu.gg-net</groupId>
-    <artifactId>calculator</artifactId>
+    <artifactId>gradecalculator</artifactId>
     <version>1.2</version>
     <packaging>jar</packaging>
 
@@ -19,7 +19,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mainClass>eu.ggnet.calculatorui.ui.MainApp</mainClass>
+        <mainClass>eu.ggnet.calculator.ui.MainApp</mainClass>
     </properties>
 
     <build>
