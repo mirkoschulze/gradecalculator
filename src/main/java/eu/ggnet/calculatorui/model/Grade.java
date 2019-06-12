@@ -50,13 +50,15 @@ public class Grade {
      */
     public String toSimpleLine() {
         return this.subject.getTheme() + ": " + this.note.getMiddleschoolNote()
-                + " (" + this.note.getHighschoolNote()
-                + ") [Datum: " + this.localDate.format(DateTimeFormatter.ofPattern("EEEE dd.MM.yyyy")) + "]";
+                + " / " + this.note.getHighschoolNote()
+                + " [ " + this.localDate.format(DateTimeFormatter.ofPattern("EEEE dd.MM.yyyy")) + "]";
     }
 
     /**
-     * Enumeration of courses given at a school.
+     * Enumeration of courses given at a school.Overrides
+     * {@link Object#toString()} for presentation purposes.
      */
+    @Getter
     public enum Subject {
 
         ENG("Business english"), IT_S("IT systems"),
@@ -69,10 +71,6 @@ public class Grade {
             this.theme = description;
         }
 
-        public String getTheme() {
-            return this.theme;
-        }
-
         /**
          * {@link ComboBox} uses {@link Object#toString()} to display data.
          *
@@ -80,7 +78,7 @@ public class Grade {
          */
         @Override
         public String toString() {
-            return theme;
+            return this.theme;
         }
 
     }
@@ -88,6 +86,7 @@ public class Grade {
     /**
      * Enumeration of ratings for a {@link Subject}, from 0 to 15.
      */
+    @Getter
     public enum Note {
 
         ZERO(0, "6"), ONE(1, "5-"), TWO(2, "5"), THREE(3, "5+"), FOUR(4, "4-"), FIVE(5, "4"),
@@ -100,14 +99,6 @@ public class Grade {
         private Note(int hsNote, String msNote) {
             this.highschoolNote = hsNote;
             this.middleschoolNote = msNote;
-        }
-
-        public int getHighschoolNote() {
-            return this.highschoolNote;
-        }
-
-        public String getMiddleschoolNote() {
-            return this.middleschoolNote;
         }
     }
 
