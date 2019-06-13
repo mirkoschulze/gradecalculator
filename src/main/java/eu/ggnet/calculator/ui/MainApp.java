@@ -18,9 +18,9 @@ import javafx.stage.Stage;
 
 /**
  * Main class with main() as fallback and start() as starting point. Defines the
- * layout.
+ * layout. Adds control components to container components.
  *
- * @author Administrator
+ * @author Mirko Schulze
  */
 public class MainApp extends Application {
 
@@ -47,10 +47,12 @@ public class MainApp extends Application {
      * Main method, starts the application and the initial window. Defines the
      * scenes layout.
      *
-     * @param stage Primary Stage to show content.
+     * @param stage Stage
      */
     @Override
     public void start(Stage stage) {
+
+        stage.setTitle("Grade Calculator");
 
         //initialization
         initializeMain(stage);
@@ -84,8 +86,10 @@ public class MainApp extends Application {
 
         //components
         hbox.getChildren().addAll(this.controller.getCalculateButton(),
-                this.controller.getCalculateForEachClassbookButton(), this.controller.getCalculateForEachSubjectButton(),
-                this.controller.getClearButton(), this.controller.getCloseButton());
+                this.controller.getCalculateForEachClassbookButton(),
+                this.controller.getCalculateForEachSubjectButton(),
+                this.controller.getClearButton(),
+                this.controller.getCloseButton());
 
         grid.add(this.controller.getInstructions(), 0, 1, 6, 1);
 
@@ -95,7 +99,7 @@ public class MainApp extends Application {
         grid.add(this.controller.getPupilsList(), 0, 5, 2, 2);
 
         //drop down boxes
-        grid.add(this.controller.getSubjectSelectionBox(), 3, 2);
+        grid.add(this.controller.getSubjectSelectionBox(), 2, 2, 2, 1);
         grid.add(this.controller.getCalculationSelectionBox(), 4, 2);
 
         //text
@@ -117,9 +121,9 @@ public class MainApp extends Application {
     }
 
     /**
-     * Instantiates and initializes the controller and the container.
+     * Instantiates and initializes the controller and the container components.
      *
-     * @param stage Primary Stage to show content.
+     * @param stage Stage
      */
     private void initializeMain(Stage stage) {
         this.controller = new MainController(stage);

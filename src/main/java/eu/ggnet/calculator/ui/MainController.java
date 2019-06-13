@@ -1,7 +1,3 @@
-/*
-*
-* by Mirko Schulze
- */
 package eu.ggnet.calculator.ui;
 
 import eu.ggnet.calculator.model.Generator;
@@ -29,7 +25,7 @@ import lombok.Getter;
 /**
  * Controller class, responsible for the logic of MainApp.
  *
- * @author Administrator
+ * @author Mirko Schulze
  */
 @Getter
 public class MainController {
@@ -134,7 +130,7 @@ public class MainController {
 
         //text area meta data
         this.presentation.setTextOrigin(VPos.TOP);
-//        this.presentation.setWrappingWidth(this.mainStage.getMaxWidth() / 20);
+        this.presentation.setWrappingWidth(250);
 
         //button functionality
         this.calculateButton.setOnAction(e -> this.calculateAndPresent());
@@ -171,7 +167,8 @@ public class MainController {
         if (this.calculationSelectionBox.getSelectionModel().getSelectedItem() != null
                 && this.subjectSelectionBox.getSelectionModel().getSelectedItem() != null) {
             for (Classbook classbook : classbooks) {
-                this.calculate(classbook, this.subjectSelectionBox.getSelectionModel().getSelectedItem());
+                this.calculate(classbook, 
+                        this.subjectSelectionBox.getSelectionModel().getSelectedItem());
                 this.present();
             }
         }
@@ -189,7 +186,8 @@ public class MainController {
         if (this.calculationSelectionBox.getSelectionModel().getSelectedItem() != null
                 && this.classbookSelectionBox.getSelectionModel().getSelectedItem() != null) {
             for (Subject value : Subject.values()) {
-                this.calculate(this.classbookSelectionBox.getSelectionModel().getSelectedItem(), value);
+                this.calculate(this.classbookSelectionBox.getSelectionModel().getSelectedItem(),
+                        value);
                 this.present();
             }
         }
@@ -201,16 +199,16 @@ public class MainController {
      * {@link CalculatedGrade} for the submitted {@link Classbook} and
      * {@link Subject}.
      *
-     * @param classbook Calculates for the summited classbook.
-     * @param subject Calculates for the submitted subject.
+     * @param classbook Classbook
+     * @param subject Subject
      */
     private void calculate(Classbook classbook, Subject subject) {
-        switch (this.calculationSelectionBox.getSelectionModel().getSelectedItem()) {
-            case "Average":
+        switch (this.calculationSelectionBox.getSelectionModel().getSelectedItem().toLowerCase()) {
+            case "average":
                 this.calculatedGrade = Calculator
                         .calculateAverageGrade(classbook, subject);
                 break;
-            case "Accumulation":
+            case "accumulation":
                 this.calculatedGrade = Calculator
                         .calculateAccumulatedGrade(classbook, subject);
                 break;
@@ -238,7 +236,7 @@ public class MainController {
      * Opens a new {@link ConfirmationStage} to confirm the closing of a
      * {@link Stage}.
      *
-     * @param stage Stage to be closed.
+     * @param stage Stage
      */
     private void close(Stage stage) {
         if (new ConfirmationStage("Do you really want to close the programm?").display()) {
