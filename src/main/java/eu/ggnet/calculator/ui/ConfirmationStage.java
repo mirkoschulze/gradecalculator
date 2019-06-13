@@ -1,7 +1,3 @@
-/*
-*
-* by Mirko Schulze
- */
 package eu.ggnet.calculator.ui;
 
 import javafx.geometry.Insets;
@@ -16,48 +12,63 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 /**
+ * Stage to confirm an user event.
  *
- * @author Administrator
+ * @author Mirko Schulze
  */
 public class ConfirmationStage {
 
-    private final Label stageMessage;
+    //fields
     private boolean answer;
+
+    //container components
+    private Stage primaryStage;
+    private HBox hbox;
+    private BorderPane borderPane;
+
+    //control component
+    private final Label stageMessage;
+    private Button yesButton, noButton;
 
     public ConfirmationStage(String stageMessage) {
         this.stageMessage = new Label(stageMessage);
     }
 
+    /**
+     * Defines the layout and adds functionality to components.
+     *
+     * @return boolean
+     */
     public boolean display() {
-        Stage primaryStage = new Stage(StageStyle.DECORATED);
+        //layout
+        hbox = new HBox(25);
+        hbox.setAlignment(Pos.CENTER);
+        hbox.setPadding(new Insets(10));
+        hbox.getChildren().addAll(yesButton, noButton);
+
+        borderPane = new BorderPane();
+        borderPane.setPadding(new Insets(10));
+        borderPane.setTop(this.stageMessage);
+        borderPane.setCenter(hbox);
+
+        //components
+        primaryStage = new Stage(StageStyle.DECORATED);
         primaryStage.setTitle("Confirmation");
         primaryStage.initModality(Modality.APPLICATION_MODAL);
 
-        Button yesButton = new Button("Yes");
+        yesButton = new Button("Yes");
         yesButton.setOnAction(e -> {
             this.answer = true;
             primaryStage.close();
         });
 
-        Button noButton = new Button("No");
+        noButton = new Button("No");
         noButton.setOnAction(e -> {
             this.answer = false;
             primaryStage.close();
         });
 
-        HBox hbox = new HBox(25);
-        hbox.setAlignment(Pos.CENTER);
-        hbox.setPadding(new Insets(10));
-        hbox.getChildren().addAll(yesButton, noButton);
-        
-        BorderPane borderPane = new BorderPane();
-        borderPane.setPadding(new Insets(10));
-        borderPane.setTop(this.stageMessage);
-        borderPane.setCenter(hbox);
-
-        Scene scene = new Scene(borderPane, 300, 200);
-
-        primaryStage.setScene(scene);
+        primaryStage.setScene(new Scene(borderPane, 300, 200));
         primaryStage.showAndWait();
 
         return this.answer;
