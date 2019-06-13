@@ -1,13 +1,5 @@
-/*
-*
-* by Mirko Schulze
- */
 package eu.ggnet.calculator.model;
 
-import eu.ggnet.calculator.model.Certification;
-import eu.ggnet.calculator.model.Pupil;
-import eu.ggnet.calculator.model.Classbook;
-import eu.ggnet.calculator.model.Grade;
 import eu.ggnet.calculator.model.Grade.Note;
 import eu.ggnet.calculator.model.Grade.Subject;
 import eu.ggnet.calculator.model.Pupil.Sex;
@@ -22,31 +14,16 @@ import java.util.Random;
  * <p>
  * Contains methods to generate random Strings for names or select a random sex.
  *
- * @author mirko.schulze
+ * @author Mirko Schulze
  */
 public class Generator {
 
     private static final Random R = new Random();
 
     /**
-     * Generates a {@link Certification} with a random {@link Note} for each
-     * {@link Subject} for the submitted {@link Pupil}.
-     *
-     * @param pupil Sets pupils certification.
-     * @return Returns the generated certification.
-     */
-    public static Certification generateCertification(Pupil pupil) {
-        List<Grade> listOfGrades = new ArrayList<>();
-        Arrays.asList(Grade.Subject.values()).forEach(s -> {
-            listOfGrades.add(new Grade(s, Grade.Note.values()[R.nextInt(16)]));
-        });
-        return new Certification(pupil, listOfGrades);
-    }
-
-    /**
      * Generates an instance of {@link Pupil} with random values.
      *
-     * @return Returns the generated pupil.
+     * @return Pupil
      */
     public static Pupil generatePupil() {
         Sex g = generateSex();
@@ -54,9 +31,9 @@ public class Generator {
     }
 
     /**
-     * Generates an instance of {@link Schoolclass} with random values.
+     * Generates an instance of {@link Classbook} with random values.
      *
-     * @return Returns the generated schoolclass.
+     * @return Classbook
      */
     public static Classbook generateClassbook() {
         List<Pupil> pupils = new ArrayList<>();
@@ -67,9 +44,24 @@ public class Generator {
     }
 
     /**
+     * Generates a {@link Certification} with a random {@link Note} for each
+     * {@link Subject} for the submitted {@link Pupil}.
+     *
+     * @param pupil Pupil
+     * @return Certification
+     */
+    public static Certification generateCertification(Pupil pupil) {
+        List<Grade> listOfGrades = new ArrayList<>();
+        Arrays.asList(Grade.Subject.values()).forEach(s -> {
+            listOfGrades.add(new Grade(s, Grade.Note.values()[R.nextInt(16)]));
+        });
+        return new Certification(pupil, listOfGrades);
+    }
+
+    /**
      * Selects a random {@link Sex} for an instance of {@link Pupil}.
      *
-     * @return Returns the selected gender.
+     * @return Sex
      */
     public static Pupil.Sex generateSex() {
         if (R.nextInt(2) < 1) {
@@ -82,8 +74,8 @@ public class Generator {
     /**
      * Selects a random forename for an instance of {@link Pupil}.
      *
-     * @param gender The selected name depends on the submitted {@link Sex}.
-     * @return Returns a String with the selected forename.
+     * @param gender Sex
+     * @return String
      */
     public static String generateForename(Sex gender) {
         if (gender == Pupil.Sex.FEMALE) {
@@ -158,7 +150,7 @@ public class Generator {
     /**
      * Selects a random surname for an instance of {@link Pupil}.
      *
-     * @return Returns a String with the selected surname.
+     * @return String
      */
     public static String generateSurname() {
         switch (R.nextInt(10)) {
@@ -204,25 +196,38 @@ public class Generator {
     }
 
     /**
-     * Selects a random name for an instance of {@link Schoolclass}.
+     * Selects a random name for an instance of {@link Classbook}.
      *
-     * @return Returns a String with the selected name.
+     * @return String
      */
     public static String generateSchoolclassName() {
-        switch (R.nextInt(6)) {
-            case 0:
-                return "KP " + R.nextInt(25);
-            case 1:
-                return "IT " + R.nextInt(25);
-            case 2:
-                return "OUG " + R.nextInt(25);
-            case 3:
-                return "SUK " + R.nextInt(25);
-            case 4:
-                return "WUG " + R.nextInt(25);
-            default:
-                return "AE " + R.nextInt(25);
+        return "IT " + R.nextInt(13) + generateClassbookCharacter();
+    }
+
+    /**
+     *
+     * @return char
+     */
+    public static char generateClassbookCharacter() {
+        return ClassbookCharacter.values()[R.nextInt(ClassbookCharacter.values().length)].character;
+    }
+
+    /**
+     * Enum with characters for titles ofI a {@link Classbook}.
+     */
+    public enum ClassbookCharacter {
+        A('a'), E('e'), I('i'), O('o'), U('u');
+
+        private char character;
+
+        private ClassbookCharacter(char character) {
+            this.character = character;
         }
+
+        public char getCharacter() {
+            return character;
+        }
+
     }
 
 }
