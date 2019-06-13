@@ -1,7 +1,3 @@
-/*
-*
-* by Mirko Schulze
- */
 package eu.ggnet.calculator.model;
 
 import java.util.List;
@@ -17,7 +13,7 @@ import lombok.Getter;
  * Contains a method to present data in a human-readable format. Overrides
  * {@link Object#toString()} for presentation purposes.
  *
- * @author mirko.schulze
+ * @author Mirko Schulze
  */
 @Getter
 @AllArgsConstructor
@@ -29,7 +25,7 @@ public class Certification {
     /**
      * {@link ComboBox} uses {@link Object#toString()} to display data.
      *
-     * @return Returns the pupil, for whom the certification was made.
+     * @return String
      */
     @Override
     public String toString() {
@@ -39,7 +35,7 @@ public class Certification {
     /**
      * Joins and returns a human-readable String with all data in this instance.
      *
-     * @return Returns the created String.
+     * @return String
      */
     public String toEnhancedLine() {
         StringBuilder sb = new StringBuilder();

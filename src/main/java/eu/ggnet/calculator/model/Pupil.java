@@ -1,9 +1,6 @@
-/*
-*
-* by Mirko Schulze
- */
 package eu.ggnet.calculator.model;
 
+import javafx.scene.control.ComboBox;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +15,7 @@ import lombok.Setter;
  * <p>
  * Implements {@link Comparable} by comparing the first letter of surename.
  *
- * @author Administrator
+ * @author Mirko Schulze
  */
 @Getter
 public class Pupil implements Comparable<Pupil> {
@@ -40,7 +37,7 @@ public class Pupil implements Comparable<Pupil> {
     /**
      * {@link ComboBox} uses {@link Object#toString()} to display data.
      *
-     * @return Returns the pupils name.
+     * @return String
      */
     @Override
     public String toString() {
@@ -55,7 +52,7 @@ public class Pupil implements Comparable<Pupil> {
     /**
      * Joins and returns a human-readable String with data about this instance.
      *
-     * @return Returns the created String.
+     * @return String
      */
     public String toSimpleLine() {
         return this.forename + " " + this.surname + " (" + this.age + " Jahre, " + this.sex.description + ")";

@@ -1,7 +1,3 @@
-/*
-*
-* by Mirko Schulze
- */
 package eu.ggnet.calculator.model;
 
 import java.time.LocalDate;
@@ -18,7 +14,7 @@ import lombok.Getter;
  * Contains a method to present data in a human-readable format. Overrides
  * {@link Object#toString()} for presentation purposes.
  *
- * @author Administrator
+ * @author Mirko Schulze
  */
 @Getter
 public class Grade {
@@ -36,7 +32,7 @@ public class Grade {
     /**
      * {@link ComboBox} uses {@link Object#toString()} to display data.
      *
-     * @return Returns the grades subject and miidleschoolNote.
+     * @return String
      */
     @Override
     public String toString() {
@@ -46,7 +42,7 @@ public class Grade {
     /**
      * Joins and returns a human-readable String with the data of this instance.
      *
-     * @return Returns the created String.
+     * @return String
      */
     public String toSimpleLine() {
         return this.subject.getTheme() + ": " + this.note.getMiddleschoolNote()

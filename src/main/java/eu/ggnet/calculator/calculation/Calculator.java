@@ -1,7 +1,3 @@
-/*
-*
-* by Mirko Schulze
- */
 package eu.ggnet.calculator.calculation;
 
 import eu.ggnet.calculator.model.Pupil;
@@ -18,7 +14,7 @@ import static eu.ggnet.calculator.model.Grade.Subject.IT_S;
 /**
  * Static class to generate new instances of {@link CalculatedGrade}.
  *
- * @author Administrator
+ * @author Mirko Schulze
  */
 public class Calculator {
 
@@ -30,9 +26,9 @@ public class Calculator {
      * Generates and returns a new {@link CalculatedGrade} with the calculated
      * note and its occurencies as suffix.
      *
-     * @param classbook Counts all notes from the submitted classbook.
-     * @param subject Counts all notes for the submitted subject.
-     * @return Returns the calculated grade.
+     * @param classbook Classbook
+     * @param subject Subject
+     * @return CalculatedGrade
      */
     public static CalculatedGrade calculateAccumulatedGrade(Classbook classbook, Subject subject) {
         String calculation = "Accumulated grade in " + subject.getTheme() + " for " + classbook.toString() + " = ";
@@ -66,9 +62,9 @@ public class Calculator {
      * Generates and returns a new {@link CalculatedGrade} with the calculated
      * number as note.
      *
-     * @param classbook Collects all notes from the submitted classbook.
-     * @param subject Collects all notes for the submitted subject.
-     * @return Returns the calculated grade.
+     * @param classbook Classbook
+     * @param subject Subject
+     * @return CalculatedGrade
      */
     public static CalculatedGrade calculateAverageGrade(Classbook classbook, Subject subject) {
         String calculation = "Average note in " + subject.getTheme() + " for " + classbook.getClassbookTitle() + " = ";

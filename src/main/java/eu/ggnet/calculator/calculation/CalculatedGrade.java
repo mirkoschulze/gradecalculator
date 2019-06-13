@@ -1,7 +1,3 @@
-/*
-*
-* by Mirko Schulze
- */
 package eu.ggnet.calculator.calculation;
 
 import eu.ggnet.calculator.model.Grade;
@@ -17,7 +13,7 @@ import lombok.Getter;
  * <p>
  * Contains a method to present data in a human-readable format.
  *
- * @author Administrator
+ * @author Mirko Schulze
  */
 @Getter
 @AllArgsConstructor
@@ -40,7 +36,7 @@ public class CalculatedGrade {
     /**
      * Joins and returns a human-readable String with the data of this instance.
      *
-     * @return Returns the created String.
+     * @return String
      */
     public String toEnhancedLine() {
         StringBuilder sb = new StringBuilder();
