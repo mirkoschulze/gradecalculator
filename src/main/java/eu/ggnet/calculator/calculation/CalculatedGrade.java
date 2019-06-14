@@ -11,7 +11,7 @@ import lombok.Getter;
  * Contains Strings to hold informations about the calculatoin and a
  * {@link Grade}.
  * <p>
- * Contains a method to present data in a human-readable format.
+ * Contains methods to present data in a human-readable format.
  *
  * @author Mirko Schulze
  */
@@ -34,6 +34,16 @@ public class CalculatedGrade {
     }
 
     /**
+     * Joins and returns a human-readable String with most data of this
+     * instance.
+     *
+     * @return String
+     */
+    public String toSimpleLine() {
+        return this.calculation + this.grade.toSimpleLine();
+    }
+
+    /**
      * Joins and returns a human-readable String with the data of this instance.
      *
      * @return String
@@ -41,12 +51,12 @@ public class CalculatedGrade {
     public String toEnhancedLine() {
         StringBuilder sb = new StringBuilder();
         sb.append(this.calculation)
-                .append(this.grade.getNote().getMiddleschoolNote());
+                .append(this.grade.toSimpleLine());
         if (this.suffix != null) {
             sb.append(" ").append(this.suffix);
         }
         sb.append(" [").append(this.grade.getLocalDate()
-                .format(DateTimeFormatter.ofPattern("EEEE, dd.MM.yyyy")))
+                .format(DateTimeFormatter.ofPattern("dd.MM.yyyy")))
                 .append("]");
         return sb.toString();
     }

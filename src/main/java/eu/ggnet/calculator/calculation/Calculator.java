@@ -5,18 +5,19 @@ import eu.ggnet.calculator.model.Classbook;
 import eu.ggnet.calculator.model.Grade;
 import eu.ggnet.calculator.model.Grade.Note;
 import eu.ggnet.calculator.model.Grade.Subject;
-import static eu.ggnet.calculator.model.Grade.Subject.DEV;
-import static eu.ggnet.calculator.model.Grade.Subject.SOC;
-import static eu.ggnet.calculator.model.Grade.Subject.ENG;
-import static eu.ggnet.calculator.model.Grade.Subject.IT_W;
-import static eu.ggnet.calculator.model.Grade.Subject.IT_S;
+import lombok.ToString;
 
 /**
  * Static class to generate new instances of {@link CalculatedGrade}.
  *
  * @author Mirko Schulze
  */
+@ToString
 public class Calculator {
+
+    private Calculator() {
+
+    }
 
     /**
      * Counts how often each individual {@link Note} is given to the
@@ -31,7 +32,7 @@ public class Calculator {
      * @return CalculatedGrade
      */
     public static CalculatedGrade calculateAccumulatedGrade(Classbook classbook, Subject subject) {
-        String calculation = "Accumulated grade in " + subject.getTheme() + " for " + classbook.toString() + " = ";
+        String calculation = "Accumulated grade in for " + classbook.toString() + " = ";
         int mostOccurencies = 0;
         int iterationStep = 0;
         if (classbook.getPupils() != null) {
@@ -67,32 +68,14 @@ public class Calculator {
      * @return CalculatedGrade
      */
     public static CalculatedGrade calculateAverageGrade(Classbook classbook, Subject subject) {
-        String calculation = "Average note in " + subject.getTheme() + " for " + classbook.getClassbookTitle() + " = ";
+        String calculation = "Average note in for " + classbook.getClassbookTitle() + " = ";
         int total = 0;
         int average = 0;
         if (classbook.getPupils() != null) {
             if (!classbook.getPupils().isEmpty()) {
                 for (Pupil pupil : classbook.getPupils()) {
                     if (pupil.getCertification() != null) {
-                        switch (subject) {
-                            case ENG:
-                                total += pupil.getCertification().getGrades().get(subject.ordinal()).getNote().getHighschoolNote();
-                                break;
-                            case IT_S:
-                                total += pupil.getCertification().getGrades().get(subject.ordinal()).getNote().getHighschoolNote();
-                                break;
-                            case IT_W:
-                                total += pupil.getCertification().getGrades().get(subject.ordinal()).getNote().getHighschoolNote();
-                                break;
-                            case SOC:
-                                total += pupil.getCertification().getGrades().get(subject.ordinal()).getNote().getHighschoolNote();
-                                break;
-                            case DEV:
-                                total += pupil.getCertification().getGrades().get(subject.ordinal()).getNote().getHighschoolNote();
-                                break;
-                            default:
-                                total += pupil.getCertification().getGrades().get(subject.ordinal()).getNote().getHighschoolNote();
-                        }
+                        total += pupil.getCertification().getGrades().get(subject.ordinal()).getNote().getHighschoolNote();
                     }
                 }
                 average = total / classbook.getPupils().size();
