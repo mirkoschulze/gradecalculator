@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javafx.scene.control.ComboBox;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Represents the evaluation for a finished course or module.
@@ -17,6 +18,7 @@ import lombok.Getter;
  * @author Mirko Schulze
  */
 @Getter
+@ToString
 public class Grade {
 
     private final Subject subject;
@@ -29,22 +31,13 @@ public class Grade {
         this.localDate = LocalDate.now();
     }
 
-    /**
-     * {@link ComboBox} uses {@link Object#toString()} to display data.
-     *
-     * @return String
-     */
-    @Override
-    public String toString() {
-        return this.subject.theme + ": " + this.note.middleschoolNote;
-    }
 
     /**
      * Joins and returns a human-readable String with the data of this instance.
      *
      * @return String
      */
-    public String toSimpleLine() {
+    public String toEnhancedLine() {
         return this.subject.getTheme() + ": " + this.note.getMiddleschoolNote()
                 + " [ " + this.localDate.format(DateTimeFormatter.ofPattern("EEEE dd.MM.yyyy")) + "]";
     }
