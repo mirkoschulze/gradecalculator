@@ -40,7 +40,7 @@ public class Generator {
         for (int i = 0; i < R.nextInt(20) + 10; i++) {
             pupils.add(generatePupil());
         }
-        return new Classbook(generateSchoolclassName(), pupils);
+        return new Classbook(generateClassbookName(), pupils);
     }
 
     /**
@@ -200,7 +200,7 @@ public class Generator {
      *
      * @return String
      */
-    public static String generateSchoolclassName() {
+    public static String generateClassbookName() {
         return "IT " + R.nextInt(13) + generateClassbookCharacter();
     }
 
