@@ -10,17 +10,20 @@ import eu.ggnet.calculator.model.Grade.Subject;
 import eu.ggnet.calculator.model.Pupil;
 import java.util.ArrayList;
 import java.util.List;
+import static javafx.application.ConditionalFeature.FXML;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.VPos;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Controller class, responsible for the logic of MainApp.
@@ -28,6 +31,7 @@ import lombok.Getter;
  * @author Mirko Schulze
  */
 @Getter
+@ToString
 public class MainController {
 
     //root
@@ -39,15 +43,18 @@ public class MainController {
 
     //components
     private Label instructions;
+    @FXML
     private ComboBox<Classbook> classbookSelectionBox;
+    @FXML
     private ComboBox<Subject> subjectSelectionBox;
+    @FXML
     private ComboBox<String> calculationSelectionBox;
     private Label presentationLabel;
-    private Text presentation;
+    private TextArea presentation;
     private Label pupilsListLabel;
-    private ListView<Pupil> pupilsList;
+    private ListView<Pupil> pupilsListView;
     private Label gradesListLabel;
-    private ListView<Grade> gradesList;
+    private ListView<Grade> gradesListView;
     private Button calculateButton;
     private Button calculateForEachClassbookButton;
     private Button calculateForEachSubjectButton;
@@ -77,11 +84,11 @@ public class MainController {
         this.subjectSelectionBox = new ComboBox<>();
         this.calculationSelectionBox = new ComboBox<>();
         this.presentationLabel = new Label("Calculation view:");
-        this.presentation = new Text();
+        this.presentation = new TextArea();
         this.pupilsListLabel = new Label("Pupils in the selected class:");
-        this.pupilsList = new ListView<>();
+        this.pupilsListView = new ListView<>();
         this.gradesListLabel = new Label("Grades of the selected pupil:");
-        this.gradesList = new ListView<>();
+        this.gradesListView = new ListView<>();
         this.calculateButton = new Button("Calculate");
         this.calculateForEachClassbookButton = new Button("Calculate for each classbook");
         this.calculateForEachSubjectButton = new Button("Calculate for each subject");
@@ -114,23 +121,23 @@ public class MainController {
                             .observableArrayList(this.classbookSelectionBox
                                     .getSelectionModel().getSelectedItem()
                                     .getPupils());
-                    this.pupilsList.setItems(pupils);
+                    this.pupilsListView.setItems(pupils);
                 });
 
-        this.pupilsList.getSelectionModel().selectedItemProperty().addListener((change, oldValue, newValue) -> {
+        this.pupilsListView.getSelectionModel().selectedItemProperty().addListener((change, oldValue, newValue) -> {
             try {
-                this.gradesList.setItems(FXCollections
-                        .observableArrayList(this.pupilsList
+                this.gradesListView.setItems(FXCollections
+                        .observableArrayList(this.pupilsListView
                                 .getSelectionModel().getSelectedItem()
                                 .getCertification().getGrades()));
             } catch (NullPointerException e) {
-                this.gradesList.setItems(FXCollections.emptyObservableList());
+                this.gradesListView.setItems(FXCollections.emptyObservableList());
             }
         });
 
         //text area meta data
-        this.presentation.setTextOrigin(VPos.TOP);
-        this.presentation.setWrappingWidth(250);
+        this.presentation.setEditable(false);
+        this.presentation.setWrapText(true);
 
         //button functionality
         this.calculateButton.setOnAction(e -> this.calculateAndPresent());
@@ -163,11 +170,12 @@ public class MainController {
      * <ul><li>generates a {@link CalculatedGrade} to set calculatedGrade</li>
      * <li>calculatedGrade is added to {@link Text} presentation</li></ul>
      */
+    @FXML
     private void calculateAndPresentForEachClassbook() {
         if (this.calculationSelectionBox.getSelectionModel().getSelectedItem() != null
                 && this.subjectSelectionBox.getSelectionModel().getSelectedItem() != null) {
             for (Classbook classbook : classbooks) {
-                this.calculate(classbook, 
+                this.calculate(classbook,
                         this.subjectSelectionBox.getSelectionModel().getSelectedItem());
                 this.present();
             }
@@ -182,6 +190,7 @@ public class MainController {
      * <ul><li>generates a {@link CalculatedGrade} to set calculatedGrade</li>
      * <li>calculatedGrade is added to {@link Text} </li></ul>
      */
+    @FXML
     private void calculateAndPresentForEachSubject() {
         if (this.calculationSelectionBox.getSelectionModel().getSelectedItem() != null
                 && this.classbookSelectionBox.getSelectionModel().getSelectedItem() != null) {
@@ -202,6 +211,7 @@ public class MainController {
      * @param classbook Classbook
      * @param subject Subject
      */
+    @FXML
     private void calculate(Classbook classbook, Subject subject) {
         switch (this.calculationSelectionBox.getSelectionModel().getSelectedItem().toLowerCase()) {
             case "average":
@@ -228,6 +238,7 @@ public class MainController {
     /**
      * Resets {@link Text} presentation.
      */
+    @FXML
     private void clear() {
         this.presentation.setText("");
     }
@@ -238,6 +249,7 @@ public class MainController {
      *
      * @param stage Stage
      */
+    @FXML
     private void close(Stage stage) {
         if (new ConfirmationStage("Do you really want to close the programm?").display()) {
             stage.close();
