@@ -10,9 +10,11 @@ import eu.ggnet.calculator.model.Grade.Subject;
 import eu.ggnet.calculator.model.Pupil;
 import java.util.ArrayList;
 import java.util.List;
+import static javafx.application.ConditionalFeature.FXML;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -35,7 +37,7 @@ public class MainController {
     private List<Classbook> classbooks;
     private CalculatedGrade calculatedGrade;
 
-    private Stage mainStage;
+    private final Stage mainStage;
     private Label instructions;
     private ComboBox<Classbook> classbookSelectionBox;
     private ComboBox<Subject> subjectSelectionBox;
@@ -50,6 +52,7 @@ public class MainController {
     private Button calculateForEachClassbookButton;
     private Button calculateForEachSubjectButton;
     private Button clearButton;
+    private Button closeButton;
 
     public MainController(Stage mainStage) {
         this.mainStage = mainStage;
@@ -82,6 +85,7 @@ public class MainController {
         this.calculateForEachClassbookButton = new Button("Calculate for each classbook");
         this.calculateForEachSubjectButton = new Button("Calculate for each subject");
         this.clearButton = new Button("Clear");
+        this.closeButton = new Button("Close");
 
         //auto-generation of classbooks to simulate the application
         for (int i = 0; i < 5; i++) {
@@ -128,6 +132,7 @@ public class MainController {
         this.calculateForEachClassbookButton.setOnAction(e -> this.calculateAndPresentForEachClassbook());
         this.calculateForEachSubjectButton.setOnAction(e -> this.calculateAndPresentForEachSubject());
         this.clearButton.setOnAction(e -> this.clear());
+        this.closeButton.setOnAction(e -> this.close(this.mainStage));
     }
 
     /**
@@ -220,6 +225,18 @@ public class MainController {
      */
     private void clear() {
         this.presentation.setText("");
+    }
+
+    /**
+     * Opens a new {@link ConfirmationStage} to confirm the closing of a
+     * {@link Stage}.
+     *
+     * @param stage Stage
+     */
+    private void close(Stage stage) {
+        if (new ConfirmationStage("Do you really want to close the programm?").display()) {
+            stage.close();
+        }
     }
 
 }

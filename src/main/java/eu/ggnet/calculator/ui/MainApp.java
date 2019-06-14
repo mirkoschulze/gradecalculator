@@ -28,7 +28,6 @@ public class MainApp extends Application {
 
     private GridPane grid;
     private HBox hbox;
-    private Button closeButton;
 
     /**
      * The main() method is ignored in correctly deployed JavaFX application.
@@ -51,10 +50,8 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        //initialization
         initializeMain(stage);
 
-        //layout
         hbox.setPadding(new Insets(10));
         hbox.setSpacing(10);
 
@@ -79,41 +76,23 @@ public class MainApp extends Application {
         grid.getColumnConstraints().addAll(colCons);
         grid.getRowConstraints().addAll(rowCons);
 
-        //components
         hbox.getChildren().addAll(this.controller.getCalculateButton(),
                 this.controller.getCalculateForEachClassbookButton(),
                 this.controller.getCalculateForEachSubjectButton(),
                 this.controller.getClearButton());
-
         grid.add(this.controller.getInstructions(), 0, 1, 6, 1);
-
-        //list of pupils
         grid.add(this.controller.getClassbookSelectionBox(), 0, 2, 2, 1);
         grid.add(this.controller.getPupilsListLabel(), 0, 3, 2, 1);
         grid.add(this.controller.getPupilsListView(), 0, 4, 2, 2);
-
-        //drop down boxes
         grid.add(this.controller.getSubjectSelectionBox(), 2, 2, 2, 1);
         grid.add(this.controller.getCalculationSelectionBox(), 4, 2);
-
-        //text
         grid.add(this.controller.getPresentationLabel(), 2, 3);
         grid.add(this.controller.getPresentation(), 2, 4, 3, 2);
-
-        //list of grades
         grid.add(this.controller.getGradesListLabel(), 5, 3, 2, 1);
         grid.add(this.controller.getGradesListView(), 5, 4, 2, 1);
 
-        //buttons
         grid.add(hbox, 2, 6, 3, 1);
-        grid.add(this.closeButton, 6, 6);
-        this.closeButton.setOnAction(e -> {
-            if (new ConfirmationStage("Do you really want to close the programm?").display()) {
-                stage.close();
-            }
-        });
-
-        
+        grid.add(this.controller.getCloseButton(), 6, 6);
 
         stage.setScene(new Scene(grid, 900, 800));
         stage.show();
@@ -129,8 +108,6 @@ public class MainApp extends Application {
         this.controller = new MainController(stage);
         this.grid = new GridPane();
         this.hbox = new HBox();
-        this.closeButton = new Button("Close");
-        
         this.controller.initialize();
     }
 
