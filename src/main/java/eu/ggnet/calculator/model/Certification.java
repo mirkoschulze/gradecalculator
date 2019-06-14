@@ -10,8 +10,7 @@ import lombok.ToString;
  * <p>
  * Contains a {@link Pupil} and a list with instances of {@link Grade}.
  * <p>
- * Contains a method to present data in a human-readable format. Overrides
- * {@link Object#toString()} for presentation purposes.
+ * Contains a method to present data in a human-readable format.
  *
  * @author Mirko Schulze
  */
