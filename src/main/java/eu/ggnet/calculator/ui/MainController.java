@@ -12,6 +12,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,7 +21,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -37,6 +41,7 @@ public class MainController implements Initializable {
 
     private List<Classbook> classbooks;
     private CalculatedGrade calculatedGrade;
+    private BooleanProperty selectedPupilProperty;
 
     @FXML
     private ComboBox<Classbook> classbookSelectionBox;
@@ -46,6 +51,8 @@ public class MainController implements Initializable {
     private ComboBox<String> calculationSelectionBox;
     @FXML
     private TextArea presentation;
+    @FXML
+    private ProgressIndicator indicator;
     @FXML
     private ListView<Pupil> pupilsListView;
     @FXML
@@ -59,14 +66,15 @@ public class MainController implements Initializable {
      * <li>auto-generation of 5 instances of {@link Classbook} to simulate, with
      * already set {@link Certification}</li>
      * <li>adding {@link ObservableList} to {@link ComboBox} components</li>
-     * <li>adding {@link ChangeListener} to lists</li>
-     * <li>setting methods to {@link Button} components</li></ul>
+     * <li>adding {@link ChangeListener} to lists</li></ul>
      *
      * @param url URL
      * @param rb ResourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        this.selectedPupilProperty = new SimpleBooleanProperty();
+
         this.classbooks = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             this.classbooks.add(Generator.generateClassbook());
@@ -78,24 +86,33 @@ public class MainController implements Initializable {
         }
 
         this.classbookSelectionBox.setItems(FXCollections.observableArrayList(this.classbooks));
-        this.subjectSelectionBox.setItems(FXCollections.observableArrayList(Subject.values()));
-        this.calculationSelectionBox.setItems(FXCollections.observableArrayList("Average", "Accumulation"));
-
         this.classbookSelectionBox.getSelectionModel().selectedItemProperty()
-                .addListener((change, oldValue, newValue) -> {
+                .addListener((value, oldValue, newValue) -> {
                     ObservableList<Pupil> pupils = FXCollections
                             .observableArrayList(this.classbookSelectionBox
                                     .getSelectionModel().getSelectedItem()
                                     .getPupils());
                     this.pupilsListView.setItems(pupils);
+                    this.indicator.setProgress(this.indicator.getProgress() + 0.33);
                 });
 
-        this.pupilsListView.getSelectionModel().selectedItemProperty().addListener((change, oldValue, newValue) -> {
+        this.subjectSelectionBox.setItems(FXCollections.observableArrayList(Subject.values()));
+        this.subjectSelectionBox.getSelectionModel().selectedItemProperty().addListener((value, oldValue, newValue) -> {
+            this.indicator.setProgress(this.indicator.getProgress() + 0.33);
+        });
+
+        this.calculationSelectionBox.setItems(FXCollections.observableArrayList("Average", "Accumulation"));
+        this.calculationSelectionBox.getSelectionModel().selectedItemProperty().addListener((value, oldValue, newValue) -> {
+            this.indicator.setProgress(this.indicator.getProgress() + 0.34);
+        });
+
+        this.pupilsListView.getSelectionModel().selectedItemProperty().addListener((value, oldValue, newValue) -> {
             try {
                 this.gradesListView.setItems(FXCollections
                         .observableArrayList(this.pupilsListView
                                 .getSelectionModel().getSelectedItem()
                                 .getCertification().getGrades()));
+                this.selectedPupilProperty.set(true);
             } catch (NullPointerException e) {
                 this.gradesListView.setItems(FXCollections.emptyObservableList());
             }

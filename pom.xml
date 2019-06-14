@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>eu.ggnet</groupId>
-    <artifactId>gradecalculator</artifactId>
+    <artifactId>calculator</artifactId>
     <version>1.2</version>
     <packaging>jar</packaging>
 
-    <name>Grade Calculator</name>
+    <name>Calculator</name>
     <developers>
         <developer>
             <name>Mirko Schulze</name>
