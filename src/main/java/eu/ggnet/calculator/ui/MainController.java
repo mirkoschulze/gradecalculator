@@ -8,16 +8,17 @@ import eu.ggnet.calculator.model.Classbook;
 import eu.ggnet.calculator.model.Grade;
 import eu.ggnet.calculator.model.Grade.Subject;
 import eu.ggnet.calculator.model.Pupil;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import static javafx.application.ConditionalFeature.FXML;
+import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
@@ -32,31 +33,25 @@ import lombok.ToString;
  */
 @Getter
 @ToString
-public class MainController {
+public class MainController implements Initializable {
 
     private List<Classbook> classbooks;
     private CalculatedGrade calculatedGrade;
 
-    private final Stage mainStage;
-    private Label instructions;
+    @FXML
     private ComboBox<Classbook> classbookSelectionBox;
+    @FXML
     private ComboBox<Subject> subjectSelectionBox;
+    @FXML
     private ComboBox<String> calculationSelectionBox;
-    private Label presentationLabel;
+    @FXML
     private TextArea presentation;
-    private Label pupilsListLabel;
+    @FXML
     private ListView<Pupil> pupilsListView;
-    private Label gradesListLabel;
+    @FXML
     private ListView<Grade> gradesListView;
-    private Button calculateButton;
-    private Button calculateForEachClassbookButton;
-    private Button calculateForEachSubjectButton;
-    private Button clearButton;
+    @FXML
     private Button closeButton;
-
-    public MainController(Stage mainStage) {
-        this.mainStage = mainStage;
-    }
 
     /**
      * Initializes the controller in the following steps:
@@ -67,43 +62,24 @@ public class MainController {
      * <li>adding {@link ChangeListener} to lists</li>
      * <li>setting methods to {@link Button} components</li></ul>
      *
+     * @param url URL
+     * @param rb ResourceBundle
      */
-    public void initialize() {
-        this.instructions = new Label("Select a class, a subject and a calculation, then click on 'Calculate'."
-                + " Click on 'Clear' to reset the text area.");
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
         this.classbooks = new ArrayList<>();
-        this.classbookSelectionBox = new ComboBox<>();
-        this.subjectSelectionBox = new ComboBox<>();
-        this.calculationSelectionBox = new ComboBox<>();
-        this.presentationLabel = new Label("Calculation view:");
-        this.presentation = new TextArea();
-        this.pupilsListLabel = new Label("Pupils in the selected class:");
-        this.pupilsListView = new ListView<>();
-        this.gradesListLabel = new Label("Grades of the selected pupil:");
-        this.gradesListView = new ListView<>();
-        this.calculateButton = new Button("Calculate");
-        this.calculateForEachClassbookButton = new Button("Calculate for each classbook");
-        this.calculateForEachSubjectButton = new Button("Calculate for each subject");
-        this.clearButton = new Button("Clear");
-        this.closeButton = new Button("Close");
-
-        //auto-generation of classbooks to simulate the application
         for (int i = 0; i < 5; i++) {
             this.classbooks.add(Generator.generateClassbook());
         }
-
         for (Classbook classbook : this.classbooks) {
             for (Pupil pupil : classbook.getPupils()) {
                 pupil.setCertification(Generator.generateCertification(pupil));
             }
         }
 
-        this.classbookSelectionBox.setPromptText("Select a schoolclass");
         this.classbookSelectionBox.setItems(FXCollections.observableArrayList(this.classbooks));
-        this.subjectSelectionBox.setPromptText("Select a subject");
         this.subjectSelectionBox.setItems(FXCollections.observableArrayList(Subject.values()));
         this.calculationSelectionBox.setItems(FXCollections.observableArrayList("Average", "Accumulation"));
-        this.calculationSelectionBox.setPromptText("Select a calculation");
 
         this.classbookSelectionBox.getSelectionModel().selectedItemProperty()
                 .addListener((change, oldValue, newValue) -> {
@@ -124,15 +100,6 @@ public class MainController {
                 this.gradesListView.setItems(FXCollections.emptyObservableList());
             }
         });
-
-        this.presentation.setEditable(false);
-        this.presentation.setWrapText(true);
-
-        this.calculateButton.setOnAction(e -> this.calculateAndPresent());
-        this.calculateForEachClassbookButton.setOnAction(e -> this.calculateAndPresentForEachClassbook());
-        this.calculateForEachSubjectButton.setOnAction(e -> this.calculateAndPresentForEachSubject());
-        this.clearButton.setOnAction(e -> this.clear());
-        this.closeButton.setOnAction(e -> this.close(this.mainStage));
     }
 
     /**
@@ -140,6 +107,7 @@ public class MainController {
      * <ul><li>generates a {@link CalculatedGrade} to set calculatedGrade</li>
      * <li>calculatedGrade is added to {@link Text}</li></ul>
      */
+    @FXML
     private void calculateAndPresent() {
         if (this.calculationSelectionBox.getSelectionModel().getSelectedItem() != null
                 && this.subjectSelectionBox.getSelectionModel().getSelectedItem() != null
@@ -158,6 +126,7 @@ public class MainController {
      * <ul><li>generates a {@link CalculatedGrade} to set calculatedGrade</li>
      * <li>calculatedGrade is added to {@link Text} presentation</li></ul>
      */
+    @FXML
     private void calculateAndPresentForEachClassbook() {
         if (this.calculationSelectionBox.getSelectionModel().getSelectedItem() != null
                 && this.subjectSelectionBox.getSelectionModel().getSelectedItem() != null) {
@@ -177,6 +146,7 @@ public class MainController {
      * <ul><li>generates a {@link CalculatedGrade} to set calculatedGrade</li>
      * <li>calculatedGrade is added to {@link Text} </li></ul>
      */
+    @FXML
     private void calculateAndPresentForEachSubject() {
         if (this.calculationSelectionBox.getSelectionModel().getSelectedItem() != null
                 && this.classbookSelectionBox.getSelectionModel().getSelectedItem() != null) {
@@ -223,18 +193,18 @@ public class MainController {
     /**
      * Resets {@link Text} presentation.
      */
+    @FXML
     private void clear() {
         this.presentation.setText("");
     }
 
     /**
-     * Opens a new {@link ConfirmationStage} to confirm the closing of a
-     * {@link Stage}.
-     *
-     * @param stage Stage
+     * Closes the root stage.
      */
-    private void close(Stage stage) {
-        if (new ConfirmationStage("Do you really want to close the programm?").display()) {
+    @FXML
+    private void close() {
+        if (new ConfirmationStage("Do you really want to close?").display()) {
+            Stage stage = (Stage) closeButton.getScene().getWindow();
             stage.close();
         }
     }
