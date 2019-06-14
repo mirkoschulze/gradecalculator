@@ -5,8 +5,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -21,8 +21,8 @@ public class ConfirmationStage {
     private boolean answer;
 
     private final Stage primaryStage;
+    private final VBox vbox;
     private final HBox hbox;
-    private final BorderPane borderPane;
     private final Label stageMessage;
     private final Button yesButton, noButton;
 
@@ -30,7 +30,7 @@ public class ConfirmationStage {
         this.primaryStage = new Stage(StageStyle.DECORATED);
         this.stageMessage = new Label(stageMessage);
         this.hbox = new HBox(25);
-        this.borderPane = new BorderPane();
+        this.vbox = new VBox(25);
         this.yesButton = new Button("Yes");
         this.noButton = new Button("No");
     }
@@ -45,9 +45,9 @@ public class ConfirmationStage {
         this.hbox.setPadding(new Insets(10));
         this.hbox.getChildren().addAll(this.yesButton, this.noButton);
 
-        this.borderPane.setPadding(new Insets(10));
-        this.borderPane.setTop(this.stageMessage);
-        this.borderPane.setCenter(this.hbox);
+        this.vbox.setAlignment(Pos.CENTER);
+        this.vbox.setPadding(new Insets(10));
+        this.vbox.getChildren().addAll(this.stageMessage, this.hbox);
 
         this.primaryStage.setTitle("Confirmation");
         this.primaryStage.initModality(Modality.APPLICATION_MODAL);
@@ -62,7 +62,7 @@ public class ConfirmationStage {
             this.primaryStage.close();
         });
 
-        this.primaryStage.setScene(new Scene(this.borderPane, 400, 300));
+        this.primaryStage.setScene(new Scene(this.vbox, 400, 300));
         this.primaryStage.showAndWait();
 
         return this.answer;
