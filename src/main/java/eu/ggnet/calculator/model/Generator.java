@@ -12,7 +12,7 @@ import java.util.Random;
  * Static class to generate random instances of
  * {@link Certification}, {@link Pupil} and {@link Classbook}.
  * <p>
- * Contains methods to generate random Strings for names or select a random sex.
+ * Contains methods to generate random attributes for instances..
  *
  * @author Mirko Schulze
  */
