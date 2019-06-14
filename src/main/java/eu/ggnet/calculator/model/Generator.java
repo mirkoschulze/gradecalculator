@@ -26,8 +26,8 @@ public class Generator {
      * @return Pupil
      */
     public static Pupil generatePupil() {
-        Sex g = generateSex();
-        return new Pupil(g, R.nextInt(10) + 18, generateForename(g), generateSurname());
+        Sex s = generateSex();
+        return new Pupil(s, R.nextInt(10) + 18, generateForename(s), generateSurname());
     }
 
     /**
@@ -201,19 +201,11 @@ public class Generator {
      * @return String
      */
     public static String generateClassbookName() {
-        return "IT " + R.nextInt(13) + generateClassbookCharacter();
+        return "IT " + R.nextInt(13) + ClassbookCharacter.values()[R.nextInt(ClassbookCharacter.values().length)].character;
     }
 
     /**
-     *
-     * @return char
-     */
-    public static char generateClassbookCharacter() {
-        return ClassbookCharacter.values()[R.nextInt(ClassbookCharacter.values().length)].character;
-    }
-
-    /**
-     * Enum with characters for titles ofI a {@link Classbook}.
+     * Enum with characters for titles of a {@link Classbook}.
      */
     public enum ClassbookCharacter {
         A('a'), E('e'), I('i'), O('o'), U('u');
