@@ -8,7 +8,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
-import javafx.scene.control.Separator;
+import javafx.scene.control.Button;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -24,12 +24,11 @@ import javafx.stage.Stage;
  */
 public class MainApp extends Application {
 
-    //controller class
     private MainController controller;
 
-    //container components
     private GridPane grid;
     private HBox hbox;
+    private Button closeButton;
 
     /**
      * The main() method is ignored in correctly deployed JavaFX application.
@@ -54,7 +53,7 @@ public class MainApp extends Application {
 
         //initialization
         initializeMain(stage);
-        
+
         //layout
         hbox.setPadding(new Insets(10));
         hbox.setSpacing(10);
@@ -107,10 +106,17 @@ public class MainApp extends Application {
 
         //buttons
         grid.add(hbox, 2, 6, 3, 1);
-        grid.add(this.controller.getCloseButton(), 6, 6);
+        grid.add(this.closeButton, 6, 6);
+        this.closeButton.setOnAction(e -> {
+            if (new ConfirmationStage("Do you really want to close the programm?").display()) {
+                stage.close();
+            }
+        });
 
-    stage.setScene(new Scene(grid, 900, 800));
-    stage.show();
+        
+
+        stage.setScene(new Scene(grid, 900, 800));
+        stage.show();
 
     }
 
@@ -123,6 +129,18 @@ public class MainApp extends Application {
         this.controller = new MainController(stage);
         this.grid = new GridPane();
         this.hbox = new HBox();
+        this.closeButton = new Button("Close");
+        
         this.controller.initialize();
+    }
+
+    /**
+     * Opens a new {@link ConfirmationStage} to confirm the closing of a
+     * {@link Stage}.
+     *
+     * @param stage Stage
+     */
+    private void close() {
+
     }
 }

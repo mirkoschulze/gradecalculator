@@ -18,20 +18,21 @@ import javafx.stage.StageStyle;
  */
 public class ConfirmationStage {
 
-    //fields
     private boolean answer;
 
-    //container components
-    private Stage primaryStage;
-    private HBox hbox;
-    private BorderPane borderPane;
-
-    //control component
+    private final Stage primaryStage;
+    private final HBox hbox;
+    private final BorderPane borderPane;
     private final Label stageMessage;
-    private Button yesButton, noButton;
+    private final Button yesButton, noButton;
 
     public ConfirmationStage(String stageMessage) {
+        this.primaryStage = new Stage(StageStyle.DECORATED);
         this.stageMessage = new Label(stageMessage);
+        this.hbox = new HBox(25);
+        this.borderPane = new BorderPane();
+        this.yesButton = new Button("Yes");
+        this.noButton = new Button("No");
     }
 
     /**
@@ -40,36 +41,29 @@ public class ConfirmationStage {
      * @return boolean
      */
     public boolean display() {
-        //layout
-        hbox = new HBox(25);
-        hbox.setAlignment(Pos.CENTER);
-        hbox.setPadding(new Insets(10));
-        hbox.getChildren().addAll(yesButton, noButton);
+        this.hbox.setAlignment(Pos.CENTER);
+        this.hbox.setPadding(new Insets(10));
+        this.hbox.getChildren().addAll(this.yesButton, this.noButton);
 
-        borderPane = new BorderPane();
-        borderPane.setPadding(new Insets(10));
-        borderPane.setTop(this.stageMessage);
-        borderPane.setCenter(hbox);
+        this.borderPane.setPadding(new Insets(10));
+        this.borderPane.setTop(this.stageMessage);
+        this.borderPane.setCenter(this.hbox);
 
-        //components
-        primaryStage = new Stage(StageStyle.DECORATED);
-        primaryStage.setTitle("Confirmation");
-        primaryStage.initModality(Modality.APPLICATION_MODAL);
+        this.primaryStage.setTitle("Confirmation");
+        this.primaryStage.initModality(Modality.APPLICATION_MODAL);
 
-        yesButton = new Button("Yes");
-        yesButton.setOnAction(e -> {
+        this.yesButton.setOnAction(e -> {
             this.answer = true;
-            primaryStage.close();
+            this.primaryStage.close();
         });
 
-        noButton = new Button("No");
-        noButton.setOnAction(e -> {
+        this.noButton.setOnAction(e -> {
             this.answer = false;
-            primaryStage.close();
+            this.primaryStage.close();
         });
 
-        primaryStage.setScene(new Scene(borderPane, 300, 200));
-        primaryStage.showAndWait();
+        this.primaryStage.setScene(new Scene(this.borderPane, 400, 300));
+        this.primaryStage.showAndWait();
 
         return this.answer;
     }
