@@ -10,7 +10,7 @@ import lombok.Setter;
  * Contains {@link Sex} sex, int age, Strings forename and surname, and a
  * {@link Certification}.
  * <p>
- * Contains a method to present data in a human-readable format. Overrides
+ * Contains methods to present data in a human-readable format. Overrides
  * {@link Object#toString()} for presentation purposes.
  * <p>
  * Implements {@link Comparable} by comparing the first letter of surename.
@@ -20,10 +20,10 @@ import lombok.Setter;
 @Getter
 public class Pupil implements Comparable<Pupil> {
 
-    private Sex sex;
+    private final Sex sex;
     private final int age;
-    private String forename;
-    private String surname;
+    private final String forename;
+    private final String surname;
     @Setter
     private Certification certification;
 
@@ -41,7 +41,7 @@ public class Pupil implements Comparable<Pupil> {
      */
     @Override
     public String toString() {
-        return this.forename + " " + this.surname;
+        return this.toSimpleLine();
     }
 
     @Override
@@ -50,12 +50,25 @@ public class Pupil implements Comparable<Pupil> {
     }
 
     /**
-     * Joins and returns a human-readable String with data about this instance.
+     * Joins and returns a human-readable String with most data in this
+     * instance.
      *
      * @return String
      */
     public String toSimpleLine() {
-        return this.forename + " " + this.surname + " (" + this.age + " Jahre, " + this.sex.description + ")";
+        return this.forename + " " + this.surname;
+    }
+
+    /**
+     * Joins and returns a human-readable String with the data in this instance.
+     *
+     * @return String
+     */
+    public String toEnhancedLine() {
+        return this.forename + " " + this.surname
+                + " (" + this.age + " Jahre, " + this.sex.description
+                + ") [" + this.getCertification().toEnhancedLine()
+                + "]";
     }
 
     /**
