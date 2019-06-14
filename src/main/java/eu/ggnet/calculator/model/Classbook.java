@@ -20,8 +20,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Classbook {
 
-    private String classbookTitle;
-    private List<Pupil> pupils;
+    private final String classbookTitle;
+    private final List<Pupil> pupils;
 
     /**
      * {@link ComboBox} uses {@link Object#toString()} to display data.
