@@ -1,9 +1,9 @@
 package eu.ggnet.calculator.model;
 
 import java.util.List;
-import javafx.scene.control.ComboBox;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Represents a school certification with grades.
@@ -17,20 +17,11 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
+@ToString
 public class Certification {
 
     private final Pupil pupil;
     private final List<Grade> grades;
-
-    /**
-     * {@link ComboBox} uses {@link Object#toString()} to display data.
-     *
-     * @return String
-     */
-    @Override
-    public String toString() {
-        return "For " + this.pupil.toString();
-    }
 
     /**
      * Joins and returns a human-readable String with all data in this instance.
