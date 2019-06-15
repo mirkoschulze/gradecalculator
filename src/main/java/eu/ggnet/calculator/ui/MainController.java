@@ -13,8 +13,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -41,7 +39,6 @@ public class MainController implements Initializable {
 
     private List<Classbook> classbooks;
     private CalculatedGrade calculatedGrade;
-    private BooleanProperty selectedPupilProperty;
 
     @FXML
     private ComboBox<Classbook> classbookSelectionBox;
@@ -73,7 +70,6 @@ public class MainController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.selectedPupilProperty = new SimpleBooleanProperty();
 
         this.classbooks = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
@@ -112,7 +108,6 @@ public class MainController implements Initializable {
                         .observableArrayList(this.pupilsListView
                                 .getSelectionModel().getSelectedItem()
                                 .getCertification().getGrades()));
-                this.selectedPupilProperty.set(true);
             } catch (NullPointerException e) {
                 this.gradesListView.setItems(FXCollections.emptyObservableList());
             }
