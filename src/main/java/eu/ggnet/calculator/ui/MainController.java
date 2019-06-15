@@ -1,5 +1,6 @@
 package eu.ggnet.calculator.ui;
 
+import eu.ggnet.calculator.ui.confirmation.ConfirmationStage;
 import eu.ggnet.calculator.model.Generator;
 import eu.ggnet.calculator.calculation.CalculatedGrade;
 import eu.ggnet.calculator.calculation.Calculator;
@@ -21,7 +22,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
@@ -203,7 +203,7 @@ public class MainController implements Initializable {
      */
     private void present() {
         StringBuilder sb = new StringBuilder(this.presentation.getText());
-        sb.append(this.calculatedGrade.toEnhancedLine()).append("\n");
+        sb.append(this.calculatedGrade.toSimpleLine()).append("\n");
         this.presentation.setText(new String(sb).concat("\n"));
     }
 
@@ -219,9 +219,9 @@ public class MainController implements Initializable {
      * Closes the root stage.
      */
     @FXML
-    private void close() {
-        if (new ConfirmationStage("Do you really want to close?").display()) {
-            Stage stage = (Stage) closeButton.getScene().getWindow();
+    private void close() throws Exception {
+        if (new ConfirmationStage().display()) {
+            Stage stage = (Stage) this.closeButton.getScene().getWindow();
             stage.close();
         }
     }

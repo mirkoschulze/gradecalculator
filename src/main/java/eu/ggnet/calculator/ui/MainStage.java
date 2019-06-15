@@ -13,7 +13,7 @@ import javafx.stage.Stage;
  *
  * @author Mirko Schulze
  */
-public class MainApp extends Application {
+public class MainStage extends Application {
 
     /**
      * The main() method is ignored in correctly deployed JavaFX application.
@@ -28,8 +28,7 @@ public class MainApp extends Application {
     }
 
     /**
-     * Main method, starts the application and the initial window. Defines the
-     * scenes layout.
+     * Main method, starts the application and the initial window.
      *
      * @param stage Stage
      * @throws Exception
@@ -38,7 +37,6 @@ public class MainApp extends Application {
     public void start(Stage stage) throws Exception {
         
         Parent root = new FXMLLoader(getClass().getResource("/fxml/MainScene.fxml")).load();
-        root.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
 
         stage.setScene(new Scene(root, 900, 800));
         stage.show();
