@@ -3,7 +3,6 @@ package eu.ggnet.calculator.ui.confirmation;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import lombok.Getter;
 
 /**
  *
@@ -11,7 +10,6 @@ import lombok.Getter;
  */
 public class ConfirmationController {
 
-    @Getter
     public boolean answer;
 
     @FXML
