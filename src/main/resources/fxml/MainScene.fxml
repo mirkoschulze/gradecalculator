@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.ggnet.calculator.ui.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" 
+            prefHeight="680.0" prefWidth="850.0" styleClass="mainFxmlClass" 
+            xmlns="http://javafx.com/javafx/8.0.201" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="eu.ggnet.calculator.ui.MainController">
     <left>
         <VBox alignment="CENTER" prefHeight="337.0" prefWidth="155.0" spacing="10.0" BorderPane.alignment="CENTER">
             <children>
-                <Label alignment="CENTER" contentDisplay="CENTER" text="Selected classbook view:" VBox.vgrow="ALWAYS" />
                 <ListView fx:id="pupilsListView" prefHeight="540.0" prefWidth="155.0" />
+                <Button fx:id="addPupilButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addPupil" text="Add a pupil">
+                    <font>
+                        <Font size="10.0" />
+                    </font>
+                </Button>
             </children>
             <BorderPane.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -23,11 +35,6 @@
     <right>
         <VBox alignment="CENTER" prefHeight="577.0" prefWidth="182.0" spacing="10.0" BorderPane.alignment="CENTER">
             <children>
-                <Label alignment="TOP_LEFT" contentDisplay="CENTER" text="Selected pupil view:">
-                    <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </VBox.margin>
-                </Label>
                 <ListView fx:id="gradesListView" prefHeight="520.0" prefWidth="182.0" />
                 <ProgressIndicator fx:id="indicator" progress="0.0">
                     <VBox.margin>
@@ -43,20 +50,12 @@
     <center>
         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
             <children>
-                <Label alignment="CENTER" contentDisplay="CENTER" text="Calculation view:">
-                    <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </VBox.margin>
-                </Label>
                 <HBox alignment="CENTER" prefHeight="34.0" prefWidth="400.0" spacing="10.0">
                     <children>
                         <ComboBox fx:id="classbookSelectionBox" prefWidth="150.0" promptText="Select a classbook..." />
                         <ComboBox fx:id="subjectSelectionBox" prefWidth="150.0" promptText="Select a subject.." />
                         <ComboBox fx:id="calculationSelectionBox" prefWidth="150.0" promptText="Select a calculation..." />
                     </children>
-                    <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </VBox.margin>
                 </HBox>
                 <TextArea fx:id="presentation" prefHeight="583.0" prefWidth="473.0" />
             </children>
@@ -73,6 +72,19 @@
                         <Font size="14.0" />
                     </font>
                 </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" VBox.vgrow="ALWAYS">
+               <children>
+                      <Label text="Selected classbook view:" />
+                      <Label alignment="CENTER" contentDisplay="CENTER" text="Calculation view:" textAlignment="CENTER" />
+                      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Selected pupil view:" textAlignment="RIGHT" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+               </padding>
+            </HBox>
             </children>
             <BorderPane.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

@@ -4,7 +4,7 @@
 
     <groupId>eu.ggnet</groupId>
     <artifactId>calculator</artifactId>
-    <version>1.2</version>
+    <version>1.3</version>
     <packaging>jar</packaging>
 
     <name>Calculator</name>
@@ -113,6 +113,12 @@
             <artifactId>lombok</artifactId>
             <version>1.18.8</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>8.0</version>
+            <type>jar</type>
         </dependency>
     </dependencies>
 </project>

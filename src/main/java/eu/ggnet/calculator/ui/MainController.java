@@ -9,6 +9,7 @@ import eu.ggnet.calculator.model.Classbook;
 import eu.ggnet.calculator.model.Grade;
 import eu.ggnet.calculator.model.Grade.Subject;
 import eu.ggnet.calculator.model.Pupil;
+import eu.ggnet.calculator.ui.insertion.InsertPupilStage;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,8 @@ public class MainController implements Initializable {
     private ListView<Grade> gradesListView;
     @FXML
     private Button closeButton;
+    @FXML
+    private Button addPupilButton;
 
     /**
      * Initializes the controller in the following steps:
@@ -214,11 +217,16 @@ public class MainController implements Initializable {
      * Closes the root stage.
      */
     @FXML
-    private void close() throws Exception {
+    private void close() {
         if (new ConfirmationStage().display()) {
             Stage stage = (Stage) this.closeButton.getScene().getWindow();
             stage.close();
         }
+    }
+
+    @FXML
+    private void addPupil() throws Exception {
+        new InsertPupilStage().display();
     }
 
 }
