@@ -1,5 +1,6 @@
 package eu.ggnet.calculator.ui.insertion;
 
+import eu.ggnet.calculator.model.Pupil;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,6 +13,8 @@ import javafx.stage.Stage;
  */
 public class InsertPupilStage {
 
+    private static final String LOCATION = "/fxml/InsertPupilScene.fxml";
+
     private final Stage primaryStage;
 
     public InsertPupilStage() {
@@ -20,12 +23,15 @@ public class InsertPupilStage {
         this.primaryStage.initModality(Modality.APPLICATION_MODAL);
     }
 
-    public void display() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InsertPupilScene.fxml"));
+    public Pupil display() throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(LOCATION));
         Parent root = loader.load();
+        InsertPupilController controller = loader.getController();
 
         this.primaryStage.setScene(new Scene(root, 400, 300));
-        this.primaryStage.show();
+        this.primaryStage.showAndWait();
+
+        return controller.getPupil();
     }
 
 }
