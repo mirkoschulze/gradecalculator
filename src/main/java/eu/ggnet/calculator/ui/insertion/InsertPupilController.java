@@ -48,7 +48,21 @@ public class InsertPupilController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.selectSexBox.setItems(FXCollections.observableArrayList(Sex.values()));
-        this.selectSexBox.setPromptText("Select a sex...");
+    }
+
+    @FXML
+    private void create() {
+        if (this.isReady()) {
+            this.validateAge();
+            this.validateSex();
+            this.validateForename();
+            this.validateSurname();
+            this.pupil = new Pupil(this.sex, this.age, this.forename, this.surname);
+            Stage stage = (Stage) this.cancelButton.getScene().getWindow();
+            stage.close();
+        } else {
+            new AlertStage("Not all fields set.").display();
+        }
     }
 
     @FXML
@@ -56,21 +70,6 @@ public class InsertPupilController implements Initializable {
         this.clear();
         Stage stage = (Stage) this.cancelButton.getScene().getWindow();
         stage.close();
-    }
-
-    @FXML
-    private void create() {
-        if (isReady()) {
-            validateAge();
-            validateSex();
-            validateForename();
-            validateSurname();
-            this.pupil = new Pupil(this.sex, this.age, this.forename, this.surname);
-            Stage stage = (Stage) this.cancelButton.getScene().getWindow();
-            stage.close();
-        } else {
-            new AlertStage("Not all fields set.").display();
-        }
     }
 
     private boolean isReady() {
@@ -96,7 +95,7 @@ public class InsertPupilController implements Initializable {
         try {
             this.forename = this.forenameInput.getText();
         } catch (Exception e) {
-            new AlertStage("Could not setr forename").display();
+            new AlertStage("Could not set forename").display();
         }
     }
 
@@ -104,7 +103,7 @@ public class InsertPupilController implements Initializable {
         try {
             this.surname = this.surnameInput.getText();
         } catch (Exception e) {
-            new AlertStage("Could not setr forename").display();
+            new AlertStage("Could not set surname").display();
         }
     }
 
