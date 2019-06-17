@@ -1,6 +1,7 @@
 package eu.ggnet.calculator.ui.confirmation;
 
 import eu.ggnet.calculator.ui.AlertStage;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +18,8 @@ import javafx.stage.Stage;
  */
 public class ConfirmationStage {
 
+    private static final String LOCATION = "/fxml/ConfirmationScene.fxml";
+
     private final Stage primaryStage;
 
     public ConfirmationStage() {
@@ -32,9 +35,8 @@ public class ConfirmationStage {
      * @return boolean
      */
     public boolean display() {
-        String location = "/fml/ConfirmationScene.fxml";
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(location));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(LOCATION));
             Parent root = loader.load();
             Field answer = loader.getController().getClass().getField("answer");
 
@@ -42,8 +44,8 @@ public class ConfirmationStage {
             this.primaryStage.showAndWait();
 
             return answer.getBoolean(loader.getController());
-        } catch (Exception e) {
-            new AlertStage("Could not properly load scene.\nCheck value: " + location).display();
+        } catch (IOException | IllegalAccessException | IllegalArgumentException | NoSuchFieldException | SecurityException e) {
+            new AlertStage("Could not properly load scene.\nCheck value: " + LOCATION + "\nException: " + e.getMessage()).display();
             return false;
         }
 
