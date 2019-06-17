@@ -1,6 +1,6 @@
 package eu.ggnet.calculator.ui.insertion;
 
-import eu.ggnet.calculator.model.Pupil;
+import eu.ggnet.calculator.model.Classbook;
 import eu.ggnet.calculator.ui.AlertStage;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
@@ -13,33 +13,32 @@ import javafx.stage.Stage;
  *
  * @author Administrator
  */
-public class InsertPupilStage {
+public class InsertClassbookStage {
 
-    private static final String LOCATION = "/fxml/InsertPupilScene.fxml";
+    private static final String LOCATION = "/fxml/InsertClassbookScene.fxml";
 
     private final Stage primaryStage;
 
-    public InsertPupilStage() {
+    public InsertClassbookStage() {
         this.primaryStage = new Stage();
-        this.primaryStage.setTitle("Add a pupil");
+        this.primaryStage.setTitle("Add a classbook");
         this.primaryStage.initModality(Modality.APPLICATION_MODAL);
     }
 
-    public Pupil display() {
+    public Classbook display() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(LOCATION));
             Parent root = loader.load();
-            InsertPupilController controller = loader.getController();
+            InsertClassbookController controller = loader.getController();
 
             this.primaryStage.setScene(new Scene(root, 400, 300));
             this.primaryStage.showAndWait();
 
-            return controller.getPupil();
+            return controller.getClassbook();
         } catch (IOException e) {
             new AlertStage("Could not properly load scene.\nCheck value: " + LOCATION + "\nException: " + e.getMessage()).display();
             return null;
         }
-
     }
 
 }

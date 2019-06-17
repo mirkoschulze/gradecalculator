@@ -9,6 +9,7 @@ import eu.ggnet.calculator.model.Classbook;
 import eu.ggnet.calculator.model.Grade;
 import eu.ggnet.calculator.model.Grade.Subject;
 import eu.ggnet.calculator.model.Pupil;
+import eu.ggnet.calculator.ui.insertion.InsertClassbookStage;
 import eu.ggnet.calculator.ui.insertion.InsertPupilStage;
 import java.net.URL;
 import java.util.ArrayList;
@@ -145,7 +146,7 @@ public class MainController implements Initializable {
         if (this.selectedCalculation != null
                 && this.selectedSubject != null) {
             for (Classbook classbook : classbooks) {
-                this.calculate(classbook,this.selectedSubject);
+                this.calculate(classbook, this.selectedSubject);
                 this.present();
             }
         }
@@ -198,6 +199,7 @@ public class MainController implements Initializable {
         StringBuilder sb = new StringBuilder(this.presentation.getText());
         sb.append(this.calculatedGrade.toSimpleLine());
         this.presentation.setText(new String(sb).concat("\n"));
+        this.presentation.setText(this.presentation.getText().concat("\n"));
     }
 
     /**
@@ -220,7 +222,7 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void addPupil() throws Exception {
+    private void addPupil() {
         if (this.selectedClassbook != null) {
             Pupil pupil = new InsertPupilStage().display();
             if (pupil != null) {
@@ -231,6 +233,17 @@ public class MainController implements Initializable {
             }
         } else {
             new AlertStage("select a classbook noob").display();
+        }
+    }
+
+    @FXML
+    private void addClassbook() {
+        Classbook classbook = new InsertClassbookStage().display();
+        if (classbook != null) {
+            this.classbooks.add(classbook);
+            this.classbookSelectionBox.setItems(FXCollections.observableArrayList(this.classbooks));
+        } else {
+            new AlertStage("No valid name entered").display();
         }
     }
 

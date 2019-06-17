@@ -21,7 +21,12 @@
         <VBox alignment="CENTER" prefHeight="337.0" prefWidth="155.0" spacing="10.0" BorderPane.alignment="CENTER">
             <children>
                 <ListView fx:id="pupilsListView" prefHeight="540.0" prefWidth="155.0" />
-                <Button fx:id="addPupilButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addPupil" text="Add a pupil">
+                <Button  alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addPupil" text="Add a pupil">
+                    <font>
+                        <Font size="10.0" />
+                    </font>
+                </Button>
+                <Button  alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addClassbook" text="Add a classbook">
                     <font>
                         <Font size="10.0" />
                     </font>
