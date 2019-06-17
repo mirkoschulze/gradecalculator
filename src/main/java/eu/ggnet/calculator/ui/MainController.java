@@ -39,6 +39,9 @@ import lombok.ToString;
 public class MainController implements Initializable {
 
     private List<Classbook> classbooks;
+    private Classbook selectedClassbook;
+    private Subject selectedSubject;
+    private String selectedCalculation;
     private CalculatedGrade calculatedGrade;
 
     @FXML
@@ -57,12 +60,9 @@ public class MainController implements Initializable {
     private ListView<Grade> gradesListView;
     @FXML
     private Button closeButton;
-    @FXML
-    private Button addPupilButton;
 
     /**
      * Initializes the controller in the following steps:
-     * <ul><li>instantiation of all fields and components</li>
      * <li>auto-generation of 5 instances of {@link Classbook} to simulate, with
      * already set {@link Certification}</li>
      * <li>adding {@link ObservableList} to {@link ComboBox} components</li>
@@ -87,30 +87,30 @@ public class MainController implements Initializable {
         this.classbookSelectionBox.setItems(FXCollections.observableArrayList(this.classbooks));
         this.classbookSelectionBox.getSelectionModel().selectedItemProperty()
                 .addListener((value, oldValue, newValue) -> {
-                    ObservableList<Pupil> pupils = FXCollections
-                            .observableArrayList(this.classbookSelectionBox
-                                    .getSelectionModel().getSelectedItem()
-                                    .getPupils());
-                    this.pupilsListView.setItems(pupils);
+                    this.selectedClassbook = newValue;
+                    this.pupilsListView.setItems(FXCollections.observableArrayList(this.selectedClassbook.getPupils()));
                     this.indicator.setProgress(this.indicator.getProgress() + 0.33);
                 });
 
         this.subjectSelectionBox.setItems(FXCollections.observableArrayList(Subject.values()));
         this.subjectSelectionBox.getSelectionModel().selectedItemProperty().addListener((value, oldValue, newValue) -> {
+            this.selectedSubject = newValue;
             this.indicator.setProgress(this.indicator.getProgress() + 0.33);
         });
 
         this.calculationSelectionBox.setItems(FXCollections.observableArrayList("Average", "Accumulation"));
         this.calculationSelectionBox.getSelectionModel().selectedItemProperty().addListener((value, oldValue, newValue) -> {
+            this.selectedCalculation = newValue;
             this.indicator.setProgress(this.indicator.getProgress() + 0.34);
         });
 
         this.pupilsListView.getSelectionModel().selectedItemProperty().addListener((value, oldValue, newValue) -> {
             try {
-                this.gradesListView.setItems(FXCollections
-                        .observableArrayList(this.pupilsListView
-                                .getSelectionModel().getSelectedItem()
-                                .getCertification().getGrades()));
+                this.gradesListView.setItems(FXCollections.observableArrayList(this.pupilsListView
+                        .getSelectionModel()
+                        .getSelectedItem()
+                        .getCertification()
+                        .getGrades()));
             } catch (NullPointerException e) {
                 this.gradesListView.setItems(FXCollections.emptyObservableList());
             }
@@ -124,11 +124,10 @@ public class MainController implements Initializable {
      */
     @FXML
     private void calculateAndPresent() {
-        if (this.calculationSelectionBox.getSelectionModel().getSelectedItem() != null
-                && this.subjectSelectionBox.getSelectionModel().getSelectedItem() != null
-                && this.classbookSelectionBox.getSelectionModel().getSelectedItem() != null) {
-            this.calculate(this.classbookSelectionBox.getSelectionModel().getSelectedItem(),
-                    this.subjectSelectionBox.getSelectionModel().getSelectedItem());
+        if (this.selectedCalculation != null
+                && this.selectedSubject != null
+                && this.selectedClassbook != null) {
+            this.calculate(this.selectedClassbook, this.selectedSubject);
             this.present();
         }
     }
@@ -143,11 +142,10 @@ public class MainController implements Initializable {
      */
     @FXML
     private void calculateAndPresentForEachClassbook() {
-        if (this.calculationSelectionBox.getSelectionModel().getSelectedItem() != null
-                && this.subjectSelectionBox.getSelectionModel().getSelectedItem() != null) {
+        if (this.selectedCalculation != null
+                && this.selectedSubject != null) {
             for (Classbook classbook : classbooks) {
-                this.calculate(classbook,
-                        this.subjectSelectionBox.getSelectionModel().getSelectedItem());
+                this.calculate(classbook,this.selectedSubject);
                 this.present();
             }
         }
@@ -163,11 +161,10 @@ public class MainController implements Initializable {
      */
     @FXML
     private void calculateAndPresentForEachSubject() {
-        if (this.calculationSelectionBox.getSelectionModel().getSelectedItem() != null
-                && this.classbookSelectionBox.getSelectionModel().getSelectedItem() != null) {
+        if (this.selectedCalculation != null
+                && selectedClassbook != null) {
             for (Subject value : Subject.values()) {
-                this.calculate(this.classbookSelectionBox.getSelectionModel().getSelectedItem(),
-                        value);
+                this.calculate(this.selectedClassbook, value);
                 this.present();
             }
         }
@@ -183,14 +180,12 @@ public class MainController implements Initializable {
      * @param subject Subject
      */
     private void calculate(Classbook classbook, Subject subject) {
-        switch (this.calculationSelectionBox.getSelectionModel().getSelectedItem().toLowerCase()) {
+        switch (this.selectedCalculation.toLowerCase()) {
             case "average":
-                this.calculatedGrade = Calculator
-                        .calculateAverageGrade(classbook, subject);
+                this.calculatedGrade = Calculator.calculateAverageGrade(classbook, subject);
                 break;
             case "accumulation":
-                this.calculatedGrade = Calculator
-                        .calculateAccumulatedGrade(classbook, subject);
+                this.calculatedGrade = Calculator.calculateAccumulatedGrade(classbook, subject);
                 break;
         }
     }
@@ -201,7 +196,7 @@ public class MainController implements Initializable {
      */
     private void present() {
         StringBuilder sb = new StringBuilder(this.presentation.getText());
-        sb.append(this.calculatedGrade.toSimpleLine()).append("\n");
+        sb.append(this.calculatedGrade.toSimpleLine());
         this.presentation.setText(new String(sb).concat("\n"));
     }
 
@@ -214,7 +209,7 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Closes the root stage.
+     * Closes the root stage after confirming the decision.
      */
     @FXML
     private void close() {
@@ -226,7 +221,17 @@ public class MainController implements Initializable {
 
     @FXML
     private void addPupil() throws Exception {
-        new InsertPupilStage().display();
+        if (this.selectedClassbook != null) {
+            Pupil pupil = new InsertPupilStage().display();
+            if (pupil != null) {
+                this.selectedClassbook.getPupils().add(pupil);
+                this.pupilsListView.setItems(FXCollections.observableArrayList(this.selectedClassbook.getPupils()));
+            } else {
+                new AlertStage("No valid pupil entered =(").display();
+            }
+        } else {
+            new AlertStage("select a classbook noob").display();
+        }
     }
 
 }
