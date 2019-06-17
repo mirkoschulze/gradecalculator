@@ -12,24 +12,30 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 /**
+ * Invokes a new {@link Stage} to indicate a failure.
+ * <p>
+ * The AlertStage is kept as simple as possible to minimize possible failures
+ * within this class.
  *
- * @author Administrator
+ * @author Mirko Schulze
  */
 public class AlertStage {
 
-    private final Label warning;
+    private static final Label WARNING = new Label("Something went wrong.\nBut don't worry.");
     private final Label message;
 
     public AlertStage(String message) {
-        this.warning = new Label("Something went wrong.\nBut don't worry.");
         this.message = new Label(message);
     }
 
+    /**
+     * Displays a new {@link Stage} with two {@link Label} to show details about
+     * a failure and a {@link Button} to close the Stage again.
+     */
     public void display() {
-        Stage primaryStage = new Stage(StageStyle.DECORATED);
+        Stage primaryStage = new Stage();
         primaryStage.setTitle("Alert!");
         primaryStage.initModality(Modality.APPLICATION_MODAL);
 
@@ -39,7 +45,7 @@ public class AlertStage {
         VBox vbox = new VBox(25);
         vbox.setAlignment(Pos.CENTER);
         vbox.setPadding(new Insets(10));
-        vbox.getChildren().addAll(this.warning, this.message, closeButton);
+        vbox.getChildren().addAll(WARNING, this.message, closeButton);
 
         Scene scene = new Scene(vbox, 500, 300);
 
