@@ -9,6 +9,7 @@ import eu.ggnet.calculator.model.Classbook;
 import eu.ggnet.calculator.model.Grade;
 import eu.ggnet.calculator.model.Grade.Subject;
 import eu.ggnet.calculator.model.Pupil;
+import eu.ggnet.calculator.ui.insertion.GradePupilStage;
 import eu.ggnet.calculator.ui.insertion.InsertClassbookStage;
 import eu.ggnet.calculator.ui.insertion.InsertPupilStage;
 import java.net.URL;
@@ -44,6 +45,7 @@ public class MainController implements Initializable {
     private Subject selectedSubject;
     private String selectedCalculation;
     private CalculatedGrade calculatedGrade;
+    private boolean selectedPupil;
 
     @FXML
     private ComboBox<Classbook> classbookSelectionBox;
@@ -61,6 +63,11 @@ public class MainController implements Initializable {
     private ListView<Grade> gradesListView;
     @FXML
     private Button closeButton;
+
+    @FXML
+    public boolean hasSelectedPupil() {
+        return this.pupilsListView.getSelectionModel().getSelectedItem() != null;
+    }
 
     /**
      * Initializes the controller in the following steps:
@@ -89,7 +96,11 @@ public class MainController implements Initializable {
         this.classbookSelectionBox.getSelectionModel().selectedItemProperty()
                 .addListener((value, oldValue, newValue) -> {
                     this.selectedClassbook = newValue;
-                    this.pupilsListView.setItems(FXCollections.observableArrayList(this.selectedClassbook.getPupils()));
+                    try {
+                        this.pupilsListView.setItems(FXCollections.observableArrayList(this.selectedClassbook.getPupils()));
+                    } catch (NullPointerException e) {
+                        this.gradesListView.setItems(FXCollections.emptyObservableList());
+                    }
                     this.indicator.setProgress(this.indicator.getProgress() + 0.33);
                 });
 
@@ -199,7 +210,6 @@ public class MainController implements Initializable {
         StringBuilder sb = new StringBuilder(this.presentation.getText());
         sb.append(this.calculatedGrade.toSimpleLine());
         this.presentation.setText(new String(sb).concat("\n"));
-        this.presentation.setText(this.presentation.getText().concat("\n"));
     }
 
     /**
@@ -245,6 +255,11 @@ public class MainController implements Initializable {
         } else {
             new AlertStage("No valid name entered").display();
         }
+    }
+
+    @FXML
+    private void gradePupil() {
+        this.pupilsListView.getSelectionModel().getSelectedItem().setCertification(new GradePupilStage().display());
     }
 
 }
