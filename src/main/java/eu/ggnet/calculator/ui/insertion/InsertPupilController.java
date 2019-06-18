@@ -19,13 +19,13 @@ import lombok.Getter;
  *
  * @author Administrator
  */
-@Getter
 public class InsertPupilController implements Initializable {
 
     private String forename;
     private String surname;
     private int age;
     private Sex sex;
+    @Getter
     private Pupil pupil;
 
     @FXML
@@ -58,7 +58,7 @@ public class InsertPupilController implements Initializable {
             this.validateForename();
             this.validateSurname();
             this.pupil = new Pupil(this.sex, this.age, this.forename, this.surname);
-            Stage stage = (Stage) this.cancelButton.getScene().getWindow();
+            Stage stage = (Stage) this.createButton.getScene().getWindow();
             stage.close();
         } else {
             new AlertStage("Not all fields set.").display();

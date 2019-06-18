@@ -17,10 +17,10 @@ import lombok.Getter;
  *
  * @author Administrator
  */
-@Getter
 public class InsertClassbookController implements Initializable {
 
     private List<Pupil> pupils;
+    @Getter
     private Classbook classbook;
 
     @FXML
