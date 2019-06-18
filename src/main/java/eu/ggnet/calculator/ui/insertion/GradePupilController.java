@@ -47,9 +47,6 @@ public class GradePupilController implements Initializable {
     @FXML
     private Button cancelButton;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.grades = new ArrayList<>();
@@ -63,10 +60,10 @@ public class GradePupilController implements Initializable {
         this.grades.add(new Grade(Subject.SOC, this.generateMark(Integer.parseInt(this.socInput.getText()))));
         this.grades.add(new Grade(Subject.DEV, this.generateMark(Integer.parseInt(this.devInput.getText()))));
         this.grades.add(new Grade(Subject.ORGA, this.generateMark(Integer.parseInt(this.orgaInput.getText()))));
-        if (this.pupil != null) {
+        try {
             this.certification = new Certification(this.pupil, this.grades);
-        } else {
-            new AlertStage("Something wrong with pupil: " + this.pupil.toString()).display();
+        } catch (NullPointerException e) {
+            new AlertStage("No pupil selected.").display();
         }
         Stage stage = (Stage) this.createCertificationButton.getScene().getWindow();
         stage.close();

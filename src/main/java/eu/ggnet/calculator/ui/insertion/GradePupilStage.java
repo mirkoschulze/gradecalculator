@@ -13,15 +13,15 @@ import javafx.stage.Stage;
  *
  * @author Administrator
  */
-public class GradePupilStage{
-    
+public class GradePupilStage {
+
     private static final String LOCATION = "/fxml/GradePupilScene.fxml";
 
     private final Stage primaryStage;
 
     public GradePupilStage() {
         this.primaryStage = new Stage();
-        this.primaryStage.setTitle("Add a pupil");
+        this.primaryStage.setTitle("Create a certification");
         this.primaryStage.initModality(Modality.APPLICATION_MODAL);
     }
 
@@ -31,15 +31,16 @@ public class GradePupilStage{
             Parent root = loader.load();
             GradePupilController controller = loader.getController();
 
-            this.primaryStage.setScene(new Scene(root, 400, 300));
+            this.primaryStage.setScene(new Scene(root));
             this.primaryStage.showAndWait();
 
             return controller.getCertification();
         } catch (IOException e) {
-            new AlertStage("Could not properly load scene.\nCheck value: " + LOCATION + "\nException: " + e.getMessage()).display();
+            new AlertStage("FXMLoader could not properly load opject graph.\nCheck value: "
+                    + LOCATION + "\nException:\n" + e.getMessage()).display();
             return null;
         }
 
     }
-    
+
 }

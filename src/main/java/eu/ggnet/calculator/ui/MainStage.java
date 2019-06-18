@@ -1,9 +1,9 @@
 package eu.ggnet.calculator.ui;
 
+import java.io.IOException;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -14,6 +14,8 @@ import javafx.stage.Stage;
  * @author Mirko Schulze
  */
 public class MainStage extends Application {
+
+    private static final String LOCATION = "/fxml/MainScene.fxml";
 
     /**
      * The main() method is ignored in correctly deployed JavaFX application.
@@ -31,15 +33,17 @@ public class MainStage extends Application {
      * Main method, starts the application and the initial window.
      *
      * @param stage Stage
-     * @throws Exception
      */
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage){
+        try {
+            stage.setScene(new Scene(new FXMLLoader(getClass().getResource(LOCATION)).load()));
+            stage.show();
+        } catch (IOException e) {
+            new AlertStage("FXMLoader could not properly load opject graph.\nCheck value: "
+                    + LOCATION + "\nException:\n" + e.getMessage()).display();
+        }
 
-        Parent root = new FXMLLoader(getClass().getResource("/fxml/MainScene.fxml")).load();
-
-        stage.setScene(new Scene(root, 900, 800));
-        stage.show();
     }
 
 }

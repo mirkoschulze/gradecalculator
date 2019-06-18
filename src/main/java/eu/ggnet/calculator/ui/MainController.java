@@ -183,36 +183,6 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Checks {@link ComboBox} calculationSelection for the selected calculation
-     * and calls the respective method from {@link Calculator} to generate a
-     * {@link CalculatedGrade} for the submitted {@link Classbook} and
-     * {@link Subject}.
-     *
-     * @param classbook Classbook
-     * @param subject Subject
-     */
-    private void calculate(Classbook classbook, Subject subject) {
-        switch (this.selectedCalculation.toLowerCase()) {
-            case "average":
-                this.calculatedGrade = Calculator.calculateAverageGrade(classbook, subject);
-                break;
-            case "accumulation":
-                this.calculatedGrade = Calculator.calculateAccumulatedGrade(classbook, subject);
-                break;
-        }
-    }
-
-    /**
-     * Adds a String representation of a {@link CalculatedGrade} to {@link Text}
-     * presentation.
-     */
-    private void present() {
-        StringBuilder sb = new StringBuilder(this.presentation.getText());
-        sb.append(this.calculatedGrade.toSimpleLine());
-        this.presentation.setText(new String(sb).concat("\n"));
-    }
-
-    /**
      * Resets {@link Text} presentation.
      */
     @FXML
@@ -259,7 +229,42 @@ public class MainController implements Initializable {
 
     @FXML
     private void gradePupil() {
-        this.pupilsListView.getSelectionModel().getSelectedItem().setCertification(new GradePupilStage().display());
+        try {
+            this.pupilsListView.getSelectionModel().getSelectedItem().setCertification(new GradePupilStage().display());
+        } catch (NullPointerException e) {
+            new AlertStage("No proper certification set.\n" + e.getMessage()).display();
+            
+        }
+    }
+    
+    /**
+     * Checks {@link ComboBox} calculationSelection for the selected calculation
+     * and calls the respective method from {@link Calculator} to generate a
+     * {@link CalculatedGrade} for the submitted {@link Classbook} and
+     * {@link Subject}.
+     *
+     * @param classbook Classbook
+     * @param subject Subject
+     */
+    private void calculate(Classbook classbook, Subject subject) {
+        switch (this.selectedCalculation.toLowerCase()) {
+            case "average":
+                this.calculatedGrade = Calculator.calculateAverageGrade(classbook, subject);
+                break;
+            case "accumulation":
+                this.calculatedGrade = Calculator.calculateAccumulatedGrade(classbook, subject);
+                break;
+        }
+    }
+
+    /**
+     * Adds a String representation of a {@link CalculatedGrade} to {@link Text}
+     * presentation.
+     */
+    private void present() {
+        StringBuilder sb = new StringBuilder(this.presentation.getText());
+        sb.append(this.calculatedGrade.toSimpleLine());
+        this.presentation.setText(new String(sb).concat("\n"));
     }
 
 }

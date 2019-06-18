@@ -31,12 +31,13 @@ public class InsertPupilStage {
             Parent root = loader.load();
             InsertPupilController controller = loader.getController();
 
-            this.primaryStage.setScene(new Scene(root, 400, 300));
+            this.primaryStage.setScene(new Scene(root));
             this.primaryStage.showAndWait();
 
             return controller.getPupil();
         } catch (IOException e) {
-            new AlertStage("Could not properly load scene.\nCheck value: " + LOCATION + "\nException: " + e.getMessage()).display();
+             new AlertStage("FXMLoader could not properly load opject graph.\nCheck value: " 
+                    + LOCATION + "\nException:\n" + e.getMessage()).display();
             return null;
         }
 

@@ -40,12 +40,16 @@ public class ConfirmationStage {
             Parent root = loader.load();
             Field answer = loader.getController().getClass().getField("answer");
 
-            this.primaryStage.setScene(new Scene(root, 400, 300));
+            this.primaryStage.setScene(new Scene(root));
             this.primaryStage.showAndWait();
 
             return answer.getBoolean(loader.getController());
-        } catch (IOException | IllegalAccessException | IllegalArgumentException | NoSuchFieldException | SecurityException e) {
-            new AlertStage("Could not properly load scene.\nCheck value: " + LOCATION + "\nException: " + e.getMessage()).display();
+        } catch (IOException e) {
+            new AlertStage("FXMLoader could not properly load opject graph.\nCheck value: "
+                    + LOCATION + "\nException:\n" + e.getMessage()).display();
+            return false;
+        } catch (IllegalAccessException | IllegalArgumentException | NoSuchFieldException | SecurityException e) {
+            new AlertStage("FXMLoader could not properly access controller class.\nException:\n" + e.getMessage()).display();
             return false;
         }
 
