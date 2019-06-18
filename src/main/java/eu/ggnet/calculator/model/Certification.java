@@ -34,8 +34,8 @@ public class Certification {
         }
         if (this.grades != null) {
             this.grades.forEach(g -> sb.append(g.getSubject()).append(": ")
-                    .append(g.getNote().getMiddleschoolNote()).append(" (")
-                    .append(g.getNote().getHighschoolNote()).append(")")
+                    .append(g.getMark().getMiddleschoolMark()).append(" (")
+                    .append(g.getMark().getHighschoolMark()).append(")")
                     .append("\n"));
         }
         return sb.toString();

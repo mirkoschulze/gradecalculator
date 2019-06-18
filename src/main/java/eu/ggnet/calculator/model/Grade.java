@@ -8,7 +8,7 @@ import lombok.Getter;
 /**
  * Represents the evaluation for a finished course or module.
  * <p>
- * Combines a {@link Note} with a {@link Subject} and adds the {@link LocalDate}
+ * Combines a {@link Mark} with a {@link Subject} and adds the {@link LocalDate}
  * at which it was created.
  * <p>
  * Contains methods to present data in a human-readable format. Overrides
@@ -20,12 +20,12 @@ import lombok.Getter;
 public class Grade {
 
     private final Subject subject;
-    private final Note note;
+    private final Mark mark;
     private final LocalDate localDate;
 
-    public Grade(Subject subject, Note note) {
+    public Grade(Subject subject, Mark mark) {
         this.subject = subject;
-        this.note = note;
+        this.mark = mark;
         this.localDate = LocalDate.now();
     }
 
@@ -46,7 +46,7 @@ public class Grade {
      * @return String
      */
     public String toSimpleLine() {
-        return this.subject.getTheme() + ": " + this.note.getMiddleschoolNote();
+        return this.subject.getTheme() + ": " + this.mark.getMiddleschoolMark();
     }
 
     /**
@@ -55,7 +55,7 @@ public class Grade {
      * @return String
      */
     public String toEnhancedLine() {
-        return this.subject.getTheme() + ": " + this.note.getMiddleschoolNote()
+        return this.subject.getTheme() + ": " + this.mark.getMiddleschoolMark()
                 + " [ " + this.localDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + "]";
     }
 
@@ -92,18 +92,18 @@ public class Grade {
      * Enumeration of ratings for a {@link Subject}, from 0 to 15.
      */
     @Getter
-    public enum Note {
+    public enum Mark {
 
         ZERO(0, "6"), ONE(1, "5-"), TWO(2, "5"), THREE(3, "5+"), FOUR(4, "4-"), FIVE(5, "4"),
         SIX(6, "4+"), SEVEN(7, "3-"), EIGHT(8, "3"), NINE(9, "3+"), TEN(10, "2-"),
         ELEVEN(11, "2"), TWELVE(12, "2+"), THIRTEEN(13, "1-"), FORTEEN(14, "1"), FIFTEEN(15, "1+");
 
-        private final int highschoolNote;
-        private final String middleschoolNote;
+        private final int highschoolMark;
+        private final String middleschoolMark;
 
-        private Note(int hsNote, String msNote) {
-            this.highschoolNote = hsNote;
-            this.middleschoolNote = msNote;
+        private Mark(int hsMark, String msMark) {
+            this.highschoolMark = hsMark;
+            this.middleschoolMark = msMark;
         }
     }
 

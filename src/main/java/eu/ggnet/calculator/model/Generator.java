@@ -1,6 +1,6 @@
 package eu.ggnet.calculator.model;
 
-import eu.ggnet.calculator.model.Grade.Note;
+import eu.ggnet.calculator.model.Grade.Mark;
 import eu.ggnet.calculator.model.Grade.Subject;
 import eu.ggnet.calculator.model.Pupil.Sex;
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class Generator {
     }
 
     /**
-     * Generates a {@link Certification} with a random {@link Note} for each
+     * Generates a {@link Certification} with a random {@link Mark} for each
      * {@link Subject} for the submitted {@link Pupil}.
      *
      * @param pupil Pupil
@@ -53,7 +53,7 @@ public class Generator {
     public static Certification generateCertification(Pupil pupil) {
         List<Grade> listOfGrades = new ArrayList<>();
         Arrays.asList(Grade.Subject.values()).forEach(s -> {
-            listOfGrades.add(new Grade(s, Grade.Note.values()[R.nextInt(16)]));
+            listOfGrades.add(new Grade(s, Grade.Mark.values()[R.nextInt(16)]));
         });
         return new Certification(pupil, listOfGrades);
     }
