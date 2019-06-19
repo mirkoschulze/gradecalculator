@@ -1,13 +1,8 @@
 package eu.ggnet.calculator.ui;
 
-import eu.ggnet.calculator.calculation.CalculatedGrade;
-import eu.ggnet.calculator.calculation.Calculator;
-import eu.ggnet.calculator.model.Certification;
-import eu.ggnet.calculator.model.Classbook;
-import eu.ggnet.calculator.model.Generator;
-import eu.ggnet.calculator.model.Grade;
+import eu.ggnet.calculator.calculation.*;
+import eu.ggnet.calculator.model.*;
 import eu.ggnet.calculator.model.Grade.Subject;
-import eu.ggnet.calculator.model.Pupil;
 import eu.ggnet.calculator.ui.confirmation.ConfirmationStage;
 import eu.ggnet.calculator.ui.insertion.GradePupilStage;
 import eu.ggnet.calculator.ui.insertion.InsertClassbookStage;

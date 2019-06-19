@@ -12,7 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * {@link Stage} to set the {@link Certification} of a {link Pupil}.
+ * {@link Stage} to set the {@link Certification} of a {@link Pupil}.
  *
  * @author Mirko Schulze
  */

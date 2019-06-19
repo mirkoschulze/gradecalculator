@@ -31,12 +31,12 @@ public class AlertStage {
      * components to indicate failures.
      */
     public void display() {
-        Stage primaryStage = new Stage();
-        primaryStage.setTitle("Alert!");
-        primaryStage.initModality(Modality.APPLICATION_MODAL);
+        Stage stage = new Stage();
+        stage.setTitle("Alert!");
+        stage.initModality(Modality.APPLICATION_MODAL);
 
         Button closeButton = new Button("Close");
-        closeButton.setOnAction(e -> primaryStage.close());
+        closeButton.setOnAction(e -> stage.close());
 
         VBox vbox = new VBox(25);
         vbox.setAlignment(Pos.CENTER);
@@ -45,8 +45,8 @@ public class AlertStage {
 
         Scene scene = new Scene(vbox, 500, 300);
 
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        stage.setScene(scene);
+        stage.show();
     }
 
 }

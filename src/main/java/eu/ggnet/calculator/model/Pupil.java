@@ -92,6 +92,13 @@ public class Pupil implements Comparable<Pupil> {
             return this.description;
         }
 
+        @Override
+        public String toString() {
+            return this.description;
+        }
+        
+        
+
     }
 
 }
