@@ -14,19 +14,22 @@
       xmlns="http://javafx.com/javafx/8.0.201" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="eu.ggnet.calculator.ui.confirmation.ConfirmationController">
     <children>
-        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="103.0" prefWidth="515.0" text="Do you really want to close the programm?">
+        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="103.0" prefWidth="515.0" 
+               text="Do you really want to close the programm?">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
         <HBox alignment="CENTER" prefHeight="193.0" prefWidth="364.0" spacing="5.0" VBox.vgrow="SOMETIMES">
             <children>
-                <Button fx:id="confirmButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#confirm" text="Confirm">
+                <Button fx:id="confirmButton" alignment="CENTER_LEFT" contentDisplay="CENTER" 
+                        mnemonicParsing="false" onAction="#confirm" text="Confirm">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Button>
-                <Button fx:id="denyButton" alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#deny" text="Deny">
+                <Button fx:id="denyButton" alignment="CENTER_RIGHT" contentDisplay="CENTER" 
+                        mnemonicParsing="false" onAction="#deny" text="Deny">
                     <font>
                         <Font size="14.0" />
                     </font>
