@@ -217,7 +217,7 @@ public class Generator {
         }
 
         public char getCharacter() {
-            return character;
+            return this.character;
         }
 
     }

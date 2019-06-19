@@ -85,7 +85,7 @@ public class Pupil implements Comparable<Pupil> {
         }
 
         public String getDescription() {
-            return description;
+            return this.description;
         }
 
     }

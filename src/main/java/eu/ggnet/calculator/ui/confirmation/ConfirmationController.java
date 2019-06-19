@@ -8,8 +8,7 @@ import lombok.Getter;
 /**
  * Controller class responsible for the logic at {@link ConfirmationStage}.
  * <p>
- * Defines methods for {@link Button} components to close their root
- * {@link Stage} and return true or false.
+ * Defines methods foset a boolean.
  *
  * @author Mirko Schulze
  */
