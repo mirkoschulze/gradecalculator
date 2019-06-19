@@ -32,7 +32,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 /**
- * Controller class, responsible for the logic at {@link MainApp}.
+ * Controller class, responsible for the logic at {@link MainStage}.
  * <p>
  * Defines methods to interact with the different components.
  *
@@ -78,7 +78,7 @@ public class MainController implements Initializable {
 
     /**
      * Initializes the controller in the following steps:
-     * <li>auto-generation of 5 instances of {@link Classbook} to simulate, with
+     * <ul><li>auto-generation of 5 instances of {@link Classbook} to simulate, with
      * already set {@link Certification}</li>
      * <li>adding {@link ObservableList} to {@link ComboBox} components</li>
      * <li>adding {@link ChangeListener} to lists</li></ul>

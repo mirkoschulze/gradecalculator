@@ -8,8 +8,8 @@ import lombok.Getter;
 /**
  * Represents a {@link Grade} that has been calculated by {@link Calculator}.
  * <p>
- * Contains Strings to hold informations about the calculatoin and a
- * {@link Grade}.
+ * Contains Strings to hold informations about the calculation and the
+ * Grade.
  * <p>
  * Contains methods to present data in a human-readable format.
  *

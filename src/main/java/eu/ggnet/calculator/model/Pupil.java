@@ -12,8 +12,6 @@ import lombok.Setter;
  * <p>
  * Contains methods to present data in a human-readable format. Overrides
  * {@link Object#toString()} for presentation purposes.
- * <p>
- * Implements {@link Comparable} by comparing the first letter of surename.
  *
  * @author Mirko Schulze
  */
@@ -44,6 +42,12 @@ public class Pupil implements Comparable<Pupil> {
         return this.toSimpleLine();
     }
 
+    /**
+     * Implements {@link Comparable} by comparing the first letter of surename.
+     *
+     * @param p Pupil
+     * @return int
+     */
     @Override
     public int compareTo(Pupil p) {
         return (this.surname.charAt(0) <= p.surname.charAt(0)) ? -1 : 1;

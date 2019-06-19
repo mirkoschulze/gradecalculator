@@ -19,6 +19,10 @@ import java.util.Random;
 public class Generator {
 
     private static final Random R = new Random();
+    
+    private Generator(){
+        
+    }
 
     /**
      * Generates an instance of {@link Pupil} with random values.
