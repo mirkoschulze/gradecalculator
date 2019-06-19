@@ -1,14 +1,14 @@
 package eu.ggnet.calculator.ui;
 
-import eu.ggnet.calculator.ui.confirmation.ConfirmationStage;
-import eu.ggnet.calculator.model.Generator;
 import eu.ggnet.calculator.calculation.CalculatedGrade;
 import eu.ggnet.calculator.calculation.Calculator;
 import eu.ggnet.calculator.model.Certification;
 import eu.ggnet.calculator.model.Classbook;
+import eu.ggnet.calculator.model.Generator;
 import eu.ggnet.calculator.model.Grade;
 import eu.ggnet.calculator.model.Grade.Subject;
 import eu.ggnet.calculator.model.Pupil;
+import eu.ggnet.calculator.ui.confirmation.ConfirmationStage;
 import eu.ggnet.calculator.ui.insertion.GradePupilStage;
 import eu.ggnet.calculator.ui.insertion.InsertClassbookStage;
 import eu.ggnet.calculator.ui.insertion.InsertPupilStage;
@@ -32,7 +32,9 @@ import lombok.Getter;
 import lombok.ToString;
 
 /**
- * Controller class, responsible for the logic of MainApp.
+ * Controller class, responsible for the logic at {@link MainApp}.
+ * <p>
+ * Defines methods to interact with the different components.
  *
  * @author Mirko Schulze
  */
@@ -64,6 +66,11 @@ public class MainController implements Initializable {
     @FXML
     private Button closeButton;
 
+    /**
+     * Returns true if a {@link Pupil} is selected in the {@link ListView}.
+     *
+     * @return boolean
+     */
     @FXML
     public boolean hasSelectedPupil() {
         return this.pupilsListView.getSelectionModel().getSelectedItem() != null;
@@ -127,6 +134,7 @@ public class MainController implements Initializable {
                 this.gradesListView.setItems(FXCollections.emptyObservableList());
             }
         });
+        //TODO listener new pupil new classbook new certification docu
     }
 
     /**
@@ -156,10 +164,12 @@ public class MainController implements Initializable {
     private void calculateAndPresentForEachClassbook() {
         if (this.selectedCalculation != null
                 && this.selectedSubject != null) {
-            for (Classbook classbook : classbooks) {
+            this.classbooks.stream().map((classbook) -> {
                 this.calculate(classbook, this.selectedSubject);
+                return classbook;
+            }).forEachOrdered((_item) -> {
                 this.present();
-            }
+            });
         }
     }
 
@@ -174,7 +184,7 @@ public class MainController implements Initializable {
     @FXML
     private void calculateAndPresentForEachSubject() {
         if (this.selectedCalculation != null
-                && selectedClassbook != null) {
+                && this.selectedClassbook != null) {
             for (Subject value : Subject.values()) {
                 this.calculate(this.selectedClassbook, value);
                 this.present();
@@ -214,6 +224,7 @@ public class MainController implements Initializable {
         } else {
             new AlertStage("select a classbook noob").display();
         }
+        //TODO validation
     }
 
     @FXML
@@ -225,6 +236,7 @@ public class MainController implements Initializable {
         } else {
             new AlertStage("No valid name entered").display();
         }
+        //TODO validation
     }
 
     @FXML
@@ -233,10 +245,11 @@ public class MainController implements Initializable {
             this.pupilsListView.getSelectionModel().getSelectedItem().setCertification(new GradePupilStage().display());
         } catch (NullPointerException e) {
             new AlertStage("No proper certification set.\n" + e.getMessage()).display();
-            
+
         }
+        //TODO validation
     }
-    
+
     /**
      * Checks {@link ComboBox} calculationSelection for the selected calculation
      * and calls the respective method from {@link Calculator} to generate a

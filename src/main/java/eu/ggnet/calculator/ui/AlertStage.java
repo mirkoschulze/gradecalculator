@@ -1,7 +1,3 @@
-/*
-*
-* by Mirko Schulze
- */
 package eu.ggnet.calculator.ui;
 
 import javafx.geometry.Insets;
@@ -23,7 +19,7 @@ import javafx.stage.Stage;
  */
 public class AlertStage {
 
-    private static final Label WARNING = new Label("Something went wrong.\nBut don't worry.");
+    private static final Label WARNING = new Label("Something went wrong.\nBut don't worry. It's your fault, probably.");
     private final Label message;
 
     public AlertStage(String message) {
@@ -31,8 +27,8 @@ public class AlertStage {
     }
 
     /**
-     * Displays a new {@link Stage} with two {@link Label} to show details about
-     * a failure and a {@link Button} to close the Stage again.
+     * Displays a new {@link Stage} with {@link Label} and {@link Button}
+     * components to indicate failures.
      */
     public void display() {
         Stage primaryStage = new Stage();

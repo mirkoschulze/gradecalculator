@@ -15,9 +15,13 @@ import javafx.stage.Stage;
 import lombok.Getter;
 
 /**
- * FXML Controller class
+ * Controller class responsible for the logic at {@link InsertPupilStage}.
+ * <p>
+ * Defines methods to validate user input in {@link TextField} and
+ * {@link ComboBox} components and to create a new {@link Pupil} via
+ * {@link Button} components.
  *
- * @author Administrator
+ * @author Mirko Schulze
  */
 public class InsertPupilController implements Initializable {
 
@@ -44,15 +48,24 @@ public class InsertPupilController implements Initializable {
     /**
      * Initializes the controller class by setting values to
      * {@link #selectSexBox}.
+     *
+     * @param url URL
+     * @param rb ResourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.selectSexBox.setItems(FXCollections.observableArrayList(Sex.values()));
     }
 
+    /**
+     * Tries to create a new {@link Pupil} and close the root {@link Stage}.
+     * <p>
+     * Catches {@link Exception} by displaying a new {@link AlertStage} with a
+     * respective error message.
+     */
     @FXML
     private void create() {
-        if (this.isReady()) {
+        try {
             this.validateAge();
             this.validateSex();
             this.validateForename();
@@ -60,30 +73,23 @@ public class InsertPupilController implements Initializable {
             this.pupil = new Pupil(this.sex, this.age, this.forename, this.surname);
             Stage stage = (Stage) this.createButton.getScene().getWindow();
             stage.close();
-        } else {
-            new AlertStage("Not all fields set.").display();
+        } catch (Exception e) {
+            new AlertStage("Not all fields set.\nError:\n" + e.getMessage()).display();
         }
+        //TODO
     }
 
+    /**
+     * Closes the root {@link Stage}.
+     */
     @FXML
     private void cancel() {
-        this.clear();
         Stage stage = (Stage) this.cancelButton.getScene().getWindow();
         stage.close();
     }
 
-    private boolean isReady() {
-        return (this.forenameInput.getText() != null
-                && !this.forenameInput.getText().isEmpty()
-                && this.surnameInput.getText() != null
-                && !this.surnameInput.getText().isEmpty()
-                && this.ageInput.getText() != null
-                && !(this.ageInput.getText().isEmpty())
-                && this.selectSexBox.getSelectionModel().getSelectedItem() != null);
-
-    }
-
     private void validateAge() {
+        //TODO
         try {
             this.age = Integer.parseInt(this.ageInput.getText());
         } catch (NumberFormatException e) {
@@ -92,6 +98,7 @@ public class InsertPupilController implements Initializable {
     }
 
     private void validateForename() {
+        //TODO
         try {
             this.forename = this.forenameInput.getText();
         } catch (Exception e) {
@@ -100,6 +107,7 @@ public class InsertPupilController implements Initializable {
     }
 
     private void validateSurname() {
+        //TODO
         try {
             this.surname = this.surnameInput.getText();
         } catch (Exception e) {
@@ -108,18 +116,12 @@ public class InsertPupilController implements Initializable {
     }
 
     private void validateSex() {
+        //TODO
         try {
             this.sex = this.selectSexBox.getSelectionModel().getSelectedItem();
         } catch (Exception e) {
             new AlertStage("Could not set sex").display();
         }
-    }
-
-    private void clear() {
-        this.forenameInput.clear();
-        this.surnameInput.clear();
-        this.ageInput.clear();
-        this.selectSexBox.getSelectionModel().clearSelection();
     }
 
 }

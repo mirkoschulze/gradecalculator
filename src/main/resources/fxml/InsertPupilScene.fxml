@@ -5,8 +5,7 @@
 <?import java.util.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
 
@@ -15,7 +14,7 @@
       xmlns="http://javafx.com/javafx/8.0.201" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="eu.ggnet.calculator.ui.insertion.InsertPupilController">
     <children>
-        <Label alignment="CENTER" contentDisplay="CENTER" text="Enter values for each field to add a new pupil:" VBox.vgrow="ALWAYS">
+        <Label alignment="CENTER" contentDisplay="CENTER" text="Enter values for each field to add a new pupil:">
             <font>
                 <Font size="14.0" />
             </font>
@@ -23,9 +22,9 @@
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </VBox.margin>
         </Label>
-        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="ALWAYS">
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
             <children>
-                <Label alignment="CENTER" contentDisplay="CENTER" text="Forename: " />
+                <Label alignment="CENTER" contentDisplay="CENTER" text="Forename:   " />
                 <TextField fx:id="forenameInput"/>
             </children>
             <VBox.margin>
@@ -35,9 +34,9 @@
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding>
         </HBox>
-        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="ALWAYS">
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
             <children>
-                <Label alignment="CENTER" contentDisplay="CENTER" text="Surname:  " />
+                <Label alignment="CENTER" contentDisplay="CENTER" text="Surname:    " />
                 <TextField fx:id="surnameInput"/>
             </children>
             <VBox.margin>
@@ -47,9 +46,9 @@
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding>
         </HBox>
-        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="ALWAYS">
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
             <children>
-                <Label alignment="CENTER" contentDisplay="CENTER" text="Age:          ">
+                <Label alignment="CENTER" contentDisplay="CENTER" text="Age:    ">
                     <HBox.margin>
                         <Insets />
                     </HBox.margin>
@@ -63,10 +62,10 @@
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding>
         </HBox>
-        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="ALWAYS">
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
             <children>
                 <Label alignment="CENTER" contentDisplay="CENTER" text="Sex:          " />
-                <ComboBox fx:id="selectSexBox" prefWidth="150.0" promptText="Select a sex..." HBox.hgrow="ALWAYS">
+                <ComboBox fx:id="selectSexBox" prefWidth="150.0" promptText="Select a sex...">
                     <HBox.margin>
                         <Insets />
                     </HBox.margin>
@@ -79,10 +78,12 @@
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding>
         </HBox>
-        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="ALWAYS">
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
             <children>
-                <Button fx:id="createButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#create" text="Add" />
-                <Button fx:id="cancelButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+                <Button fx:id="createButton" alignment="CENTER" contentDisplay="CENTER"
+                        mnemonicParsing="false" onAction="#create" text="Add" />
+                <Button fx:id="cancelButton" alignment="CENTER" contentDisplay="CENTER"
+                        mnemonicParsing="false" onAction="#cancel" text="Cancel" />
             </children>
             <VBox.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

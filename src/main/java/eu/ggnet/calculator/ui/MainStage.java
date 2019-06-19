@@ -30,12 +30,15 @@ public class MainStage extends Application {
     }
 
     /**
-     * Main method, starts the application and the initial window.
+     * Tries to show the primary application {@link Stage}.
+     * <p>
+     * Catches an {@link IOException} by displaying a new {@link AlertStage}
+     * with a respective error message.
      *
      * @param stage Stage
      */
     @Override
-    public void start(Stage stage){
+    public void start(Stage stage) {
         try {
             stage.setScene(new Scene(new FXMLLoader(getClass().getResource(LOCATION)).load()));
             stage.show();

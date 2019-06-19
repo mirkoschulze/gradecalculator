@@ -6,9 +6,12 @@ import eu.ggnet.calculator.model.Grade.Mark;
 import eu.ggnet.calculator.model.Grade.Subject;
 import eu.ggnet.calculator.model.Pupil;
 import eu.ggnet.calculator.ui.AlertStage;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -24,7 +27,7 @@ import lombok.Setter;
  *
  * @author Mirko Schulze
  */
-public class GradePupilController {
+public class GradePupilController implements Initializable {
 
     @Setter
     private Pupil pupil;
@@ -45,35 +48,44 @@ public class GradePupilController {
     @FXML
     private TextField orgaInput;
     @FXML
-    private Button createCertificationButton;
+    private Button createButton;
     @FXML
     private Button cancelButton;
 
     /**
-     * Validates each {@link TextField} before trying to create a new
-     * {@link Certification}.
+     * Initializes this controller by instantiating an {@link ArrayList}.
+     *
+     * @param url URL
+     * @param rb ResourceBundle
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        this.grades = new ArrayList<>();
+    }
+
+    /**
+     * Tries to create a new {@link Certification} and close the root {@link Stage}.
      * <p>
      * A {@link NullPointerException} is caught by displaying a new
      * {@link AlertStage} with a respective error message.
-     * <p>
-     * Closes the root {link Stage}.
      */
     @FXML
-    private void confirm() {
-        this.grades = new ArrayList<>();
-        this.validateEngInput();
-        this.validateItsInput();
-        this.validateItwInput();
-        this.validateSocInput();
-        this.validateDevInput();
-        this.validateOrgaInput();
+    private void create() {
         try {
+            this.validateEngInput();
+            this.validateItsInput();
+            this.validateItwInput();
+            this.validateSocInput();
+            this.validateDevInput();
+            this.validateOrgaInput();
             this.certification = new Certification(this.pupil, this.grades);
+            Stage stage = (Stage) this.createButton.getScene().getWindow();
+            stage.close();
+            //TODO
         } catch (NullPointerException e) {
             new AlertStage("No pupil selected.\nError:\n" + e.getMessage()).display();
         }
-        Stage stage = (Stage) this.createCertificationButton.getScene().getWindow();
-        stage.close();
+
     }
 
     /**
@@ -83,22 +95,6 @@ public class GradePupilController {
     private void cancel() {
         Stage stage = (Stage) this.cancelButton.getScene().getWindow();
         stage.close();
-    }
-
-    /**
-     * Converts an integer value into a respective {@link Mark}.
-     *
-     * @param value integer
-     * @return Mark
-     */
-    private Mark createMark(int value) {
-        Mark mark = Mark.ZERO;
-        for (Mark m : Mark.values()) {
-            if (m.getHighschoolMark() == value) {
-                mark = m;
-            }
-        }
-        return mark;
     }
 
     /**
@@ -189,6 +185,22 @@ public class GradePupilController {
         } catch (NumberFormatException e) {
             new AlertStage("Could not properly resolve input.\nError:\n" + e.getMessage()).display();
         }
+    }
+    
+    /**
+     * Converts an integer value into a respective {@link Mark}.
+     *
+     * @param value integer
+     * @return Mark
+     */
+    private Mark createMark(int value) {
+        Mark mark = Mark.ZERO;
+        for (Mark m : Mark.values()) {
+            if (m.getHighschoolMark() == value) {
+                mark = m;
+            }
+        }
+        return mark;
     }
 
 }

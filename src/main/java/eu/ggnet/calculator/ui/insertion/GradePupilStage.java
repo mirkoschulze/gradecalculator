@@ -18,7 +18,7 @@ import javafx.stage.Stage;
  */
 public class GradePupilStage {
 
-    private static final String FXML_PATH = "/fxml/GradePupilScene.fxml";
+    private static final String FXML_URL = "/fxml/GradePupilScene.fxml";
 
     private final Stage primaryStage;
 
@@ -28,9 +28,9 @@ public class GradePupilStage {
     }
 
     /**
-     * Tries to display a new {@link Stage} with {@link Label} and
-     * {@link TextField} components to set grades for each subject, and two
-     * {@link Button} components to confirm or cancel the process.
+     * Tries to display a new {@link Stage} with {@link Label},
+     * {@link TextField} and {@link Button} components to create a new
+     * {@link Certification}.
      * <p>
      * Catches an {@link IOException} by displaying a new {@link AlertStage}
      * with a respective error message.
@@ -39,7 +39,7 @@ public class GradePupilStage {
      */
     public Certification display() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_PATH));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_URL));
             Parent root = loader.load();
             GradePupilController controller = loader.getController();
 
@@ -49,7 +49,7 @@ public class GradePupilStage {
             return controller.getCertification();
         } catch (IOException e) {
             new AlertStage("FXMLoader could not properly load opject graph.\nCheck value: "
-                    + FXML_PATH + "\nException:\n" + e.getMessage()).display();
+                    + FXML_URL + "\nException:\n" + e.getMessage()).display();
             return null;
         }
 
