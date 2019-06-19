@@ -3,14 +3,20 @@ package eu.ggnet.calculator.ui.confirmation;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import lombok.Getter;
 
 /**
+ * Controller class responsible for the logic at {@link ConfirmationStage}.
+ * <p>
+ * Defines methods for {@link Button} components to close their root
+ * {@link Stage} and return true or false.
  *
- * @author Administrator
+ * @author Mirko Schulze
  */
 public class ConfirmationController {
 
-    public boolean answer;
+    @Getter
+    private boolean answer;
 
     @FXML
     private Button confirmButton;
@@ -18,7 +24,7 @@ public class ConfirmationController {
     private Button denyButton;
 
     /**
-     * Closes the root stage with a true result.
+     * Closes the root {@link Stage} with a true result.
      */
     @FXML
     private void confirm() {
@@ -28,7 +34,7 @@ public class ConfirmationController {
     }
 
     /**
-     * Closes the root stage with a false result.
+     * Closes the root {@link Stage} with a false result.
      */
     @FXML
     private void deny() {
