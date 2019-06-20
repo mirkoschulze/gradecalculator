@@ -74,7 +74,7 @@ public class InsertPupilController implements Initializable {
             Stage stage = (Stage) this.createButton.getScene().getWindow();
             stage.close();
         } catch (Exception e) {
-            new AlertStage("Not all fields set.\nError:\n" + e.getMessage()).display();
+            new AlertStage("Not all fields set.\nError:\n" + e.getMessage()).warn();
         }
         //TODO
     }
@@ -93,7 +93,7 @@ public class InsertPupilController implements Initializable {
         try {
             this.age = Integer.parseInt(this.ageInput.getText());
         } catch (NumberFormatException e) {
-            new AlertStage("Could not set age.").display();
+            new AlertStage("Could not set age.").warn();
         }
     }
 
@@ -102,7 +102,7 @@ public class InsertPupilController implements Initializable {
         try {
             this.forename = this.forenameInput.getText();
         } catch (Exception e) {
-            new AlertStage("Could not set forename").display();
+            new AlertStage("Could not set forename").warn();
         }
     }
 
@@ -111,7 +111,7 @@ public class InsertPupilController implements Initializable {
         try {
             this.surname = this.surnameInput.getText();
         } catch (Exception e) {
-            new AlertStage("Could not set surname").display();
+            new AlertStage("Could not set surname").warn();
         }
     }
 
@@ -120,7 +120,7 @@ public class InsertPupilController implements Initializable {
         try {
             this.sex = this.selectSexBox.getSelectionModel().getSelectedItem();
         } catch (Exception e) {
-            new AlertStage("Could not set sex").display();
+            new AlertStage("Could not set sex").warn();
         }
     }
 

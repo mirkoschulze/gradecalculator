@@ -2,13 +2,17 @@ package eu.ggnet.calculator.ui;
 
 import eu.ggnet.calculator.calculation.*;
 import eu.ggnet.calculator.model.*;
+import eu.ggnet.calculator.model.Grade.Mark;
 import eu.ggnet.calculator.model.Grade.Subject;
 import eu.ggnet.calculator.ui.confirmation.ConfirmationStage;
-import eu.ggnet.calculator.ui.insertion.GradePupilStage;
+import eu.ggnet.calculator.ui.modification.SetCertificationAtSelectedPupilStage;
 import eu.ggnet.calculator.ui.insertion.InsertClassbookStage;
 import eu.ggnet.calculator.ui.insertion.InsertPupilStage;
+import eu.ggnet.calculator.ui.modification.EnterMarkStage;
+import eu.ggnet.calculator.ui.modification.SelectSubjectStage;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -62,19 +66,9 @@ public class MainController implements Initializable {
     private Button closeButton;
 
     /**
-     * Returns true if a {@link Pupil} is selected in the {@link ListView}.
-     *
-     * @return boolean
-     */
-    @FXML
-    public boolean hasSelectedPupil() {
-        return this.pupilsListView.getSelectionModel().getSelectedItem() != null;
-    }
-
-    /**
      * Initializes the controller in the following steps:
-     * <ul><li>auto-generation of 5 instances of {@link Classbook} to simulate, with
-     * already set {@link Certification}</li>
+     * <ul><li>auto-generation of 5 instances of {@link Classbook} to simulate,
+     * with already set {@link Certification}</li>
      * <li>adding {@link ObservableList} to {@link ComboBox} components</li>
      * <li>adding {@link ChangeListener} to lists</li></ul>
      *
@@ -159,12 +153,10 @@ public class MainController implements Initializable {
     private void calculateAndPresentForEachClassbook() {
         if (this.selectedCalculation != null
                 && this.selectedSubject != null) {
-            this.classbooks.stream().map((classbook) -> {
+            for (Classbook classbook : classbooks) {
                 this.calculate(classbook, this.selectedSubject);
-                return classbook;
-            }).forEachOrdered((_item) -> {
                 this.present();
-            });
+            }
         }
     }
 
@@ -200,49 +192,87 @@ public class MainController implements Initializable {
      */
     @FXML
     private void close() {
-        if (new ConfirmationStage().display()) {
+        if (new ConfirmationStage().confirm()) {
             Stage stage = (Stage) this.closeButton.getScene().getWindow();
             stage.close();
         }
     }
 
+    /**
+     * Displays a new {@link InsertPupilStage} to create a new {@link Pupil}.
+     * That Pupil is added to the {@link Classbook}, selected via
+     * {@link ComboBox}.
+     */
     @FXML
     private void addPupil() {
-        if (this.selectedClassbook != null) {
-            Pupil pupil = new InsertPupilStage().display();
-            if (pupil != null) {
-                this.selectedClassbook.getPupils().add(pupil);
-                this.pupilsListView.setItems(FXCollections.observableArrayList(this.selectedClassbook.getPupils()));
-            } else {
-                new AlertStage("No valid pupil entered =(").display();
-            }
-        } else {
-            new AlertStage("select a classbook noob").display();
-        }
-        //TODO validation
+        Pupil pupil = new InsertPupilStage().createPupil();
+        this.selectedClassbook.getPupils().add(pupil);
+        this.pupilsListView.setItems(FXCollections.observableArrayList(this.selectedClassbook.getPupils()));
+        //TODO listener
     }
 
+    /**
+     * Removes the selected {@link Pupil} from the selected {@link Classbook}.
+     */
+    @FXML
+    private void removePupil() {
+        this.selectedClassbook.getPupils().remove(this.pupilsListView.getSelectionModel().getSelectedItem());
+        this.pupilsListView.setItems(FXCollections.observableArrayList(this.selectedClassbook.getPupils()));
+        //TODO listener
+    }
+
+    /**
+     * Displays a new {@link InsertClassbookStage} to create a new
+     * {@link Classbook}. That Classbook is added to the list of available
+     * Classbooks, selected via {@link ComboBox}.
+     */
     @FXML
     private void addClassbook() {
-        Classbook classbook = new InsertClassbookStage().display();
-        if (classbook != null) {
-            this.classbooks.add(classbook);
-            this.classbookSelectionBox.setItems(FXCollections.observableArrayList(this.classbooks));
-        } else {
-            new AlertStage("No valid name entered").display();
-        }
-        //TODO validation
+        Classbook classbook = new InsertClassbookStage().createClassbook();
+        this.classbooks.add(classbook);
+        this.classbookSelectionBox.setItems(FXCollections.observableArrayList(this.classbooks));
+        //TODO listener
+    }
+
+    /**
+     * Removes the selected {@link Classbook} from the list of available
+     * Classbooks.
+     */
+    @FXML
+    private void removeClassbook() {
+        this.classbooks.remove(this.selectedClassbook);
+        this.classbookSelectionBox.setItems(FXCollections.observableArrayList(this.classbooks));
+        //TODO listener
     }
 
     @FXML
-    private void gradePupil() {
-        try {
-            this.pupilsListView.getSelectionModel().getSelectedItem().setCertification(new GradePupilStage().display());
-        } catch (NullPointerException e) {
-            new AlertStage("No proper certification set.\n" + e.getMessage()).display();
+    private void setCertificationAtSelectedPupil() {
+        this.pupilsListView.getSelectionModel().getSelectedItem()
+                .setCertification(new SetCertificationAtSelectedPupilStage().createCertification());
+        this.gradesListView.setItems(FXCollections.observableArrayList(this
+                .pupilsListView.getSelectionModel().getSelectedItem().getCertification().getGrades()));
+        //TODO listener
+    }
 
+    @FXML
+    private void setGradeAtSelectedPupil() {
+        Pupil pupil = this.pupilsListView.getSelectionModel().getSelectedItem();
+        List<Grade> grades = pupil.getCertification().getGrades();
+        Grade[] gradeArray = new Grade[6];
+        for (int i = 0; i < gradeArray.length; i++) {
+            gradeArray[i] = grades.get(i);
         }
-        //TODO validation
+        //TODO ListOfGrades class
+
+        Subject subject = new SelectSubjectStage().selectSubject();
+//        Mark mark = new EnterMarkStage().enterMark();
+//        gradeArray[subject.ordinal()] = new Grade(subject, mark);
+//
+//        grades = Arrays.asList(gradeArray);
+//        pupil.setCertification(new Certification(pupil, grades));
+//        this.gradesListView.setItems(FXCollections.observableArrayList(this
+//                .pupilsListView.getSelectionModel().getSelectedItem().getCertification().getGrades()));
+        //TODO listener
     }
 
     /**

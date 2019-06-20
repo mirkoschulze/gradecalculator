@@ -58,7 +58,7 @@ public class InsertClassbookController implements Initializable {
             Stage stage = (Stage) this.createButton.getScene().getWindow();
             stage.close();
         } catch (Exception e) {
-            new AlertStage("No valid name entered.\nError:\n" + e.getMessage()).display();
+            new AlertStage("No valid name entered.\nError:\n" + e.getMessage()).warn();
         }
         //TODO validation
     }

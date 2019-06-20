@@ -1,8 +1,8 @@
-package eu.ggnet.calculator.ui.insertion;
+package eu.ggnet.calculator.ui.modification;
 
+import eu.ggnet.calculator.Utilities;
 import eu.ggnet.calculator.model.Certification;
 import eu.ggnet.calculator.model.Grade;
-import eu.ggnet.calculator.model.Grade.Mark;
 import eu.ggnet.calculator.model.Grade.Subject;
 import eu.ggnet.calculator.model.Pupil;
 import eu.ggnet.calculator.ui.AlertStage;
@@ -27,7 +27,7 @@ import lombok.Setter;
  *
  * @author Mirko Schulze
  */
-public class GradePupilController implements Initializable {
+public class SetCertificationAtSelectedPupilController implements Initializable {
 
     @Setter
     private Pupil pupil;
@@ -64,7 +64,8 @@ public class GradePupilController implements Initializable {
     }
 
     /**
-     * Tries to create a new {@link Certification} and close the root {@link Stage}.
+     * Tries to create a new {@link Certification} and close the root
+     * {@link Stage}.
      * <p>
      * A {@link NullPointerException} is caught by displaying a new
      * {@link AlertStage} with a respective error message.
@@ -83,7 +84,7 @@ public class GradePupilController implements Initializable {
             stage.close();
             //TODO
         } catch (NullPointerException e) {
-            new AlertStage("No pupil selected.\nError:\n" + e.getMessage()).display();
+            new AlertStage("No pupil selected.\nError:\n" + e.getMessage()).warn();
         }
 
     }
@@ -106,9 +107,9 @@ public class GradePupilController implements Initializable {
      */
     private void validateEngInput() {
         try {
-            this.grades.add(new Grade(Subject.ENG, this.createMark(Integer.parseInt(this.engInput.getText()))));
+            this.grades.add(new Grade(Subject.ENG, Utilities.createMark(Integer.parseInt(this.engInput.getText()))));
         } catch (NumberFormatException e) {
-            new AlertStage("Could not properly resolve input.\nError:\n" + e.getMessage()).display();
+            new AlertStage("Could not properly resolve input.\nError:\n" + e.getMessage()).warn();
         }
     }
 
@@ -121,9 +122,9 @@ public class GradePupilController implements Initializable {
      */
     private void validateItsInput() {
         try {
-            this.grades.add(new Grade(Subject.IT_S, this.createMark(Integer.parseInt(this.itsInput.getText()))));
+            this.grades.add(new Grade(Subject.IT_S, Utilities.createMark(Integer.parseInt(this.itsInput.getText()))));
         } catch (NumberFormatException e) {
-            new AlertStage("Could not properly resolve input.\nError:\n" + e.getMessage()).display();
+            new AlertStage("Could not properly resolve input.\nError:\n" + e.getMessage()).warn();
         }
     }
 
@@ -136,9 +137,9 @@ public class GradePupilController implements Initializable {
      */
     private void validateItwInput() {
         try {
-            this.grades.add(new Grade(Subject.IT_W, this.createMark(Integer.parseInt(this.itwInput.getText()))));
+            this.grades.add(new Grade(Subject.IT_W, Utilities.createMark(Integer.parseInt(this.itwInput.getText()))));
         } catch (NumberFormatException e) {
-            new AlertStage("Could not properly resolve input.\nError:\n" + e.getMessage()).display();
+            new AlertStage("Could not properly resolve input.\nError:\n" + e.getMessage()).warn();
         }
     }
 
@@ -151,9 +152,9 @@ public class GradePupilController implements Initializable {
      */
     private void validateSocInput() {
         try {
-            this.grades.add(new Grade(Subject.SOC, this.createMark(Integer.parseInt(this.socInput.getText()))));
+            this.grades.add(new Grade(Subject.SOC, Utilities.createMark(Integer.parseInt(this.socInput.getText()))));
         } catch (NumberFormatException e) {
-            new AlertStage("Could not properly resolve input.\nError:\n" + e.getMessage()).display();
+            new AlertStage("Could not properly resolve input.\nError:\n" + e.getMessage()).warn();
         }
     }
 
@@ -166,9 +167,9 @@ public class GradePupilController implements Initializable {
      */
     private void validateDevInput() {
         try {
-            this.grades.add(new Grade(Subject.DEV, this.createMark(Integer.parseInt(this.devInput.getText()))));
+            this.grades.add(new Grade(Subject.DEV, Utilities.createMark(Integer.parseInt(this.devInput.getText()))));
         } catch (NumberFormatException e) {
-            new AlertStage("Could not properly resolve input.\nError:\n" + e.getMessage()).display();
+            new AlertStage("Could not properly resolve input.\nError:\n" + e.getMessage()).warn();
         }
     }
 
@@ -181,26 +182,10 @@ public class GradePupilController implements Initializable {
      */
     private void validateOrgaInput() {
         try {
-            this.grades.add(new Grade(Subject.ORGA, this.createMark(Integer.parseInt(this.orgaInput.getText()))));
+            this.grades.add(new Grade(Subject.ORGA, Utilities.createMark(Integer.parseInt(this.orgaInput.getText()))));
         } catch (NumberFormatException e) {
-            new AlertStage("Could not properly resolve input.\nError:\n" + e.getMessage()).display();
+            new AlertStage("Could not properly resolve input.\nError:\n" + e.getMessage()).warn();
         }
-    }
-    
-    /**
-     * Converts an integer value into a respective {@link Mark}.
-     *
-     * @param value integer
-     * @return Mark
-     */
-    private Mark createMark(int value) {
-        Mark mark = Mark.ZERO;
-        for (Mark m : Mark.values()) {
-            if (m.getHighschoolMark() == value) {
-                mark = m;
-            }
-        }
-        return mark;
     }
 
 }

@@ -8,7 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -20,12 +19,11 @@ public class InsertClassbookStage {
 
     private static final String FXML_URL = "/fxml/InsertClassbookScene.fxml";
 
-    private final Stage primaryStage;
+    private final Stage stage;
 
     public InsertClassbookStage() {
-        this.primaryStage = new Stage();
-        this.primaryStage.setTitle("Add a classbook");
-        this.primaryStage.initModality(Modality.APPLICATION_MODAL);
+        this.stage = new Stage();
+        this.stage.setTitle("Add a classbook");
     }
 
     /**
@@ -37,19 +35,19 @@ public class InsertClassbookStage {
      *
      * @return Classbook
      */
-    public Classbook display() {
+    public Classbook createClassbook() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_URL));
             Parent root = loader.load();
             InsertClassbookController controller = loader.getController();
 
-            this.primaryStage.setScene(new Scene(root));
-            this.primaryStage.showAndWait();
+            this.stage.setScene(new Scene(root));
+            this.stage.showAndWait();
 
             return controller.getClassbook();
         } catch (IOException e) {
             new AlertStage("FXMLoader could not properly load opject graph.\nCheck value: "
-                    + FXML_URL + "\nException:\n" + e.getMessage()).display();
+                    + FXML_URL + "\nException:\n" + e.getMessage()).warn();
             return null;
         }
     }

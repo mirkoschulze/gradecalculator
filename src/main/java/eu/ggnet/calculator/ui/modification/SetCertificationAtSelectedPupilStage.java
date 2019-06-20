@@ -1,6 +1,7 @@
-package eu.ggnet.calculator.ui.insertion;
+package eu.ggnet.calculator.ui.modification;
 
 import eu.ggnet.calculator.model.Certification;
+import eu.ggnet.calculator.model.Pupil;
 import eu.ggnet.calculator.ui.AlertStage;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
@@ -16,15 +17,14 @@ import javafx.stage.Stage;
  *
  * @author Mirko Schulze
  */
-public class GradePupilStage {
+public class SetCertificationAtSelectedPupilStage {
 
-    private static final String FXML_URL = "/fxml/GradePupilScene.fxml";
+    private static final String FXML_URL = "/fxml/SetCertificationAtSelectedPupilScene.fxml";
 
-    private final Stage primaryStage;
+    private final Stage stage;
 
-    public GradePupilStage() {
-        this.primaryStage = new Stage();
-        this.primaryStage.setTitle("Create a certification for the selected pupil");
+    public SetCertificationAtSelectedPupilStage() {
+        this.stage = new Stage();
     }
 
     /**
@@ -37,19 +37,19 @@ public class GradePupilStage {
      *
      * @return Certification
      */
-    public Certification display() {
+    public Certification createCertification() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_URL));
             Parent root = loader.load();
-            GradePupilController controller = loader.getController();
+            SetCertificationAtSelectedPupilController controller = loader.getController();
 
-            this.primaryStage.setScene(new Scene(root));
-            this.primaryStage.showAndWait();
+            this.stage.setScene(new Scene(root));
+            this.stage.showAndWait();
 
             return controller.getCertification();
         } catch (IOException e) {
             new AlertStage("FXMLoader could not properly load opject graph.\nCheck value: "
-                    + FXML_URL + "\nException:\n" + e.getMessage()).display();
+                    + FXML_URL + "\nException:\n" + e.getMessage()).warn();
             return null;
         }
 

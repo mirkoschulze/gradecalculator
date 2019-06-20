@@ -19,7 +19,7 @@ import javafx.stage.Stage;
  */
 public class AlertStage {
 
-    private static final Label WARNING = new Label("Something went wrong.\nBut don't worry. It's your fault, probably.");
+    private static final Label WARNING = new Label("Something went wrong.\nBut don't worry. It's your fault, probably. :)");
     private final Label message;
 
     public AlertStage(String message) {
@@ -30,7 +30,7 @@ public class AlertStage {
      * Displays a new {@link Stage} with {@link Label} and {@link Button}
      * components to indicate failures.
      */
-    public void display() {
+    public void warn() {
         Stage stage = new Stage();
         stage.setTitle("Alert!");
         stage.initModality(Modality.APPLICATION_MODAL);

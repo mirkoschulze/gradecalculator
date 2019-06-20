@@ -44,7 +44,7 @@ public class MainStage extends Application {
             stage.show();
         } catch (IOException e) {
             new AlertStage("FXMLoader could not properly load opject graph.\nCheck value: "
-                    + FXML_URL + "\nException:\n" + e.getMessage()).display();
+                    + FXML_URL + "\nException:\n" + e.getMessage()).warn();
         }
 
     }

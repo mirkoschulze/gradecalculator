@@ -21,11 +21,11 @@ public class InsertPupilStage {
 
     private static final String FXML_URL = "/fxml/InsertPupilScene.fxml";
 
-    private final Stage primaryStage;
+    private final Stage stage;
 
     public InsertPupilStage() {
-        this.primaryStage = new Stage();
-        this.primaryStage.setTitle("Add a pupil");
+        this.stage = new Stage();
+        this.stage.setTitle("Add a pupil");
     }
 
     /**
@@ -38,19 +38,19 @@ public class InsertPupilStage {
      *
      * @return Pupil
      */
-    public Pupil display() {
+    public Pupil createPupil() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_URL));
             Parent root = loader.load();
             InsertPupilController controller = loader.getController();
 
-            this.primaryStage.setScene(new Scene(root));
-            this.primaryStage.showAndWait();
+            this.stage.setScene(new Scene(root));
+            this.stage.showAndWait();
 
             return controller.getPupil();
         } catch (IOException e) {
             new AlertStage("FXMLoader could not properly load opject graph.\nCheck value: "
-                    + FXML_URL + "\nException:\n" + e.getMessage()).display();
+                    + FXML_URL + "\nException:\n" + e.getMessage()).warn();
             return null;
         }
 

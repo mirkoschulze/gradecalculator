@@ -9,7 +9,7 @@
 
 <VBox alignment="CENTER" prefHeight="309.0" prefWidth="445.0" spacing="10.0" 
       xmlns="http://javafx.com/javafx/8.0.201" xmlns:fx="http://javafx.com/fxml/1" 
-      fx:controller="eu.ggnet.calculator.ui.insertion.GradePupilController">
+      fx:controller="eu.ggnet.calculator.ui.modification.SetCertificationAtSelectedPupilController">
     <HBox alignment="CENTER" prefHeight="30.0" prefWidth="338.0">
         <children>
             <Label alignment="CENTER" contentDisplay="CENTER" text="Enter integral valus (0-15) for each subject to add a certification:" />
