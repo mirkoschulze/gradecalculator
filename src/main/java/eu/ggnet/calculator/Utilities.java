@@ -20,13 +20,7 @@ public class Utilities {
      * @return Mark
      */
     public static Mark createMark(int value) {
-        Mark mark = Mark.ZERO;
-        for (Mark m : Mark.values()) {
-            if (m.getHighschoolMark() == value) {
-                mark = m;
-            }
-        }
-        return mark;
+        return Mark.values()[value];
     }
 
 }
