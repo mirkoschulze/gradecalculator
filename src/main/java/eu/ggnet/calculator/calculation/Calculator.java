@@ -20,9 +20,9 @@ public class Calculator {
     }
 
     /**
-     * Counts how often each individual {@link Mark} is given to the
-     * {@link Pupil} mentioned in a {@link Classbook}. Saves the mark with the
-     * most occurencies.
+     * Counts how often each individual {@link Mark} is given for the submitted
+     * {@link Subject} in the submitted {@link Classbook}. Saves the mark with
+     * the most occurencies.
      * <p>
      * Generates and returns a new {@link CalculatedGrade} with the calculated
      * mark and its occurencies as suffix.
@@ -32,10 +32,10 @@ public class Calculator {
      * @return CalculatedGrade
      */
     public static CalculatedGrade calculateAccumulatedGrade(Classbook classbook, Subject subject) {
-        String calculation = "Accumulated grade in for " + classbook.toString() + " = ";
+        String calculation = "Accumulated grade for " + classbook.toString() + " = ";
         int mostOccurencies = 0;
         int iterationStep = 0;
-        if (classbook.getPupils() != null) {
+        if (classbook.getPupils() != null && (!classbook.getPupils().isEmpty())) {
             for (int i = 0; i < Mark.values().length; i++) {
                 int occurencies = 0;
                 for (Pupil pupil : classbook.getPupils()) {
@@ -68,18 +68,16 @@ public class Calculator {
      * @return CalculatedGrade
      */
     public static CalculatedGrade calculateAverageGrade(Classbook classbook, Subject subject) {
-        String calculation = "Average mark in for " + classbook.getClassbookTitle() + " = ";
+        String calculation = "Average grade for " + classbook.getClassbookTitle() + " = ";
         int total = 0;
         int average = 0;
-        if (classbook.getPupils() != null) {
-            if (!classbook.getPupils().isEmpty()) {
-                for (Pupil pupil : classbook.getPupils()) {
-                    if (pupil.getCertification() != null) {
-                        total += pupil.getCertification().getGrades().get(subject.ordinal()).getMark().getHighschoolMark();
-                    }
+        if (classbook.getPupils() != null && (!classbook.getPupils().isEmpty())) {
+            for (Pupil pupil : classbook.getPupils()) {
+                if (pupil.getCertification() != null) {
+                    total += pupil.getCertification().getGrades().get(subject.ordinal()).getMark().getHighschoolMark();
                 }
-                average = total / classbook.getPupils().size();
             }
+            average = total / classbook.getPupils().size();
         }
         return new CalculatedGrade(calculation, new Grade(subject, Mark.values()[average]));
     }
