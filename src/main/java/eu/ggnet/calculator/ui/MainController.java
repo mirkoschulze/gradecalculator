@@ -1,18 +1,20 @@
 package eu.ggnet.calculator.ui;
 
-import eu.ggnet.calculator.calculation.*;
-import eu.ggnet.calculator.model.*;
-import eu.ggnet.calculator.model.Grade.Mark;
+import eu.ggnet.calculator.calculation.CalculatedGrade;
+import eu.ggnet.calculator.calculation.Calculator;
+import eu.ggnet.calculator.model.Certification;
+import eu.ggnet.calculator.model.Classbook;
+import eu.ggnet.calculator.model.Generator;
+import eu.ggnet.calculator.model.Grade;
 import eu.ggnet.calculator.model.Grade.Subject;
+import eu.ggnet.calculator.model.Pupil;
 import eu.ggnet.calculator.ui.confirmation.ConfirmationStage;
 import eu.ggnet.calculator.ui.modification.SetCertificationAtSelectedPupilStage;
 import eu.ggnet.calculator.ui.insertion.InsertClassbookStage;
 import eu.ggnet.calculator.ui.insertion.InsertPupilStage;
-import eu.ggnet.calculator.ui.modification.EnterMarkStage;
 import eu.ggnet.calculator.ui.modification.SelectSubjectStage;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -25,7 +27,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.ToString;
@@ -129,7 +130,7 @@ public class MainController implements Initializable {
     /**
      * If all {@link ComboBox} are selected:
      * <ul><li>generates a {@link CalculatedGrade} to set calculatedGrade</li>
-     * <li>calculatedGrade is added to {@link Text}</li></ul>
+     * <li>calculatedGrade is added to {@link TextArea}</li></ul>
      */
     @FXML
     private void calculateAndPresent() {
@@ -147,7 +148,7 @@ public class MainController implements Initializable {
      * <p>
      * For each {@link Classbook} in classbooks:
      * <ul><li>generates a {@link CalculatedGrade} to set calculatedGrade</li>
-     * <li>calculatedGrade is added to {@link Text} presentation</li></ul>
+     * <li>calculatedGrade is added to {@link TextArea} presentation</li></ul>
      */
     @FXML
     private void calculateAndPresentForEachClassbook() {
@@ -166,7 +167,7 @@ public class MainController implements Initializable {
      * <p>
      * For each {@link Subject}:
      * <ul><li>generates a {@link CalculatedGrade} to set calculatedGrade</li>
-     * <li>calculatedGrade is added to {@link Text} </li></ul>
+     * <li>calculatedGrade is added to {@link TextArea} </li></ul>
      */
     @FXML
     private void calculateAndPresentForEachSubject() {
@@ -180,7 +181,7 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Resets {@link Text} presentation.
+     * Resets {@link TextArea} presentation.
      */
     @FXML
     private void clear() {
@@ -249,8 +250,7 @@ public class MainController implements Initializable {
     private void setCertificationAtSelectedPupil() {
         this.pupilsListView.getSelectionModel().getSelectedItem()
                 .setCertification(new SetCertificationAtSelectedPupilStage().createCertification());
-        this.gradesListView.setItems(FXCollections.observableArrayList(this
-                .pupilsListView.getSelectionModel().getSelectedItem().getCertification().getGrades()));
+        this.gradesListView.setItems(FXCollections.observableArrayList(this.pupilsListView.getSelectionModel().getSelectedItem().getCertification().getGrades()));
         //TODO listener
     }
 
@@ -296,8 +296,8 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Adds a String representation of a {@link CalculatedGrade} to {@link Text}
-     * presentation.
+     * Adds a String representation of a {@link CalculatedGrade} to
+     * {@link TextArea} presentation.
      */
     private void present() {
         StringBuilder sb = new StringBuilder(this.presentation.getText());

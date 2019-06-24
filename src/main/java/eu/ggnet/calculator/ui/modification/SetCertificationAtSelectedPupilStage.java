@@ -7,9 +7,6 @@ import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -28,8 +25,7 @@ public class SetCertificationAtSelectedPupilStage {
     }
 
     /**
-     * Tries to display a new {@link Stage} with {@link Label},
-     * {@link TextField} and {@link Button} components to create a new
+     * Tries to display a new {@link Stage} to create a new
      * {@link Certification}.
      * <p>
      * Catches an {@link IOException} by displaying a new {@link AlertStage}
@@ -52,7 +48,6 @@ public class SetCertificationAtSelectedPupilStage {
                     + FXML_URL + "\nException:\n" + e.getMessage()).warn();
             return null;
         }
-
     }
 
 }

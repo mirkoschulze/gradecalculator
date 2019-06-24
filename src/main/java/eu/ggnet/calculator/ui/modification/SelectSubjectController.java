@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import lombok.Getter;
-
+//TODO all
 /**
  *
  * @author Mirko Schulze

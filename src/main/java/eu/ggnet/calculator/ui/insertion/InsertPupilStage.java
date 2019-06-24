@@ -7,9 +7,6 @@ import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -29,9 +26,7 @@ public class InsertPupilStage {
     }
 
     /**
-     * Tries to display a new {@link Stage} with
-     * {@link TextField}, {@link ComboBox} and {@link Button} components to
-     * create a new {@link Pupil}.
+     * Tries to display a new {@link Stage} to create a new {@link Pupil}.
      * <p>
      * Catches an {@link IOException} by displaying a new {@link AlertStage}
      * with a respective error message.

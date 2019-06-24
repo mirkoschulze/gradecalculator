@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lombok.Getter;
-
+//TODO all
 /**
  *
  * @author Mirko Schulze

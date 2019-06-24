@@ -66,17 +66,18 @@ public class InsertPupilController implements Initializable {
     @FXML
     private void create() {
         try {
+            //TODO no seperate methods needed
             this.validateAge();
             this.validateSex();
             this.validateForename();
             this.validateSurname();
+            //these four
             this.pupil = new Pupil(this.sex, this.age, this.forename, this.surname);
             Stage stage = (Stage) this.createButton.getScene().getWindow();
             stage.close();
         } catch (Exception e) {
             new AlertStage("Not all fields set.\nError:\n" + e.getMessage()).warn();
-        }
-        //TODO
+        }//multi catch
     }
 
     /**

@@ -8,7 +8,7 @@ import lombok.Getter;
 /**
  * Controller class responsible for the logic at {@link ConfirmationStage}.
  * <p>
- * Defines methods foset a boolean.
+ * Defines methods to set a boolean.
  *
  * @author Mirko Schulze
  */

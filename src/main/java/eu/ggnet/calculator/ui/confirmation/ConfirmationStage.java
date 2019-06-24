@@ -5,8 +5,6 @@ import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -28,8 +26,7 @@ public class ConfirmationStage {
     }
 
     /**
-     * Tries to display a new {@link Stage} with a {@link Label} and two
-     * {@link Button} components to confirm or deny an user decision.
+     * Tries to display a new {@link Stage} to confirm or deny an user decision.
      * <p>
      * Catches an {@link IOException} by displaying a new {@link AlertStage}
      * with a respective error message.
@@ -51,7 +48,6 @@ public class ConfirmationStage {
                     + FXML_URL + "\nException:\n" + e.getMessage()).warn();
             return false;
         }
-
     }
 
 }
