@@ -13,6 +13,8 @@ import lombok.Getter;
  * <p>
  * Contains methods to present data in a human-readable format. Overrides
  * {@link Object#toString()} for presentation purposes.
+ * <p>
+ * Contains enums for the different subjects and values of a mark.
  *
  * @author Mirko Schulze
  */
@@ -60,7 +62,7 @@ public class Grade {
     }
 
     /**
-     * Enumeration of courses given at a school.Overrides
+     * Enumeration of courses given at a school. Overrides
      * {@link Object#toString()} for presentation purposes.
      */
     @Getter
@@ -79,7 +81,7 @@ public class Grade {
         /**
          * {@link ComboBox} uses {@link Object#toString()} to display data.
          *
-         * @return Returns a Subjects theme.
+         * @return String
          */
         @Override
         public String toString() {

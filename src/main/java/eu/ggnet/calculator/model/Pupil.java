@@ -96,8 +96,6 @@ public class Pupil implements Comparable<Pupil> {
         public String toString() {
             return this.description;
         }
-        
-        
 
     }
 
