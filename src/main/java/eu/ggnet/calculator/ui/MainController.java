@@ -9,10 +9,10 @@ import eu.ggnet.calculator.model.Grade;
 import eu.ggnet.calculator.model.Grade.Subject;
 import eu.ggnet.calculator.model.Pupil;
 import eu.ggnet.calculator.ui.confirmation.ConfirmationStage;
-import eu.ggnet.calculator.ui.modification.SetCertificationAtSelectedPupilStage;
 import eu.ggnet.calculator.ui.insertion.InsertClassbookStage;
 import eu.ggnet.calculator.ui.insertion.InsertPupilStage;
 import eu.ggnet.calculator.ui.modification.SelectSubjectStage;
+import eu.ggnet.calculator.ui.modification.SetCertificationAtSelectedPupilStage;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class MainController implements Initializable {
-
+    
     private List<Classbook> classbooks;
     private Classbook selectedClassbook;
     private Subject selectedSubject;
@@ -124,7 +124,6 @@ public class MainController implements Initializable {
                 this.gradesListView.setItems(FXCollections.emptyObservableList());
             }
         });
-        //TODO listener new pupil new classbook new certification docu
     }
 
     /**
@@ -209,7 +208,6 @@ public class MainController implements Initializable {
         Pupil pupil = new InsertPupilStage().createPupil();
         this.selectedClassbook.getPupils().add(pupil);
         this.pupilsListView.setItems(FXCollections.observableArrayList(this.selectedClassbook.getPupils()));
-        //TODO listener
     }
 
     /**
@@ -219,7 +217,6 @@ public class MainController implements Initializable {
     private void removePupil() {
         this.selectedClassbook.getPupils().remove(this.pupilsListView.getSelectionModel().getSelectedItem());
         this.pupilsListView.setItems(FXCollections.observableArrayList(this.selectedClassbook.getPupils()));
-        //TODO listener
     }
 
     /**
@@ -232,7 +229,6 @@ public class MainController implements Initializable {
         Classbook classbook = new InsertClassbookStage().createClassbook();
         this.classbooks.add(classbook);
         this.classbookSelectionBox.setItems(FXCollections.observableArrayList(this.classbooks));
-        //TODO listener
     }
 
     /**
@@ -243,7 +239,6 @@ public class MainController implements Initializable {
     private void removeClassbook() {
         this.classbooks.remove(this.selectedClassbook);
         this.classbookSelectionBox.setItems(FXCollections.observableArrayList(this.classbooks));
-        //TODO listener
     }
 
     @FXML
@@ -251,7 +246,6 @@ public class MainController implements Initializable {
         this.pupilsListView.getSelectionModel().getSelectedItem()
                 .setCertification(new SetCertificationAtSelectedPupilStage().createCertification());
         this.gradesListView.setItems(FXCollections.observableArrayList(this.pupilsListView.getSelectionModel().getSelectedItem().getCertification().getGrades()));
-        //TODO listener
     }
 
     @FXML
@@ -262,7 +256,6 @@ public class MainController implements Initializable {
         for (int i = 0; i < gradeArray.length; i++) {
             gradeArray[i] = grades.get(i);
         }
-        //TODO ListOfGrades class
 
         Subject subject = new SelectSubjectStage().selectSubject();
 //        Mark mark = new EnterMarkStage().enterMark();
@@ -272,7 +265,6 @@ public class MainController implements Initializable {
 //        pupil.setCertification(new Certification(pupil, grades));
 //        this.gradesListView.setItems(FXCollections.observableArrayList(this
 //                .pupilsListView.getSelectionModel().getSelectedItem().getCertification().getGrades()));
-        //TODO listener
     }
 
     /**
