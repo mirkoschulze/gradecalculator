@@ -2,7 +2,6 @@ package eu.ggnet.calculator.ui.insertion;
 
 import eu.ggnet.calculator.model.Classbook;
 import eu.ggnet.calculator.model.Pupil;
-import eu.ggnet.calculator.ui.AlertStage;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,21 +45,18 @@ public class InsertClassbookController implements Initializable {
     }
 
     /**
-     * Tries to create a new {@link Classbook} and close the root {@link Stage}.
+     * If a name is entered into the {@link TextField}, a new {@link Classbook}
+     * will be created with that name and an empty list for {@link Pupil}.
      * <p>
-     * Catches an {@link Exception} by displaying a new {@link AlertStage} with
-     * a respective error message.
+     * The root {@link Stage} will be closed afterwards.
      */
     @FXML
     private void create() {
-        try {
+        if (!this.nameInput.getText().isEmpty()) {
             this.classbook = new Classbook(this.nameInput.getText(), this.pupils);
             Stage stage = (Stage) this.createButton.getScene().getWindow();
             stage.close();
-        } catch (Exception e) {
-            new AlertStage("No valid name entered.\nError:\n" + e.getMessage()).warn();
         }
-        //TODO validation
     }
 
     /**

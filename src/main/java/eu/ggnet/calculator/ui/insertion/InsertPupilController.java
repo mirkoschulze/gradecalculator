@@ -65,21 +65,39 @@ public class InsertPupilController implements Initializable {
      */
     @FXML
     private void create() {
-        try {
-            //TODO no seperate methods needed
-            this.validateAge();
-            this.validateSex();
-            this.validateForename();
-            this.validateSurname();
-            //these four
-            this.pupil = new Pupil(this.sex, this.age, this.forename, this.surname);
-            Stage stage = (Stage) this.createButton.getScene().getWindow();
-            stage.close();
-        } catch (Exception e) {
-            new AlertStage("Not all fields set.\nError:\n" + e.getMessage()).warn();
-        }//multi catch
+        if (this.inputsAreEntered()) {
+            this.forename = this.forenameInput.getText().replaceAll("\\d", "").trim();
+            this.surname = this.surnameInput.getText().replaceAll("\\d", "").trim();
+            try {
+                this.age = Integer.parseInt(this.ageInput.getText());
+            } catch (NumberFormatException e) {
+                new AlertStage("Could not set age.").warn();
+            }
+            this.sex = this.selectSexBox.getSelectionModel().getSelectedItem();
+            if (this.valuesAreSet()) {
+                this.pupil = new Pupil(this.sex, this.age, this.forename, this.surname);
+                Stage stage = (Stage) createButton.getScene().getWindow();
+                stage.close();
+            }
+        } else {
+            new AlertStage("Plese check if all values are entered.").warn();
+        }
     }
 
+    private boolean inputsAreEntered() {
+        return this.forenameInput.getText() != null
+                && this.surnameInput.getText() != null
+                && this.ageInput.getText() != null
+                && this.selectSexBox.getSelectionModel().getSelectedItem() != null;
+    }
+
+    private boolean valuesAreSet() {
+        return this.forename != null 
+                && this.surname != null 
+                && this.age != 0 
+                && this.sex != null;
+    }
+    
     /**
      * Closes the root {@link Stage}.
      */
@@ -87,42 +105,6 @@ public class InsertPupilController implements Initializable {
     private void cancel() {
         Stage stage = (Stage) this.cancelButton.getScene().getWindow();
         stage.close();
-    }
-
-    private void validateAge() {
-        //TODO
-        try {
-            this.age = Integer.parseInt(this.ageInput.getText());
-        } catch (NumberFormatException e) {
-            new AlertStage("Could not set age.").warn();
-        }
-    }
-
-    private void validateForename() {
-        //TODO
-        try {
-            this.forename = this.forenameInput.getText();
-        } catch (Exception e) {
-            new AlertStage("Could not set forename").warn();
-        }
-    }
-
-    private void validateSurname() {
-        //TODO
-        try {
-            this.surname = this.surnameInput.getText();
-        } catch (Exception e) {
-            new AlertStage("Could not set surname").warn();
-        }
-    }
-
-    private void validateSex() {
-        //TODO
-        try {
-            this.sex = this.selectSexBox.getSelectionModel().getSelectedItem();
-        } catch (Exception e) {
-            new AlertStage("Could not set sex").warn();
-        }
     }
 
 }
