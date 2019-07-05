@@ -12,7 +12,7 @@ public class Utilities {
     private Utilities() {
 
     }
-    //TODO new class converter
+
     /**
      * Converts an integer value into a {@link Mark}.
      *
