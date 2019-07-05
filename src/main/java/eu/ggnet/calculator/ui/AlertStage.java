@@ -25,6 +25,7 @@ public class AlertStage {
 
     public AlertStage(String message) {
         this.message = new Label(message);
+        this.message.setWrapText(true);
     }
 
     /**
