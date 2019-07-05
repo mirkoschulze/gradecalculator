@@ -8,7 +8,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -65,11 +64,6 @@
             <children>
                 <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Selected pupil view:" textAlignment="RIGHT" />
                 <ListView fx:id="gradesListView" prefHeight="495.0" prefWidth="245.0" />
-                <ProgressIndicator fx:id="indicator" prefHeight="47.0" prefWidth="41.0" progress="0.0">
-                    <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </VBox.margin>
-                </ProgressIndicator>
             </children>
             <BorderPane.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
