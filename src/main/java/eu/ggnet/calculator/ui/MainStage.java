@@ -8,14 +8,16 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Main class with start() as starting point and main() as fallback. Defines the
- * layout. Adds control components to container components.
+ * Main class with start() as starting point and main() as fallback.
+ * <p>
+ * Displays a {@link Stage} to interact with an user.
  *
  * @author Mirko Schulze
  */
 public class MainStage extends Application {
+    //TODO - MainScene.fxml: reconsider layout
 
-    private static final String FXML_URL = "/fxml/MainScene.fxml";
+    private static final String FXML_PATH = "/fxml/MainScene.fxml";
 
     /**
      * The main() method is ignored in correctly deployed JavaFX application.
@@ -40,11 +42,11 @@ public class MainStage extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            stage.setScene(new Scene(new FXMLLoader(getClass().getResource(FXML_URL)).load()));
+            stage.setScene(new Scene(new FXMLLoader(getClass().getResource(FXML_PATH)).load()));
             stage.show();
         } catch (IOException e) {
             new AlertStage("FXMLoader could not properly load opject graph.\nCheck value: "
-                    + FXML_URL + "\nException:\n" + e.getMessage()).warn();
+                    + FXML_PATH + "\nException:\n" + e.getMessage()).warn();
         }
 
     }

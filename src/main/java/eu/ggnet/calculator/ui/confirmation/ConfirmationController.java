@@ -7,15 +7,13 @@ import lombok.Getter;
 
 /**
  * Controller class responsible for the logic at {@link ConfirmationStage}.
- * <p>
- * Defines methods to set a boolean.
  *
  * @author Mirko Schulze
  */
 public class ConfirmationController {
 
     @Getter
-    private boolean answer;
+    private boolean confirmed;
 
     @FXML
     private Button confirmButton;
@@ -27,7 +25,7 @@ public class ConfirmationController {
      */
     @FXML
     private void confirm() {
-        this.answer = true;
+        this.confirmed = true;
         Stage stage = (Stage) this.confirmButton.getScene().getWindow();
         stage.close();
     }
@@ -37,7 +35,7 @@ public class ConfirmationController {
      */
     @FXML
     private void deny() {
-        this.answer = false;
+        this.confirmed = false;
         Stage stage = (Stage) this.denyButton.getScene().getWindow();
         stage.close();
     }

@@ -15,7 +15,7 @@ import javafx.stage.Stage;
  */
 public class ConfirmationStage {
 
-    private static final String FXML_URL = "/fxml/ConfirmationScene.fxml";
+    private static final String FXML_PATH = "/fxml/ConfirmationScene.fxml";
 
     private final Stage stage;
 
@@ -35,17 +35,17 @@ public class ConfirmationStage {
      */
     public boolean confirm() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_URL));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_PATH));
             Parent root = loader.load();
             ConfirmationController controller = loader.getController();
 
             this.stage.setScene(new Scene(root));
             this.stage.showAndWait();
 
-            return controller.isAnswer();
+            return controller.isConfirmed();
         } catch (IOException e) {
             new AlertStage("FXMLoader could not properly load opject graph.\nCheck value: "
-                    + FXML_URL + "\nException:\n" + e.getMessage()).warn();
+                    + FXML_PATH + "\nException:\n" + e.getMessage()).warn();
             return false;
         }
     }
