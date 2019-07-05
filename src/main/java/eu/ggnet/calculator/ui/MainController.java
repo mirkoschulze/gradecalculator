@@ -9,12 +9,13 @@ import eu.ggnet.calculator.model.Grade;
 import eu.ggnet.calculator.model.Grade.Subject;
 import eu.ggnet.calculator.model.Pupil;
 import eu.ggnet.calculator.ui.confirmation.ConfirmationStage;
-import eu.ggnet.calculator.ui.insertion.InsertClassbookStage;
-import eu.ggnet.calculator.ui.insertion.InsertPupilStage;
-import eu.ggnet.calculator.ui.modification.SelectSubjectStage;
-import eu.ggnet.calculator.ui.modification.SetCertificationAtSelectedPupilStage;
+import eu.ggnet.calculator.ui.create.CreateClassbookStage;
+import eu.ggnet.calculator.ui.create.CreatePupilStage;
+import eu.ggnet.calculator.ui.update.UpdateCertificationStage;
+import eu.ggnet.calculator.ui.update.UpdateGradeStage;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -25,7 +26,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import lombok.Getter;
@@ -41,13 +41,12 @@ import lombok.ToString;
 @Getter
 @ToString
 public class MainController implements Initializable {
-    
+
     private List<Classbook> classbooks;
     private Classbook selectedClassbook;
     private Subject selectedSubject;
     private String selectedCalculation;
     private CalculatedGrade calculatedGrade;
-    private boolean selectedPupil;
 
     @FXML
     private ComboBox<Classbook> classbookSelectionBox;
@@ -57,8 +56,6 @@ public class MainController implements Initializable {
     private ComboBox<String> calculationSelectionBox;
     @FXML
     private TextArea presentation;
-    @FXML
-    private ProgressIndicator indicator;
     @FXML
     private ListView<Pupil> pupilsListView;
     @FXML
@@ -79,6 +76,7 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        //auto-generate classbooks to simulate
         this.classbooks = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             this.classbooks.add(Generator.generateClassbook());
@@ -89,6 +87,7 @@ public class MainController implements Initializable {
             }
         }
 
+        //listener to show pupils when a classbook is selected
         this.classbookSelectionBox.setItems(FXCollections.observableArrayList(this.classbooks));
         this.classbookSelectionBox.getSelectionModel().selectedItemProperty()
                 .addListener((value, oldValue, newValue) -> {
@@ -98,21 +97,21 @@ public class MainController implements Initializable {
                     } catch (NullPointerException e) {
                         this.gradesListView.setItems(FXCollections.emptyObservableList());
                     }
-                    this.indicator.setProgress(this.indicator.getProgress() + 0.33);
                 });
 
+        //TODO - bind checkBox to a Property?
         this.subjectSelectionBox.setItems(FXCollections.observableArrayList(Subject.values()));
         this.subjectSelectionBox.getSelectionModel().selectedItemProperty().addListener((value, oldValue, newValue) -> {
             this.selectedSubject = newValue;
-            this.indicator.setProgress(this.indicator.getProgress() + 0.33);
         });
 
+        //TODO - bind checkBox to a Property?
         this.calculationSelectionBox.setItems(FXCollections.observableArrayList("Average", "Accumulation"));
         this.calculationSelectionBox.getSelectionModel().selectedItemProperty().addListener((value, oldValue, newValue) -> {
             this.selectedCalculation = newValue;
-            this.indicator.setProgress(this.indicator.getProgress() + 0.34);
         });
 
+        //listener to show grades when a pupil is selected
         this.pupilsListView.getSelectionModel().selectedItemProperty().addListener((value, oldValue, newValue) -> {
             try {
                 this.gradesListView.setItems(FXCollections.observableArrayList(this.pupilsListView
@@ -124,147 +123,6 @@ public class MainController implements Initializable {
                 this.gradesListView.setItems(FXCollections.emptyObservableList());
             }
         });
-    }
-
-    /**
-     * If all {@link ComboBox} are selected:
-     * <ul><li>generates a {@link CalculatedGrade} to set calculatedGrade</li>
-     * <li>calculatedGrade is added to {@link TextArea}</li></ul>
-     */
-    @FXML
-    private void calculateAndPresent() {
-        if (this.selectedCalculation != null
-                && this.selectedSubject != null
-                && this.selectedClassbook != null) {
-            this.calculate(this.selectedClassbook, this.selectedSubject);
-            this.present();
-        }
-    }
-
-    /**
-     * If {@link ComboBox} calculationSelection and subjectSelection are
-     * selected:
-     * <p>
-     * For each {@link Classbook} in classbooks:
-     * <ul><li>generates a {@link CalculatedGrade} to set calculatedGrade</li>
-     * <li>calculatedGrade is added to {@link TextArea} presentation</li></ul>
-     */
-    @FXML
-    private void calculateAndPresentForEachClassbook() {
-        if (this.selectedCalculation != null
-                && this.selectedSubject != null) {
-            for (Classbook classbook : classbooks) {
-                this.calculate(classbook, this.selectedSubject);
-                this.present();
-            }
-        }
-    }
-
-    /**
-     * If {@link ComboBox} calculationSelection and classbookSelection are
-     * selected:
-     * <p>
-     * For each {@link Subject}:
-     * <ul><li>generates a {@link CalculatedGrade} to set calculatedGrade</li>
-     * <li>calculatedGrade is added to {@link TextArea} </li></ul>
-     */
-    @FXML
-    private void calculateAndPresentForEachSubject() {
-        if (this.selectedCalculation != null
-                && this.selectedClassbook != null) {
-            for (Subject value : Subject.values()) {
-                this.calculate(this.selectedClassbook, value);
-                this.present();
-            }
-        }
-    }
-
-    /**
-     * Resets {@link TextArea} presentation.
-     */
-    @FXML
-    private void clear() {
-        this.presentation.setText("");
-    }
-
-    /**
-     * Closes the root stage after confirming the decision.
-     */
-    @FXML
-    private void close() {
-        if (new ConfirmationStage().confirm()) {
-            Stage stage = (Stage) this.closeButton.getScene().getWindow();
-            stage.close();
-        }
-    }
-
-    /**
-     * Displays a new {@link InsertPupilStage} to create a new {@link Pupil}.
-     * That Pupil is added to the {@link Classbook}, selected via
-     * {@link ComboBox}.
-     */
-    @FXML
-    private void addPupil() {
-        Pupil pupil = new InsertPupilStage().createPupil();
-        this.selectedClassbook.getPupils().add(pupil);
-        this.pupilsListView.setItems(FXCollections.observableArrayList(this.selectedClassbook.getPupils()));
-    }
-
-    /**
-     * Removes the selected {@link Pupil} from the selected {@link Classbook}.
-     */
-    @FXML
-    private void removePupil() {
-        this.selectedClassbook.getPupils().remove(this.pupilsListView.getSelectionModel().getSelectedItem());
-        this.pupilsListView.setItems(FXCollections.observableArrayList(this.selectedClassbook.getPupils()));
-    }
-
-    /**
-     * Displays a new {@link InsertClassbookStage} to create a new
-     * {@link Classbook}. That Classbook is added to the list of available
-     * Classbooks, selected via {@link ComboBox}.
-     */
-    @FXML
-    private void addClassbook() {
-        Classbook classbook = new InsertClassbookStage().createClassbook();
-        this.classbooks.add(classbook);
-        this.classbookSelectionBox.setItems(FXCollections.observableArrayList(this.classbooks));
-    }
-
-    /**
-     * Removes the selected {@link Classbook} from the list of available
-     * Classbooks.
-     */
-    @FXML
-    private void removeClassbook() {
-        this.classbooks.remove(this.selectedClassbook);
-        this.classbookSelectionBox.setItems(FXCollections.observableArrayList(this.classbooks));
-    }
-
-    @FXML
-    private void setCertificationAtSelectedPupil() {
-        this.pupilsListView.getSelectionModel().getSelectedItem()
-                .setCertification(new SetCertificationAtSelectedPupilStage().createCertification());
-        this.gradesListView.setItems(FXCollections.observableArrayList(this.pupilsListView.getSelectionModel().getSelectedItem().getCertification().getGrades()));
-    }
-
-    @FXML
-    private void setGradeAtSelectedPupil() {
-        Pupil pupil = this.pupilsListView.getSelectionModel().getSelectedItem();
-        List<Grade> grades = pupil.getCertification().getGrades();
-        Grade[] gradeArray = new Grade[6];
-        for (int i = 0; i < gradeArray.length; i++) {
-            gradeArray[i] = grades.get(i);
-        }
-
-        Subject subject = new SelectSubjectStage().selectSubject();
-//        Mark mark = new EnterMarkStage().enterMark();
-//        gradeArray[subject.ordinal()] = new Grade(subject, mark);
-//
-//        grades = Arrays.asList(gradeArray);
-//        pupil.setCertification(new Certification(pupil, grades));
-//        this.gradesListView.setItems(FXCollections.observableArrayList(this
-//                .pupilsListView.getSelectionModel().getSelectedItem().getCertification().getGrades()));
     }
 
     /**
@@ -295,6 +153,173 @@ public class MainController implements Initializable {
         StringBuilder sb = new StringBuilder(this.presentation.getText());
         sb.append(this.calculatedGrade.toSimpleLine());
         this.presentation.setText(new String(sb).concat("\n"));
+    }
+
+    /**
+     * If all {@link ComboBox} are selected:
+     * <ul><li>generates a {@link CalculatedGrade} to set calculatedGrade</li>
+     * <li>calculatedGrade is added to {@link TextArea}</li></ul>
+     */
+    @FXML
+    private void calculateAndPresent() {
+        if (this.selectedCalculation != null
+                && this.selectedSubject != null
+                && this.selectedClassbook != null) {
+            this.calculate(this.selectedClassbook, this.selectedSubject);
+            this.present();
+        }
+    }
+
+    /**
+     * If {@link ComboBox} calculationSelection and subjectSelection are
+     * selected:
+     * <p>
+     * For each {@link Classbook} in classbooks:
+     * <ul><li>generates a {@link CalculatedGrade} to set calculatedGrade</li>
+     * <li>calculatedGrade is added to {@link TextArea} presentation</li></ul>
+     */
+    @FXML
+    private void calculateAndPresentForEachClassbook() {
+        if (this.selectedCalculation != null
+                && this.selectedSubject != null) {
+            this.classbooks.forEach(c -> {
+                this.calculate(c, this.selectedSubject);
+                this.present();
+            });
+        }
+    }
+
+    /**
+     * If {@link ComboBox} calculationSelection and classbookSelection are
+     * selected:
+     * <p>
+     * For each {@link Subject}:
+     * <ul><li>generates a {@link CalculatedGrade} to set calculatedGrade</li>
+     * <li>calculatedGrade is added to {@link TextArea} </li></ul>
+     */
+    @FXML
+    private void calculateAndPresentForEachSubject() {
+        if (this.selectedCalculation != null
+                && this.selectedClassbook != null) {
+            Arrays.asList(Subject.values()).forEach(s -> {
+                this.calculate(this.selectedClassbook, s);
+                this.present();
+            });
+        }
+    }
+
+    /**
+     * Resets {@link TextArea} presentation.
+     */
+    @FXML
+    private void clear() {
+        this.presentation.setText("");
+    }
+
+    /**
+     * Displays a new {@link CreateClassbookStage} to create a new
+     * {@link Classbook}.
+     * <p>
+     * If a Classbook is returned, that Classbook is added to the available
+     * Classbooks.
+     */
+    @FXML
+    private void addClassbook() {
+        Classbook classbook = new CreateClassbookStage().createClassbook();
+        if (classbook != null) {
+            this.classbooks.add(classbook);
+            this.classbookSelectionBox.setItems(FXCollections.observableArrayList(this.classbooks));
+        }
+    }
+
+    /**
+     * Removes the selected {@link Classbook} from the list of available
+     * Classbooks.
+     */
+    @FXML
+    private void removeClassbook() {
+        try {
+            this.classbooks.remove(this.selectedClassbook);
+            this.classbookSelectionBox.setItems(FXCollections.observableArrayList(this.classbooks));
+            this.pupilsListView.setItems(FXCollections.emptyObservableList());
+        } catch (NullPointerException e) {
+            new AlertStage("No classbook selected.\n\nException message:\n" + e.getMessage()).warn();
+        }
+    }
+
+    /**
+     * Displays a new {@link CreatePupilStage} to create a new {@link Pupil}.
+     * <p>
+     * If a Pupil is returned, that Pupil is addded to the selected Classbook.
+     */
+    @FXML
+    private void addPupil() {
+        Pupil pupil = new CreatePupilStage().createPupil();
+        if (pupil != null) {
+            this.selectedClassbook.getPupils().add(pupil);
+            this.pupilsListView.setItems(FXCollections.observableArrayList(this.selectedClassbook.getPupils()));
+        }
+    }
+
+    /**
+     * Removes the selected {@link Pupil} from the selected {@link Classbook}.
+     */
+    @FXML
+    private void removePupil() {
+        try {
+            this.selectedClassbook.getPupils().remove(this.pupilsListView.getSelectionModel().getSelectedItem());
+            this.pupilsListView.setItems(FXCollections.observableArrayList(this.selectedClassbook.getPupils()));
+        } catch (NullPointerException e) {
+            new AlertStage("No pupil selected.\n\nException message:\n" + e.getMessage()).warn();
+        }
+
+    }
+
+    @FXML
+    private void setCertificationAtSelectedPupil() {
+        try {
+            this.pupilsListView.getSelectionModel().getSelectedItem()
+                    .setCertification(new UpdateCertificationStage().createCertification());
+            this.gradesListView.setItems(FXCollections.observableArrayList(this.pupilsListView.getSelectionModel().getSelectedItem().getCertification().getGrades()));
+        } catch (NullPointerException e) {
+            new AlertStage("No pupil selected.\n\nException message:\n" + e.getMessage()).warn();
+        }
+
+    }
+
+    @FXML
+    private void setGradeAtSelectedPupil() {
+        try {
+            Pupil pupil = this.pupilsListView.getSelectionModel().getSelectedItem();
+            List<Grade> grades = pupil.getCertification().getGrades();
+            Grade[] gradeArray = new Grade[6];
+            for (int i = 0; i < gradeArray.length; i++) {
+                gradeArray[i] = grades.get(i);
+            }
+
+            Grade newGrade = new UpdateGradeStage().updateGrade();
+            Subject subject = newGrade.getSubject();
+
+            gradeArray[subject.ordinal()] = newGrade;
+
+            grades = Arrays.asList(gradeArray);
+            pupil.setCertification(new Certification(pupil, grades));
+            this.gradesListView.setItems(FXCollections.observableArrayList(this.pupilsListView.getSelectionModel().getSelectedItem().getCertification().getGrades()));
+        } catch (NullPointerException e) {
+            new AlertStage("No pupil selected.\n\nException message:\n" + e.getMessage()).warn();
+        }
+
+    }
+
+    /**
+     * Closes the root stage after confirming the decision.
+     */
+    @FXML
+    private void close() {
+        if (new ConfirmationStage().confirm()) {
+            Stage stage = (Stage) this.closeButton.getScene().getWindow();
+            stage.close();
+        }
     }
 
 }
