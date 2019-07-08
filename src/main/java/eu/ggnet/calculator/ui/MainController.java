@@ -17,6 +17,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -219,16 +220,19 @@ public class MainController implements Initializable {
      */
     @FXML
     private void addClassbook() {
-        Classbook classbook = new CreateClassbookStage().createClassbook();
-        if (classbook != null) {
-            this.classbooks.add(classbook);
+        Optional<Classbook> classbook = new CreateClassbookStage().createClassbook();
+        if (classbook.isPresent()) {
+            this.classbooks.add(classbook.get());
             this.classbookSelectionBox.setItems(FXCollections.observableArrayList(this.classbooks));
         }
     }
 
     /**
-     * Removes the selected {@link Classbook} from the list of available
+     * Tries to remove the selected {@link Classbook} from the list of available
      * Classbooks.
+     * <p>
+     * Catches a {@link NullPointerException} by displaying a new
+     * {@link AlertStage} with a respective error message.
      */
     @FXML
     private void removeClassbook() {
@@ -242,16 +246,20 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Displays a new {@link CreatePupilStage} to create a new {@link Pupil}.
+     * Tries to displays a new {@link CreatePupilStage} to create a new
+     * {@link Pupil} at a {@link Classbook}.
      * <p>
      * If a Pupil is returned, that Pupil is addded to the selected Classbook.
+     * <p>
+     * Catches a {@link NullPointerException} by dispülaying a new
+     * {@link AlertStage} with a respective error message.
      */
     @FXML
     private void addPupil() {
-        Pupil pupil = new CreatePupilStage().createPupil();
         try {
-            if (pupil != null) {
-                this.selectedClassbook.getPupils().add(pupil);
+            Optional<Pupil> pupil = new CreatePupilStage().createPupil();
+            if (pupil.isPresent()) {
+                this.selectedClassbook.getPupils().add(pupil.get());
                 this.pupilsListView.setItems(FXCollections.observableArrayList(this.selectedClassbook.getPupils()));
             }
         } catch (NullPointerException e) {
@@ -261,7 +269,11 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Removes the selected {@link Pupil} from the selected {@link Classbook}.
+     * Tries to remove the selected {@link Pupil} from the selected
+     * {@link Classbook}.
+     * <p>
+     * Catches a {@link NullPointerException} by displaying a new
+     * {@link AlertStage} with a respective error message.
      */
     @FXML
     private void removePupil() {
@@ -274,46 +286,57 @@ public class MainController implements Initializable {
 
     }
 
+    /**
+     * Tries to display a new {@link UpdateCertificationStage} to create a new
+     * {@link Certification} at a {@link Pupil}.
+     * <p>
+     * If a Certification is returned, the Certification is set at the selected
+     * Pupil.
+     * <p>
+     * Catches a {@link NullPointerException} by displaying a new
+     * {@link AlertStage} with a respective error message.
+     */
     @FXML
     private void setCertificationAtSelectedPupil() {
         try {
-            this.pupilsListView.getSelectionModel().getSelectedItem()
-                    .setCertification(new UpdateCertificationStage().createCertification());
-            this.gradesListView.setItems(FXCollections.observableArrayList(this.pupilsListView.getSelectionModel().getSelectedItem().getCertification().getGrades()));
-        } catch (NullPointerException e) {
-            //TODO - cancel results in null (optional?)
-            new AlertStage("No pupil selected.\n\nException message:\n" + e.getMessage()).warn();
-        }
-
-    }
-
-    @FXML
-    private void setGradeAtSelectedPupil() {
-        try {
-            Pupil pupil = this.pupilsListView.getSelectionModel().getSelectedItem();
-            List<Grade> grades = pupil.getCertification().getGrades();
-            Grade[] gradeArray = new Grade[6];
-            for (int i = 0; i < gradeArray.length; i++) {
-                gradeArray[i] = grades.get(i);
+            Optional<Certification> certification = new UpdateCertificationStage().createCertification();
+            if (certification.isPresent()) {
+                this.pupilsListView.getSelectionModel().getSelectedItem().setCertification(certification.get());
+                this.gradesListView.setItems(FXCollections.observableArrayList(this.pupilsListView.getSelectionModel().getSelectedItem().getCertification().getGrades()));
             }
-
-            Grade newGrade = new UpdateGradeStage().updateGrade();
-            Subject subject = newGrade.getSubject();
-
-            gradeArray[subject.ordinal()] = newGrade;
-
-            grades = Arrays.asList(gradeArray);
-            pupil.setCertification(new Certification(pupil, grades));
-            this.gradesListView.setItems(FXCollections.observableArrayList(this.pupilsListView.getSelectionModel().getSelectedItem().getCertification().getGrades()));
         } catch (NullPointerException e) {
-            //TODO - cancel results in null (optional?)
             new AlertStage("No pupil selected.\n\nException message:\n" + e.getMessage()).warn();
         }
 
     }
 
     /**
-     * Closes the root stage after confirming the decision.
+     * Tries to display a new {@link UpdateGradeStage} to create a new
+     * {@link Grade} for a {@link Certification} at a {@link Pupil}.
+     * <p>
+     * If a Grade is returned, a new Certification with the old values and the
+     * newly created Grade is set at the selected Pupil.
+     */
+    @FXML
+    private void setGradeAtSelectedPupil() {
+        try {
+            Pupil pupil = this.pupilsListView.getSelectionModel().getSelectedItem();
+            List<Grade> grades = pupil.getCertification().getGrades();
+            Optional<Grade> grade = new UpdateGradeStage().updateGrade();
+            if (grade.isPresent()) {
+                grades.set(grade.get().getSubject().ordinal(), grade.get());
+                pupil.setCertification(new Certification(pupil, grades));
+                this.gradesListView.setItems(FXCollections.observableArrayList(this.pupilsListView.getSelectionModel().getSelectedItem().getCertification().getGrades()));
+            }
+        } catch (NullPointerException e) {
+            new AlertStage("No pupil selected.\n\nException message:\n" + e.getMessage()).warn();
+        }
+
+    }
+
+    /**
+     * Displays a new {@link ConfirmationStage} to confirm the close request.
+     * Closes the root {@link Stage} when the event is confirmed.
      */
     @FXML
     private void close() {
