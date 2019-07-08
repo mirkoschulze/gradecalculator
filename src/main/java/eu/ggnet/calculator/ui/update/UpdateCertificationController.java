@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,7 +31,10 @@ public class UpdateCertificationController implements Initializable {
     private List<Grade> grades;
     @Getter
     private Certification certification;
+    private boolean justNowDisplayed;
 
+    @FXML
+    private VBox parentContainer;
     @FXML
     private TextField engInput;
     @FXML
@@ -57,6 +61,13 @@ public class UpdateCertificationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.grades = new ArrayList<>();
+        this.justNowDisplayed = true;
+        this.engInput.focusedProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (newValue && this.justNowDisplayed) {
+                this.parentContainer.requestFocus();
+                this.justNowDisplayed = false;
+            }
+        });
     }
 
     /**
@@ -105,7 +116,7 @@ public class UpdateCertificationController implements Initializable {
         try {
             this.grades.add(new Grade(Subject.ENG, Utilities.createMark(Integer.parseInt(this.engInput.getText()))));
         } catch (NumberFormatException e) {
-            new AlertStage("Could not properly resolve input.\nError:\n" + e.getMessage()).warn();
+            new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
         }
     }
 
@@ -120,7 +131,7 @@ public class UpdateCertificationController implements Initializable {
         try {
             this.grades.add(new Grade(Subject.IT_S, Utilities.createMark(Integer.parseInt(this.itsInput.getText()))));
         } catch (NumberFormatException e) {
-            new AlertStage("Could not properly resolve input.\nError:\n" + e.getMessage()).warn();
+            new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
         }
     }
 
@@ -135,7 +146,7 @@ public class UpdateCertificationController implements Initializable {
         try {
             this.grades.add(new Grade(Subject.IT_W, Utilities.createMark(Integer.parseInt(this.itwInput.getText()))));
         } catch (NumberFormatException e) {
-            new AlertStage("Could not properly resolve input.\nError:\n" + e.getMessage()).warn();
+            new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
         }
     }
 
@@ -150,7 +161,7 @@ public class UpdateCertificationController implements Initializable {
         try {
             this.grades.add(new Grade(Subject.SOC, Utilities.createMark(Integer.parseInt(this.socInput.getText()))));
         } catch (NumberFormatException e) {
-            new AlertStage("Could not properly resolve input.\nError:\n" + e.getMessage()).warn();
+            new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
         }
     }
 
@@ -165,7 +176,7 @@ public class UpdateCertificationController implements Initializable {
         try {
             this.grades.add(new Grade(Subject.DEV, Utilities.createMark(Integer.parseInt(this.devInput.getText()))));
         } catch (NumberFormatException e) {
-            new AlertStage("Could not properly resolve input.\nError:\n" + e.getMessage()).warn();
+            new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
         }
     }
 
@@ -180,7 +191,7 @@ public class UpdateCertificationController implements Initializable {
         try {
             this.grades.add(new Grade(Subject.ORGA, Utilities.createMark(Integer.parseInt(this.orgaInput.getText()))));
         } catch (NumberFormatException e) {
-            new AlertStage("Could not properly resolve input.\nError:\n" + e.getMessage()).warn();
+            new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
         }
     }
 
