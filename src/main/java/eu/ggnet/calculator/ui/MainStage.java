@@ -1,5 +1,6 @@
 package eu.ggnet.calculator.ui;
 
+import eu.ggnet.calculator.Utilities;
 import java.io.IOException;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -43,12 +44,13 @@ public class MainStage extends Application {
     @Override
     public void start(Stage stage) {
         //TODO - threads, Platform. ... 
+        //TODO - css
         try {
             stage.setScene(new Scene(new FXMLLoader(getClass().getResource(FXML_PATH)).load()));
             stage.show();
         } catch (IOException e) {
-            new AlertStage("FXMLoader could not properly load opject graph.\nCheck value: "
-                    + FXML_PATH + "\n\nException message:\n" + e.getMessage()).warn();
+            Utilities.alertWarn("FXMLoader could not properly load opject graph.\nCheck value: "
+                    + FXML_PATH + "\nException message:\n" + e.getMessage());
         }
 
     }

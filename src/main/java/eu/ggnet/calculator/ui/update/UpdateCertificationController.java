@@ -5,7 +5,6 @@ import eu.ggnet.calculator.model.Certification;
 import eu.ggnet.calculator.model.Grade;
 import eu.ggnet.calculator.model.Grade.Subject;
 import eu.ggnet.calculator.model.Pupil;
-import eu.ggnet.calculator.ui.AlertStage;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +75,7 @@ public class UpdateCertificationController implements Initializable {
      * <li>instantiates a new {@link ArrayList}</li>
      * <li>tries to get the value from each input area and adds a new
      * {@link Grade} to the list</li>
-     * <li>invalid values are catched by a new {@link AlertStage} that displays
+     * <li>invalid values are catched by a new AlertStage that displays
      * a respective error message</li></ul>
      * <p>
      * If all input areas can be resolved:
@@ -92,37 +91,37 @@ public class UpdateCertificationController implements Initializable {
             try {
                 grades.add(new Grade(Subject.ENG, Utilities.createMark(Integer.parseInt(this.engInput.getText()))));
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
+               Utilities.alertWarn("Could not properly resolve input.\n\nException message:\n" + e.getMessage());
             }
 
             try {
                 grades.add(new Grade(Subject.IT_S, Utilities.createMark(Integer.parseInt(this.itsInput.getText()))));
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
+                Utilities.alertWarn("Could not properly resolve input.\n\nException message:\n" + e.getMessage());
             }
 
             try {
                 grades.add(new Grade(Subject.IT_W, Utilities.createMark(Integer.parseInt(this.itwInput.getText()))));
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
+                Utilities.alertWarn("Could not properly resolve input.\n\nException message:\n" + e.getMessage());
             }
 
             try {
                 grades.add(new Grade(Subject.SOC, Utilities.createMark(Integer.parseInt(this.socInput.getText()))));
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
+                Utilities.alertWarn("Could not properly resolve input.\n\nException message:\n" + e.getMessage());
             }
 
             try {
                 grades.add(new Grade(Subject.DEV, Utilities.createMark(Integer.parseInt(this.devInput.getText()))));
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
+                Utilities.alertWarn("Could not properly resolve input.\n\nException message:\n" + e.getMessage());
             }
 
             try {
                 grades.add(new Grade(Subject.ORGA, Utilities.createMark(Integer.parseInt(this.orgaInput.getText()))));
             } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
+               Utilities.alertWarn("Could not properly resolve input.\n\nException message:\n" + e.getMessage());
             }
             if (grades.size() == 6) {
                 this.certification = new Certification(this.pupil, grades);

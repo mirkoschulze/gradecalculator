@@ -1,7 +1,7 @@
 package eu.ggnet.calculator.ui.create;
 
+import eu.ggnet.calculator.Utilities;
 import eu.ggnet.calculator.model.Classbook;
-import eu.ggnet.calculator.ui.AlertStage;
 import java.io.IOException;
 import java.util.Optional;
 import javafx.fxml.FXMLLoader;
@@ -30,7 +30,7 @@ public class CreateClassbookStage {
     /**
      * Tries to display a new {@link Stage} to create a new {@link Classbook}.
      * <p>
-     * Catches an {@link IOException} by displaying a new {@link AlertStage}
+     * Catches an {@link IOException} by displaying a new AlertStage
      * with a respective error message.
      *
      * @return Classbook
@@ -46,8 +46,8 @@ public class CreateClassbookStage {
 
             return Optional.ofNullable(controller.getClassbook());
         } catch (IOException e) {
-            new AlertStage("FXMLoader could not properly load opject graph.\nCheck value at: "
-                    + FXML_PATH + "\n\nException message:\n" + e.getMessage()).warn();
+            Utilities.alertWarn("FXMLoader could not properly load opject graph.\nCheck value: "
+                    + FXML_PATH + "\nException message:\n" + e.getMessage());
             return Optional.empty();
         }
     }
