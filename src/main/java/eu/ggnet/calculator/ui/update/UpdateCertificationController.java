@@ -28,7 +28,6 @@ public class UpdateCertificationController implements Initializable {
 
     @Setter
     private Pupil pupil;
-    private List<Grade> grades;
     @Getter
     private Certification certification;
     private boolean justNowDisplayed;
@@ -60,7 +59,6 @@ public class UpdateCertificationController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.grades = new ArrayList<>();
         this.justNowDisplayed = true;
         this.engInput.focusedProperty().addListener((observableValue, oldValue, newValue) -> {
             if (newValue && this.justNowDisplayed) {
@@ -71,27 +69,64 @@ public class UpdateCertificationController implements Initializable {
     }
 
     /**
-     * Tries to create a new {@link Certification} and close the root
-     * {@link Stage}.
+     * Creates a new {@link Certification} in the following steps:
+     * <ul><li>checks if all input areas have a value</li>
+     * <li>instantiates a new {@link ArrayList}</li>
+     * <li>tries to get the value from each input area and adds a new
+     * {@link Grade} to the list</li>
+     * <li>invalid values are catched by a new {@link AlertStage} that displays
+     * a respective error message</li></ul>
      * <p>
-     * A {@link NullPointerException} is caught by displaying a new
-     * {@link AlertStage} with a respective error message.
+     * If all input areas can be resolved:
+     * <ul><li>instantiates a new Certification with the created list</li>
+     * <li>closes the root {@link Stage}</li></ul>
      */
     @FXML
     private void create() {
-        try {
-            //TODO - reconsider validation
-            this.validateEngInput();
-            this.validateItsInput();
-            this.validateItwInput();
-            this.validateSocInput();
-            this.validateDevInput();
-            this.validateOrgaInput();
-            this.certification = new Certification(this.pupil, this.grades);
-            Stage stage = (Stage) this.createButton.getScene().getWindow();
-            stage.close();
-        } catch (NullPointerException e) {
-            new AlertStage("No pupil selected.\nError:\n" + e.getMessage()).warn();
+        if (!this.engInput.getText().isEmpty() && !this.itsInput.getText().isEmpty()
+                && !this.itwInput.getText().isEmpty() && !this.engInput.getText().isEmpty()
+                && !this.socInput.getText().isEmpty() && !this.orgaInput.getText().isEmpty()) {
+            List<Grade> grades = new ArrayList<>();
+            try {
+                grades.add(new Grade(Subject.ENG, Utilities.createMark(Integer.parseInt(this.engInput.getText()))));
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
+            }
+
+            try {
+                grades.add(new Grade(Subject.IT_S, Utilities.createMark(Integer.parseInt(this.itsInput.getText()))));
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
+            }
+
+            try {
+                grades.add(new Grade(Subject.IT_W, Utilities.createMark(Integer.parseInt(this.itwInput.getText()))));
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
+            }
+
+            try {
+                grades.add(new Grade(Subject.SOC, Utilities.createMark(Integer.parseInt(this.socInput.getText()))));
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
+            }
+
+            try {
+                grades.add(new Grade(Subject.DEV, Utilities.createMark(Integer.parseInt(this.devInput.getText()))));
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
+            }
+
+            try {
+                grades.add(new Grade(Subject.ORGA, Utilities.createMark(Integer.parseInt(this.orgaInput.getText()))));
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
+            }
+            if (grades.size() == 6) {
+                this.certification = new Certification(this.pupil, grades);
+                Stage stage = (Stage) this.createButton.getScene().getWindow();
+                stage.close();
+            }
         }
 
     }
@@ -103,96 +138,6 @@ public class UpdateCertificationController implements Initializable {
     private void cancel() {
         Stage stage = (Stage) this.cancelButton.getScene().getWindow();
         stage.close();
-    }
-
-    /**
-     * Tries to add a new {@link Grade} with the user entered value from a
-     * {@link TextField}.
-     * <p>
-     * Catches a {@link NumberFormatException} by displaying a new
-     * {@link AlertStage} with a respective error message.
-     */
-    private void validateEngInput() {
-        try {
-            this.grades.add(new Grade(Subject.ENG, Utilities.createMark(Integer.parseInt(this.engInput.getText()))));
-        } catch (NumberFormatException e) {
-            new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
-        }
-    }
-
-    /**
-     * Tries to add a new {@link Grade} with the user entered value from a
-     * {@link TextField}.
-     * <p>
-     * Catches a {@link NumberFormatException} by displaying a new
-     * {@link AlertStage} with a respective error message.
-     */
-    private void validateItsInput() {
-        try {
-            this.grades.add(new Grade(Subject.IT_S, Utilities.createMark(Integer.parseInt(this.itsInput.getText()))));
-        } catch (NumberFormatException e) {
-            new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
-        }
-    }
-
-    /**
-     * Tries to add a new {@link Grade} with the user entered value from a
-     * {@link TextField}.
-     * <p>
-     * Catches a {@link NumberFormatException} by displaying a new
-     * {@link AlertStage} with a respective error message.
-     */
-    private void validateItwInput() {
-        try {
-            this.grades.add(new Grade(Subject.IT_W, Utilities.createMark(Integer.parseInt(this.itwInput.getText()))));
-        } catch (NumberFormatException e) {
-            new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
-        }
-    }
-
-    /**
-     * Tries to add a new {@link Grade} with the user entered value from a
-     * {@link TextField}.
-     * <p>
-     * Catches a {@link NumberFormatException} by displaying a new
-     * {@link AlertStage} with a respective error message.
-     */
-    private void validateSocInput() {
-        try {
-            this.grades.add(new Grade(Subject.SOC, Utilities.createMark(Integer.parseInt(this.socInput.getText()))));
-        } catch (NumberFormatException e) {
-            new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
-        }
-    }
-
-    /**
-     * Tries to add a new {@link Grade} with the user entered value from a
-     * {@link TextField}.
-     * <p>
-     * Catches a {@link NumberFormatException} by displaying a new
-     * {@link AlertStage} with a respective error message.
-     */
-    private void validateDevInput() {
-        try {
-            this.grades.add(new Grade(Subject.DEV, Utilities.createMark(Integer.parseInt(this.devInput.getText()))));
-        } catch (NumberFormatException e) {
-            new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
-        }
-    }
-
-    /**
-     * Tries to add a new {@link Grade} with the user entered value from a
-     * {@link TextField}.
-     * <p>
-     * Catches a {@link NumberFormatException} by displaying a new
-     * {@link AlertStage} with a respective error message.
-     */
-    private void validateOrgaInput() {
-        try {
-            this.grades.add(new Grade(Subject.ORGA, Utilities.createMark(Integer.parseInt(this.orgaInput.getText()))));
-        } catch (NumberFormatException e) {
-            new AlertStage("Could not properly resolve input.\n\nException message:\n" + e.getMessage()).warn();
-        }
     }
 
 }
