@@ -1,16 +1,19 @@
 package eu.ggnet.calculator.ui.create;
 
+import eu.ggnet.calculator.Utilities;
 import eu.ggnet.calculator.model.Pupil;
 import eu.ggnet.calculator.model.Pupil.Sex;
-import eu.ggnet.calculator.ui.AlertStage;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import lombok.Getter;
@@ -59,6 +62,17 @@ public class CreatePupilController implements Initializable {
                 this.justNowDisplayed = false;
             }
         });
+
+        this.ageInput.tooltipProperty().setValue(new Tooltip("Only digits are allowed for age validation."));
+        this.ageInput.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                // matcher for decimal input: newValue.matches("\\d{0,7}([\\.]\\d{0,4})?
+                if (!newValue.matches("\\d{0,3}")) {
+                    ageInput.setText(oldValue);
+                }
+            }
+        });
     }
 
     /**
@@ -68,7 +82,7 @@ public class CreatePupilController implements Initializable {
      * <li>instantiates a new Pupil with the entered values</li>
      * <li>closes the root {@link Stage}</li></ul>
      * <p>
-     * If not all values have been entered correctly, a new {@link AlertStage}
+     * If not all values have been entered correctly, a new AlertStage
      * with a respective error message is displayed.
      */
     @FXML
@@ -77,10 +91,11 @@ public class CreatePupilController implements Initializable {
                 && !this.ageInput.getText().isEmpty() && this.selectSexBox.getSelectionModel().getSelectedItem() != null) {
             Sex sex = this.selectSexBox.getSelectionModel().getSelectedItem();
             int age = 0;
+
             try {
                 age = Integer.parseInt(this.ageInput.getText());
             } catch (NumberFormatException e) {
-                new AlertStage("Could not set age.\n\nException message:\n" + e.getMessage()).warn();
+                Utilities.alertWarn("Could not set age.\n\nException message:\n" + e.getMessage());
             }
             String validForename = this.forenameInput.getText().replaceAll("\\d", "").replaceAll("\\s", "").toLowerCase();
             String forename = Character.toUpperCase(validForename.charAt(0)) + validForename.substring(1);
@@ -93,7 +108,7 @@ public class CreatePupilController implements Initializable {
                 stage.close();
             }
         } else {
-            new AlertStage("Please check if all values are entered properly.").warn();
+            Utilities.alertWarn("Please check if all values are entered properly.");
         }
     }
 
