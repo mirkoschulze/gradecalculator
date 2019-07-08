@@ -4,6 +4,7 @@ import eu.ggnet.calculator.model.Classbook;
 import eu.ggnet.calculator.model.Pupil;
 import eu.ggnet.calculator.ui.AlertStage;
 import java.io.IOException;
+import java.util.Optional;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -35,7 +36,7 @@ public class CreatePupilStage {
      *
      * @return Pupil
      */
-    public Pupil createPupil() {
+    public Optional<Pupil> createPupil() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_URL));
             Parent root = loader.load();
@@ -44,11 +45,11 @@ public class CreatePupilStage {
             this.stage.setScene(new Scene(root));
             this.stage.showAndWait();
 
-            return controller.getPupil();
+            return Optional.ofNullable(controller.getPupil());
         } catch (IOException e) {
             new AlertStage("FXMLoader could not properly load opject graph.\nCheck value at: "
                     + FXML_URL + "\n\nException message:\n" + e.getMessage()).warn();
-            return null;
+            return Optional.empty();
         }
 
     }

@@ -3,6 +3,7 @@ package eu.ggnet.calculator.ui.create;
 import eu.ggnet.calculator.model.Classbook;
 import eu.ggnet.calculator.ui.AlertStage;
 import java.io.IOException;
+import java.util.Optional;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -34,7 +35,7 @@ public class CreateClassbookStage {
      *
      * @return Classbook
      */
-    public Classbook createClassbook() {
+    public Optional<Classbook> createClassbook() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_PATH));
             Parent root = loader.load();
@@ -43,11 +44,11 @@ public class CreateClassbookStage {
             this.stage.setScene(new Scene(root));
             this.stage.showAndWait();
 
-            return controller.getClassbook();
+            return Optional.ofNullable(controller.getClassbook());
         } catch (IOException e) {
             new AlertStage("FXMLoader could not properly load opject graph.\nCheck value at: "
                     + FXML_PATH + "\n\nException message:\n" + e.getMessage()).warn();
-            return null;
+            return Optional.empty();
         }
     }
 

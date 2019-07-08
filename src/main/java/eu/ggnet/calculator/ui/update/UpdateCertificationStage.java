@@ -4,6 +4,7 @@ import eu.ggnet.calculator.model.Certification;
 import eu.ggnet.calculator.model.Pupil;
 import eu.ggnet.calculator.ui.AlertStage;
 import java.io.IOException;
+import java.util.Optional;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -33,7 +34,7 @@ public class UpdateCertificationStage {
      *
      * @return Certification
      */
-    public Certification createCertification() {
+    public Optional<Certification> createCertification() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_PATH));
             Parent root = loader.load();
@@ -42,11 +43,11 @@ public class UpdateCertificationStage {
             this.stage.setScene(new Scene(root));
             this.stage.showAndWait();
 
-            return controller.getCertification();
+            return Optional.ofNullable(controller.getCertification());
         } catch (IOException e) {
             new AlertStage("FXMLoader could not properly load opject graph.\nCheck value at: "
                     + FXML_PATH + "\n\nException message:\n" + e.getMessage()).warn();
-            return null;
+            return Optional.empty();
         }
     }
 
