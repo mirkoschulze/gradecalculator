@@ -4,7 +4,6 @@ import eu.ggnet.calculator.model.Pupil;
 import eu.ggnet.calculator.model.Pupil.Sex;
 import eu.ggnet.calculator.ui.AlertStage;
 import java.net.URL;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -12,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import lombok.Getter;
 
@@ -24,7 +24,10 @@ public class CreatePupilController implements Initializable {
 
     @Getter
     private Pupil pupil;
+    private boolean justNowDisplayed;
 
+    @FXML
+    private VBox parentContainer;
     @FXML
     private TextField forenameInput;
     @FXML
@@ -39,7 +42,9 @@ public class CreatePupilController implements Initializable {
     private Button cancelButton;
 
     /**
-     * Initializes the controller class by setting values to {@link ComboBox}.
+     * Initializes the controller class by setting values to {@link ComboBox}
+     * and adding a listener to the first {@link TextField} to prevent an
+     * auto-selection.
      *
      * @param url URL
      * @param rb ResourceBundle
@@ -47,6 +52,13 @@ public class CreatePupilController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.selectSexBox.setItems(FXCollections.observableArrayList(Sex.values()));
+        this.justNowDisplayed = true;
+        this.forenameInput.focusedProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (newValue && this.justNowDisplayed) {
+                this.parentContainer.requestFocus();
+                this.justNowDisplayed = false;
+            }
+        });
     }
 
     /**
@@ -61,25 +73,27 @@ public class CreatePupilController implements Initializable {
      */
     @FXML
     private void create() {
-        //TODO - first char uppercase, rest lowercase
         if (!this.forenameInput.getText().isEmpty() && !this.surnameInput.getText().isEmpty()
                 && !this.ageInput.getText().isEmpty() && this.selectSexBox.getSelectionModel().getSelectedItem() != null) {
-            String forename = this.forenameInput.getText().replaceAll("\\d", "").replaceAll("\\s+\\s", "").toLowerCase(Locale.GERMANY);
-            String surname = this.surnameInput.getText().replaceAll("\\d", "").replaceAll("\\s+\\s", "").toLowerCase(Locale.GERMANY);
+            Sex sex = this.selectSexBox.getSelectionModel().getSelectedItem();
             int age = 0;
             try {
                 age = Integer.parseInt(this.ageInput.getText());
             } catch (NumberFormatException e) {
-                new AlertStage("Could not set age.").warn();
+                new AlertStage("Could not set age.\n\nException message:\n" + e.getMessage()).warn();
             }
-            Sex sex = this.selectSexBox.getSelectionModel().getSelectedItem();
+            String validForename = this.forenameInput.getText().replaceAll("\\d", "").replaceAll("\\s", "").toLowerCase();
+            String forename = Character.toUpperCase(validForename.charAt(0)) + validForename.substring(1);
+            String validSurname = this.surnameInput.getText().replaceAll("\\d", "").replaceAll("\\s", "").toLowerCase();
+            String surname = Character.toUpperCase(validSurname.charAt(0)) + validSurname.substring(1);
+
             if (forename != null && surname != null && age != 0 && sex != null) {
                 this.pupil = new Pupil(sex, age, forename, surname);
                 Stage stage = (Stage) this.createButton.getScene().getWindow();
                 stage.close();
             }
         } else {
-            new AlertStage("Please check if all values are entered.").warn();
+            new AlertStage("Please check if all values are entered properly.").warn();
         }
     }
 
