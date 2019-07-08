@@ -47,9 +47,10 @@ public class UpdateGradeController implements Initializable {
         this.selectSubjectBox.setItems(FXCollections.observableArrayList(Subject.values()));
     }
 
-    //TODO - javadoc
     /**
-     * Creates a new {@link Grade} and closes the roor {@link Stage} afterwards.
+     * Tries to create a new {@link Grade} with the entered or selected values.
+     * Catches a {@link RunTimeException} by displaying a new {@link AlertStage}
+     * with a respective error message.
      */
     @FXML
     private void create() {
@@ -59,6 +60,8 @@ public class UpdateGradeController implements Initializable {
             mark = Utilities.createMark(Integer.parseInt(this.input.getText()));
         } catch (NumberFormatException e) {
             new AlertStage("No valid number entered.\n\nException message:\n" + e.getMessage()).warn();
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            new AlertStage("Only values between 0 and 15 are accepted.\n\nException message:\n" + ex.getMessage()).warn();
         }
         try {
             subject = this.selectSubjectBox.getValue();
