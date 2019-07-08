@@ -36,7 +36,7 @@
                                 <MenuItem mnemonicParsing="false" onAction="#setCertificationAtSelectedPupil" 
                                           text="Set a new certification" />
                                 <MenuItem mnemonicParsing="false" onAction="#setGradeAtSelectedPupil" 
-                                          text="Change a grade" />
+                                          text="Set a new grade" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Remove">

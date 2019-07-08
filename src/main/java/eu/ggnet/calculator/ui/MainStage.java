@@ -15,7 +15,8 @@ import javafx.stage.Stage;
  * @author Mirko Schulze
  */
 public class MainStage extends Application {
-    //TODO - MainScene.fxml: reconsider layout
+    //TODO - reconsider layout
+    //TODO - reconsider lombok in all classes
 
     private static final String FXML_PATH = "/fxml/MainScene.fxml";
 
@@ -41,12 +42,13 @@ public class MainStage extends Application {
      */
     @Override
     public void start(Stage stage) {
+        //TODO - threads, Platform. ... 
         try {
             stage.setScene(new Scene(new FXMLLoader(getClass().getResource(FXML_PATH)).load()));
             stage.show();
         } catch (IOException e) {
             new AlertStage("FXMLoader could not properly load opject graph.\nCheck value: "
-                    + FXML_PATH + "\nException:\n" + e.getMessage()).warn();
+                    + FXML_PATH + "\n\nException message:\n" + e.getMessage()).warn();
         }
 
     }

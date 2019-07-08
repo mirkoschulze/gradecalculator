@@ -10,7 +10,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * {@link Stage} to add a new {@link Classbook}.
+ * Displays a {@link Stage} to add a new {@link Classbook}.
  *
  * @author Mirko Schulze
  */

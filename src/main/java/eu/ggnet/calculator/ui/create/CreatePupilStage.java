@@ -11,7 +11,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * {@link Stage} to add a new {link Pupil} to a selected {@link Classbook}.
+ * Displays a {@link Stage} to add a new {link Pupil} to a {@link Classbook}.
  *
  * @author Mirko Schulze
  */

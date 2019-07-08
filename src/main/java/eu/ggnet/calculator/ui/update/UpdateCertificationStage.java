@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * {@link Stage} to set the {@link Certification} of a {@link Pupil}.
+ * Displays a {@link Stage} to set the {@link Certification} at a {@link Pupil}.
  *
  * @author Mirko Schulze
  */

@@ -20,23 +20,23 @@ public class CreateClassbookController {
     private Classbook classbook;
 
     @FXML
-    private TextField nameInput;
+    private TextField titleInput;
     @FXML
     private Button createButton;
     @FXML
     private Button cancelButton;
 
     /**
-     * If a name is entered into the {@link TextField}, a new {@link Classbook}
-     * will be created with that name and a new {@link ArrayList} for
-     * {@link Pupil}.
+     * If a title is entered into the {@link TextField}, a new {@link Classbook}
+     * will be created with that title and a new, empty {@link ArrayList} for
+     * instances of {@link Pupil}.
      * <p>
      * The root {@link Stage} will be closed afterwards.
      */
     @FXML
     private void create() {
-        if (!this.nameInput.getText().isEmpty()) {
-            this.classbook = new Classbook(this.nameInput.getText(), new ArrayList<>());
+        if (!this.titleInput.getText().isEmpty()) {
+            this.classbook = new Classbook(this.titleInput.getText(), new ArrayList<>());
             Stage stage = (Stage) this.createButton.getScene().getWindow();
             stage.close();
         }

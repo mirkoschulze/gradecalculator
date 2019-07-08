@@ -11,7 +11,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * {@link Stage} to set a new {@link Grade} at a {@link Pupil}.
+ * Displays a {@link Stage} to set a new {@link Grade} at the
+ * {@link Certification} at the selected {@link Pupil}.
  *
  * @author Mirko Schulze
  */

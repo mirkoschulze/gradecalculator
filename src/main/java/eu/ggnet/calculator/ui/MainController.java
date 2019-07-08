@@ -90,7 +90,7 @@ public class MainController implements Initializable {
         //listener to show pupils when a classbook is selected
         this.classbookSelectionBox.setItems(FXCollections.observableArrayList(this.classbooks));
         this.classbookSelectionBox.getSelectionModel().selectedItemProperty()
-                .addListener((value, oldValue, newValue) -> {
+                .addListener((observableValue, oldValue, newValue) -> {
                     this.selectedClassbook = newValue;
                     try {
                         this.pupilsListView.setItems(FXCollections.observableArrayList(this.selectedClassbook.getPupils()));
@@ -112,7 +112,7 @@ public class MainController implements Initializable {
         });
 
         //listener to show grades when a pupil is selected
-        this.pupilsListView.getSelectionModel().selectedItemProperty().addListener((value, oldValue, newValue) -> {
+        this.pupilsListView.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
             try {
                 this.gradesListView.setItems(FXCollections.observableArrayList(this.pupilsListView
                         .getSelectionModel()
@@ -255,10 +255,15 @@ public class MainController implements Initializable {
     @FXML
     private void addPupil() {
         Pupil pupil = new CreatePupilStage().createPupil();
-        if (pupil != null) {
-            this.selectedClassbook.getPupils().add(pupil);
-            this.pupilsListView.setItems(FXCollections.observableArrayList(this.selectedClassbook.getPupils()));
+        try {
+            if (pupil != null) {
+                this.selectedClassbook.getPupils().add(pupil);
+                this.pupilsListView.setItems(FXCollections.observableArrayList(this.selectedClassbook.getPupils()));
+            }
+        } catch (NullPointerException e) {
+            new AlertStage("No classbook selected.\n\nException message:\n" + e.getMessage()).warn();
         }
+
     }
 
     /**
@@ -282,6 +287,7 @@ public class MainController implements Initializable {
                     .setCertification(new UpdateCertificationStage().createCertification());
             this.gradesListView.setItems(FXCollections.observableArrayList(this.pupilsListView.getSelectionModel().getSelectedItem().getCertification().getGrades()));
         } catch (NullPointerException e) {
+            //TODO - cancel results in null (optional?)
             new AlertStage("No pupil selected.\n\nException message:\n" + e.getMessage()).warn();
         }
 
@@ -306,6 +312,7 @@ public class MainController implements Initializable {
             pupil.setCertification(new Certification(pupil, grades));
             this.gradesListView.setItems(FXCollections.observableArrayList(this.pupilsListView.getSelectionModel().getSelectedItem().getCertification().getGrades()));
         } catch (NullPointerException e) {
+            //TODO - cancel results in null (optional?)
             new AlertStage("No pupil selected.\n\nException message:\n" + e.getMessage()).warn();
         }
 
