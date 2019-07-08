@@ -12,7 +12,7 @@
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" 
       minWidth="-Infinity" prefHeight="337.0" prefWidth="511.0" spacing="10.0" 
       xmlns="http://javafx.com/javafx/8.0.201" xmlns:fx="http://javafx.com/fxml/1" 
-      fx:controller="eu.ggnet.calculator.ui.create.CreatePupilController">
+      fx:controller="eu.ggnet.calculator.ui.create.CreatePupilController" fx:id="parentContainer">
     <children>
         <Label alignment="CENTER" contentDisplay="CENTER" text="Enter values for each field to add a new pupil:">
             <font>
@@ -28,7 +28,7 @@
         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
             <children>
                 <Label alignment="CENTER" contentDisplay="CENTER" text="Forename:" />
-                <TextField fx:id="forenameInput" />
+                <TextField fx:id="forenameInput" promptText="Max"/>
             </children>
             <VBox.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -40,7 +40,7 @@
         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
             <children>
                 <Label alignment="CENTER" contentDisplay="CENTER" text="Surname:" />
-                <TextField fx:id="surnameInput" />
+                <TextField fx:id="surnameInput" promptText="Mustermann"/>
             </children>
             <VBox.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -56,7 +56,7 @@
                         <Insets />
                     </HBox.margin>
                 </Label>
-                <TextField fx:id="ageInput" />
+                <TextField fx:id="ageInput" promptText="23"/>
             </children>
             <VBox.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
