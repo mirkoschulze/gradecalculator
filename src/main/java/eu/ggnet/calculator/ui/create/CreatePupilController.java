@@ -87,7 +87,7 @@ public class CreatePupilController implements Initializable {
             String validSurname = this.surnameInput.getText().replaceAll("\\d", "").replaceAll("\\s", "").toLowerCase();
             String surname = Character.toUpperCase(validSurname.charAt(0)) + validSurname.substring(1);
 
-            if (forename != null && surname != null && age != 0 && sex != null) {
+            if (forename != null && surname != null && age > 0 && age < 125 && sex != null) {
                 this.pupil = new Pupil(sex, age, forename, surname);
                 Stage stage = (Stage) this.createButton.getScene().getWindow();
                 stage.close();
