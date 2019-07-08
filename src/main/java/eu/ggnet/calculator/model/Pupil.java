@@ -1,6 +1,7 @@
 package eu.ggnet.calculator.model;
 
 import javafx.scene.control.ComboBox;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,7 @@ import lombok.Setter;
  *
  * @author Mirko Schulze
  */
+@AllArgsConstructor
 public class Pupil implements Comparable<Pupil> {
 
     private final Sex sex;
@@ -27,11 +29,11 @@ public class Pupil implements Comparable<Pupil> {
     @Setter
     private Certification certification;
 
-    public Pupil(Sex sex, int age, String forename, String surename) {
+    public Pupil(Sex sex, int age, String forename, String surname) {
         this.sex = sex;
         this.age = age;
         this.forename = forename;
-        this.surname = surename;
+        this.surname = surname;
     }
 
     /**
