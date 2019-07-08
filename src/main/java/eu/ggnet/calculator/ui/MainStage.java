@@ -15,7 +15,6 @@ import javafx.stage.Stage;
  * @author Mirko Schulze
  */
 public class MainStage extends Application {
-    //TODO - reconsider layout
 
     private static final String FXML_PATH = "/fxml/MainScene.fxml";
 

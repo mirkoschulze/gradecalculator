@@ -18,7 +18,7 @@
          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
       </padding>
    </Label>
-   <TextField fx:id="nameInput" alignment="CENTER" promptText="Enter a name...">
+   <TextField fx:id="titleInput" alignment="CENTER" promptText="Enter a name...">
       <VBox.margin>
          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
       </VBox.margin>
