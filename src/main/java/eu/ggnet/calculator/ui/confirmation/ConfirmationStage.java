@@ -9,7 +9,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * {@link Stage} to confirm an user decision.
+ * Display a {@link Stage} to confirm an user decision.
  *
  * @author Mirko Schulze
  */

@@ -15,6 +15,8 @@ import javafx.stage.Stage;
  * @author Mirko Schulze
  */
 public class MainStage extends Application {
+    
+    //TODO - complete javadoc: param & return  < = &lt;, > = &gt;, https://www.oracle.com/technetwork/java/javase/documentation/index-137868.html#@return
 
     private static final String FXML_PATH = "/fxml/MainScene.fxml";
 

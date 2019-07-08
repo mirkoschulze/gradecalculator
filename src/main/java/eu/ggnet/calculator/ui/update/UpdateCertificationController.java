@@ -20,7 +20,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Controller class responsible for the logic at {@link GradePupilStage}.
+ * Controller class responsible for the logic at {@link UpdateGradeStage}.
  *
  * @author Mirko Schulze
  */
@@ -52,7 +52,9 @@ public class UpdateCertificationController implements Initializable {
     private Button cancelButton;
 
     /**
-     * Initializes this controller by instantiating an {@link ArrayList}.
+     * Initializes this controller by instantiating an {@link ArrayList} and
+     * adding a listener to the first {@link TextField} to prevent an
+     * auto-selection.
      *
      * @param url URL
      * @param rb ResourceBundle

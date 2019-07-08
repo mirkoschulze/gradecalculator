@@ -45,7 +45,7 @@ public class AlertStage {
         vbox.setPadding(new Insets(10));
         vbox.getChildren().addAll(WARNING, this.message, closeButton);
 
-        stage.setScene(new Scene(vbox, 500, 300));
+        stage.setScene(new Scene(vbox, 500, 400));
         stage.show();
     }
 

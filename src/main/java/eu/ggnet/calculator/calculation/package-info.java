@@ -1,5 +1,5 @@
 /**
- * Contains a wrapper class for {@link Grade} and a static class to do
+ * Contains a wrapper class for {@link eu.ggnet.calculator.model.Grade} and a static class to do
  * calculations.
  */
 package eu.ggnet.calculator.calculation;

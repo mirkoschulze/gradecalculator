@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import lombok.Getter;
 
 /**
- * Controller class responsible for the logic at {@link InsertPupilStage}.
+ * Controller class responsible for the logic at {@link CreatePupilStage}.
  *
  * @author Mirko Schulze
  */
