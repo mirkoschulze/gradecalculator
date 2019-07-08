@@ -28,8 +28,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
-import lombok.Getter;
-import lombok.ToString;
 
 /**
  * Controller class, responsible for the logic at {@link MainStage}.
@@ -38,8 +36,6 @@ import lombok.ToString;
  *
  * @author Mirko Schulze
  */
-@Getter
-@ToString
 public class MainController implements Initializable {
 
     private List<Classbook> classbooks;
@@ -82,9 +78,9 @@ public class MainController implements Initializable {
             this.classbooks.add(Generator.generateClassbook());
         }
         for (Classbook classbook : this.classbooks) {
-            for (Pupil pupil : classbook.getPupils()) {
+            classbook.getPupils().forEach((pupil) -> {
                 pupil.setCertification(Generator.generateCertification(pupil));
-            }
+            });
         }
 
         //listener to show pupils when a classbook is selected
@@ -99,13 +95,11 @@ public class MainController implements Initializable {
                     }
                 });
 
-        //TODO - bind checkBox to a Property?
         this.subjectSelectionBox.setItems(FXCollections.observableArrayList(Subject.values()));
         this.subjectSelectionBox.getSelectionModel().selectedItemProperty().addListener((value, oldValue, newValue) -> {
             this.selectedSubject = newValue;
         });
 
-        //TODO - bind checkBox to a Property?
         this.calculationSelectionBox.setItems(FXCollections.observableArrayList("Average", "Accumulation"));
         this.calculationSelectionBox.getSelectionModel().selectedItemProperty().addListener((value, oldValue, newValue) -> {
             this.selectedCalculation = newValue;

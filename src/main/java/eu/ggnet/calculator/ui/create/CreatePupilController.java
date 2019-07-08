@@ -63,10 +63,10 @@ public class CreatePupilController implements Initializable {
 
     /**
      * Ceates a new {@link Pupil} in the following steps:
-     * <ul><li>Checks if all input areas have a value</li>
-     * <li>Validates the entered values</li>
-     * <li>Instantiates a new Pupil with the entered values</li>
-     * <li>Closes the root {@link Stage}</li></ul>
+     * <ul><li>checks if all input areas have a value</li>
+     * <li>validates the entered values</li>
+     * <li>instantiates a new Pupil with the entered values</li>
+     * <li>closes the root {@link Stage}</li></ul>
      * <p>
      * If not all values have been entered correctly, a new {@link AlertStage}
      * with a respective error message is displayed.

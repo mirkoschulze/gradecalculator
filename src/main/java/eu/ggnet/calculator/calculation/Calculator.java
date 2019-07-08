@@ -1,18 +1,16 @@
 package eu.ggnet.calculator.calculation;
 
-import eu.ggnet.calculator.model.Pupil;
 import eu.ggnet.calculator.model.Classbook;
 import eu.ggnet.calculator.model.Grade;
 import eu.ggnet.calculator.model.Grade.Mark;
 import eu.ggnet.calculator.model.Grade.Subject;
-import lombok.ToString;
+import eu.ggnet.calculator.model.Pupil;
 
 /**
  * Static class to generate new instances of {@link CalculatedGrade}.
  *
  * @author Mirko Schulze
  */
-@ToString
 public class Calculator {
 
     private Calculator() {

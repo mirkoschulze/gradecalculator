@@ -15,13 +15,15 @@ import lombok.Setter;
  *
  * @author Mirko Schulze
  */
-@Getter
 public class Pupil implements Comparable<Pupil> {
 
     private final Sex sex;
     private final int age;
+    @Getter
     private final String forename;
+    @Getter
     private final String surname;
+    @Getter
     @Setter
     private Certification certification;
 
@@ -71,7 +73,7 @@ public class Pupil implements Comparable<Pupil> {
     public String toEnhancedLine() {
         return this.forename + " " + this.surname
                 + " (" + this.age + " Jahre, " + this.sex.description
-                + ") [" + this.getCertification().toEnhancedLine()
+                + ") [" + this.certification.toEnhancedLine()
                 + "]";
     }
 

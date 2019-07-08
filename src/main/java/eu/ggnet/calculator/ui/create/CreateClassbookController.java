@@ -3,6 +3,7 @@ package eu.ggnet.calculator.ui.create;
 import eu.ggnet.calculator.model.Classbook;
 import eu.ggnet.calculator.model.Pupil;
 import java.util.ArrayList;
+import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -36,7 +37,8 @@ public class CreateClassbookController {
     @FXML
     private void create() {
         if (!this.titleInput.getText().isEmpty()) {
-            this.classbook = new Classbook(this.titleInput.getText(), new ArrayList<>());
+            List<Pupil> pupils = new ArrayList<>();
+            this.classbook = new Classbook(this.titleInput.getText(), pupils);
             Stage stage = (Stage) this.createButton.getScene().getWindow();
             stage.close();
         }

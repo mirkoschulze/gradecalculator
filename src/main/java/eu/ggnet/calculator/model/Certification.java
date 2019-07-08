@@ -3,7 +3,6 @@ package eu.ggnet.calculator.model;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.ToString;
 
 /**
  * Represents a school certification with grades.
@@ -14,12 +13,11 @@ import lombok.ToString;
  *
  * @author Mirko Schulze
  */
-@Getter
 @AllArgsConstructor
-@ToString
 public class Certification {
 
     private final Pupil pupil;
+    @Getter
     private final List<Grade> grades;
 
     /**

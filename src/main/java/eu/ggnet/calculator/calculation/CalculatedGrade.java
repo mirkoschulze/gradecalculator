@@ -3,7 +3,6 @@ package eu.ggnet.calculator.calculation;
 import eu.ggnet.calculator.model.Grade;
 import java.time.format.DateTimeFormatter;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 /**
  * Represents a {@link Grade} that has been calculated by {@link Calculator}.
@@ -15,7 +14,6 @@ import lombok.Getter;
  *
  * @author Mirko Schulze
  */
-@Getter
 @AllArgsConstructor
 public class CalculatedGrade {
 
@@ -30,7 +28,7 @@ public class CalculatedGrade {
 
     @Override
     public String toString() {
-        return "CalculatedGrade{" + "calculation=" + calculation + ", grade=" + grade + ", suffix=" + suffix + '}';
+        return "CalculatedGrade{" + "calculation=" + this.calculation + ", grade=" + this.grade + ", suffix=" + this.suffix + '}';
     }
 
     /**

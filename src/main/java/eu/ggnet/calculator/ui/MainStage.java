@@ -16,7 +16,6 @@ import javafx.stage.Stage;
  */
 public class MainStage extends Application {
     //TODO - reconsider layout
-    //TODO - reconsider lombok in all classes
 
     private static final String FXML_PATH = "/fxml/MainScene.fxml";
 
