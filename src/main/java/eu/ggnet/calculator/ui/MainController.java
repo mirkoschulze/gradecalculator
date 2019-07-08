@@ -1,5 +1,6 @@
 package eu.ggnet.calculator.ui;
 
+import eu.ggnet.calculator.Utilities;
 import eu.ggnet.calculator.calculation.CalculatedGrade;
 import eu.ggnet.calculator.calculation.Calculator;
 import eu.ggnet.calculator.model.Certification;
@@ -241,7 +242,7 @@ public class MainController implements Initializable {
             this.classbookSelectionBox.setItems(FXCollections.observableArrayList(this.classbooks));
             this.pupilsListView.setItems(FXCollections.emptyObservableList());
         } catch (NullPointerException e) {
-            new AlertStage("No classbook selected.\n\nException message:\n" + e.getMessage()).warn();
+            Utilities.alertWarn("No classbook selected.\n\nException message:\n" + e.getMessage());
         }
     }
 
@@ -256,14 +257,16 @@ public class MainController implements Initializable {
      */
     @FXML
     private void addPupil() {
+        Optional<Pupil> pupil = new CreatePupilStage().showAndWait();
+        System.out.println(pupil.orElse(null));
         try {
-            Optional<Pupil> pupil = new CreatePupilStage().createPupil();
+
             if (pupil.isPresent()) {
                 this.selectedClassbook.getPupils().add(pupil.get());
                 this.pupilsListView.setItems(FXCollections.observableArrayList(this.selectedClassbook.getPupils()));
             }
         } catch (NullPointerException e) {
-            new AlertStage("No classbook selected.\n\nException message:\n" + e.getMessage()).warn();
+            Utilities.alertWarn("No classbook selected.\n\nException message:\n" + e.getMessage());
         }
 
     }
@@ -281,7 +284,7 @@ public class MainController implements Initializable {
             this.selectedClassbook.getPupils().remove(this.pupilsListView.getSelectionModel().getSelectedItem());
             this.pupilsListView.setItems(FXCollections.observableArrayList(this.selectedClassbook.getPupils()));
         } catch (NullPointerException e) {
-            new AlertStage("No pupil selected.\n\nException message:\n" + e.getMessage()).warn();
+            Utilities.alertWarn("No pupil selected.\n\nException message:\n" + e.getMessage());
         }
 
     }
@@ -305,7 +308,7 @@ public class MainController implements Initializable {
                 this.gradesListView.setItems(FXCollections.observableArrayList(this.pupilsListView.getSelectionModel().getSelectedItem().getCertification().getGrades()));
             }
         } catch (NullPointerException e) {
-            new AlertStage("No pupil selected.\n\nException message:\n" + e.getMessage()).warn();
+            Utilities.alertWarn("No pupil selected.\n\nException message:\n" + e.getMessage());
         }
 
     }
@@ -329,7 +332,7 @@ public class MainController implements Initializable {
                 this.gradesListView.setItems(FXCollections.observableArrayList(this.pupilsListView.getSelectionModel().getSelectedItem().getCertification().getGrades()));
             }
         } catch (NullPointerException e) {
-            new AlertStage("No pupil selected.\n\nException message:\n" + e.getMessage()).warn();
+            Utilities.alertWarn("No pupil selected.\n\nException message:\n" + e.getMessage());
         }
 
     }

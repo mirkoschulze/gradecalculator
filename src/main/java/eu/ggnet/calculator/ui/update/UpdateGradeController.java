@@ -4,7 +4,6 @@ import eu.ggnet.calculator.Utilities;
 import eu.ggnet.calculator.model.Grade;
 import eu.ggnet.calculator.model.Grade.Mark;
 import eu.ggnet.calculator.model.Grade.Subject;
-import eu.ggnet.calculator.ui.AlertStage;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -49,7 +48,8 @@ public class UpdateGradeController implements Initializable {
 
     /**
      * Tries to create a new {@link Grade} with the entered or selected values.
-     * Catches a {@link RunTimeException} by displaying a new {@link AlertStage}
+     * <p>
+     * Catches a {@link RunTimeException} by displaying a new AlertStage
      * with a respective error message.
      */
     @FXML
@@ -59,14 +59,14 @@ public class UpdateGradeController implements Initializable {
         try {
             mark = Utilities.createMark(Integer.parseInt(this.input.getText()));
         } catch (NumberFormatException e) {
-            new AlertStage("No valid number entered.\n\nException message:\n" + e.getMessage()).warn();
+            Utilities.alertWarn("No valid number entered.\n\nException message:\n" + e.getMessage());
         } catch (ArrayIndexOutOfBoundsException ex) {
-            new AlertStage("Only values between 0 and 15 are accepted.\n\nException message:\n" + ex.getMessage()).warn();
+            Utilities.alertWarn("Only values between 0 and 15 are accepted.\n\nException message:\n" + ex.getMessage());
         }
         try {
             subject = this.selectSubjectBox.getValue();
         } catch (NullPointerException e) {
-            new AlertStage("No subject selected.\n\nException mesage:\n" + e.getMessage()).warn();
+            Utilities.alertWarn("No subject selected.\n\nException mesage:\n" + e.getMessage());
         }
         if (mark != null && subject != null) {
             this.grade = new Grade(subject, mark);

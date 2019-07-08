@@ -1,6 +1,6 @@
 package eu.ggnet.calculator.ui.confirmation;
 
-import eu.ggnet.calculator.ui.AlertStage;
+import eu.ggnet.calculator.Utilities;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -28,7 +28,7 @@ public class ConfirmationStage {
     /**
      * Tries to display a new {@link Stage} to confirm or deny an user decision.
      * <p>
-     * Catches an {@link IOException} by displaying a new {@link AlertStage}
+     * Catches an {@link IOException} by displaying a new AlertStage
      * with a respective error message.
      *
      * @return boolean
@@ -44,8 +44,8 @@ public class ConfirmationStage {
 
             return controller.isConfirmed();
         } catch (IOException e) {
-            new AlertStage("FXMLoader could not properly load opject graph.\nCheck value: "
-                    + FXML_PATH + "\nException:\n" + e.getMessage()).warn();
+            Utilities.alertWarn("FXMLoader could not properly load opject graph.\nCheck value: "
+                    + FXML_PATH + "\nException message:\n" + e.getMessage());
             return false;
         }
     }

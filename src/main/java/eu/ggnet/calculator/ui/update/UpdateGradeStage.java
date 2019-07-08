@@ -1,9 +1,9 @@
 package eu.ggnet.calculator.ui.update;
 
+import eu.ggnet.calculator.Utilities;
 import eu.ggnet.calculator.model.Certification;
 import eu.ggnet.calculator.model.Grade;
 import eu.ggnet.calculator.model.Pupil;
-import eu.ggnet.calculator.ui.AlertStage;
 import java.io.IOException;
 import java.util.Optional;
 import javafx.fxml.FXMLLoader;
@@ -32,7 +32,7 @@ public class UpdateGradeStage {
     /**
      * Tries to display a new {@link Stage} to create a new {@link Grade}.
      * <p>
-     * Catches an {@link IOException} by displaying a new {@link AlertStage}
+     * Catches an {@link IOException} by displaying a new AlertStage
      * with a respective error message.
      *
      * @return Grade
@@ -48,8 +48,8 @@ public class UpdateGradeStage {
 
             return Optional.ofNullable(controller.getGrade());
         } catch (IOException e) {
-            new AlertStage("FXMLoader could not properly load opject graph.\nCheck value: "
-                    + FXML_PATH + "\n\nException message:\n" + e.getMessage()).warn();
+            Utilities.alertWarn("FXMLoader could not properly load opject graph.\nCheck value: "
+                    + FXML_PATH + "\nException message:\n" + e.getMessage());
             return Optional.empty();
         }
     }
