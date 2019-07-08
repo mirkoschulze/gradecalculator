@@ -3,6 +3,7 @@ package eu.ggnet.calculator.model;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javafx.scene.control.ComboBox;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -19,6 +20,7 @@ import lombok.Getter;
  * @author Mirko Schulze
  */
 @Getter
+@AllArgsConstructor
 public class Grade {
 
     private final Subject subject;
