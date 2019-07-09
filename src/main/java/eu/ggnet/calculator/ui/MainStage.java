@@ -16,9 +16,16 @@ import javafx.stage.Stage;
  * @author Mirko Schulze
  */
 public class MainStage extends Application {
-    
-    //TODO - complete javadoc: param & return  < = &lt;, > = &gt;, https://www.oracle.com/technetwork/java/javase/documentation/index-137868.html#@return
 
+    //TODO - komplette javadoc: param & return  < = &lt;, > = &gt;, https://www.oracle.com/technetwork/java/javase/documentation/index-137868.html#
+    //TODO - tooltips für hinweise
+    //TODO - stages in dialoge umwandeln (TextDialog usw.)
+    //TODO - reconsider Alert
+    //TODO - Regex für die validierung hinterlegen
+    //TODO - vorgefertigte ButtonTypes verwenden
+    //TODO - threads, Platform. ... 
+    //TODO - css
+    
     private static final String FXML_PATH = "/fxml/MainScene.fxml";
 
     /**
@@ -43,8 +50,6 @@ public class MainStage extends Application {
      */
     @Override
     public void start(Stage stage) {
-        //TODO - threads, Platform. ... 
-        //TODO - css
         try {
             stage.setScene(new Scene(new FXMLLoader(getClass().getResource(FXML_PATH)).load()));
             stage.show();
