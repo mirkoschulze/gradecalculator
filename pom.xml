@@ -2,12 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>eu.ggnet</groupId>
-    <artifactId>calculator</artifactId>
+    <groupId>eu.gg-net</groupId>
+    <artifactId>grade-calculator</artifactId>
     <version>1.5-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>Calculator</name>
+    <name>Grade Calculator</name>
     <developers>
         <developer>
             <name>Mirko Schulze</name>
@@ -37,7 +37,7 @@
                         </goals>
                         <configuration>
                             <excludeScope>system</excludeScope>
-                            <excludeGroupIds>junit,org.mockito,org.hamcrest</excludeGroupIds>
+                            <excludeGroupIds>junit,org.mockito,org.hamcrest, org.projectlombok</excludeGroupIds>
                             <outputDirectory>${project.build.directory}/classes</outputDirectory>
                         </configuration>
                     </execution>
