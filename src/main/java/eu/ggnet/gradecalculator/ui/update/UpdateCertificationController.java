@@ -84,9 +84,9 @@ public class UpdateCertificationController implements Initializable {
      */
     @FXML
     private void create() {
-        if (!this.engInput.getText().isEmpty() && !this.itsInput.getText().isEmpty()
-                && !this.itwInput.getText().isEmpty() && !this.engInput.getText().isEmpty()
-                && !this.socInput.getText().isEmpty() && !this.orgaInput.getText().isEmpty()) {
+        if (!(this.engInput.getText().isEmpty() && this.itsInput.getText().isEmpty()
+                && this.itwInput.getText().isEmpty() && this.engInput.getText().isEmpty()
+                && this.socInput.getText().isEmpty() && this.orgaInput.getText().isEmpty())) {
             List<Grade> grades = new ArrayList<>();
             try {
                 grades.add(new Grade(Subject.ENG, Utilities.createMark(Integer.parseInt(this.engInput.getText()))));
