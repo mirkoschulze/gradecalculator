@@ -17,7 +17,7 @@ import javafx.stage.Stage;
  */
 public class MainStage extends Application {
 
-    //TODO - komplette javadoc: param & return  < = &lt;, > = &gt;, https://www.oracle.com/technetwork/java/javase/documentation/index-137868.html#
+    //TODO - komplette javadoc: param & return  < = &lt;, > = &gt;, https://www.oracle.com/technetwork/java/javase/documentation/index-137868.html
     //TODO - tooltips für hinweise
     //TODO - stages in dialoge umwandeln (TextDialog usw.)
     //TODO - reconsider Alert
@@ -25,7 +25,7 @@ public class MainStage extends Application {
     //TODO - vorgefertigte ButtonTypes verwenden
     //TODO - threads, Platform. ... 
     //TODO - css
-    
+    //TODO - deutsche Ausgaben
     private static final String FXML_PATH = "/fxml/MainScene.fxml";
 
     /**
@@ -53,9 +53,9 @@ public class MainStage extends Application {
         try {
             stage.setScene(new Scene(new FXMLLoader(getClass().getResource(FXML_PATH)).load()));
             stage.show();
-        } catch (IOException e) {
-            Utilities.alertWarn("FXMLoader could not properly load opject graph.\nCheck value: "
-                    + FXML_PATH + "\nException message:\n" + e.getMessage());
+        } catch (IOException | IllegalStateException e) {
+            Utilities.alertError("Der FXMLLoader konnte den Objektgraphen nicht korrekt laden.\n\nÜberprüfe folgenden Wert:\n"
+                    + FXML_PATH + "\n\nException:\n" + e.getMessage());
         }
 
     }

@@ -9,9 +9,8 @@ import eu.ggnet.gradecalculator.model.Generator;
 import eu.ggnet.gradecalculator.model.Grade;
 import eu.ggnet.gradecalculator.model.Grade.Subject;
 import eu.ggnet.gradecalculator.model.Pupil;
-import eu.ggnet.gradecalculator.ui.confirmation.ConfirmationStage;
-import eu.ggnet.gradecalculator.ui.create.CreateClassbookStage;
-import eu.ggnet.gradecalculator.ui.create.CreatePupilStage;
+import eu.ggnet.gradecalculator.ui.create.CreateClassbookDialog;
+import eu.ggnet.gradecalculator.ui.create.CreatePupilDialog;
 import eu.ggnet.gradecalculator.ui.update.UpdateCertificationStage;
 import eu.ggnet.gradecalculator.ui.update.UpdateGradeStage;
 import java.net.URL;
@@ -25,7 +24,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -213,7 +214,7 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Displays a new {@link CreateClassbookStage} to create a new
+     * Displays a new {@link CreateClassbookDialog} to create a new
      * {@link Classbook}.
      * <p>
      * If a Classbook is returned, that Classbook is added to the available
@@ -221,7 +222,7 @@ public class MainController implements Initializable {
      */
     @FXML
     private void addClassbook() {
-        Optional<Classbook> classbook = new CreateClassbookStage().createClassbook();
+        Optional<Classbook> classbook = new CreateClassbookDialog().showAndWait();
         if (classbook.isPresent()) {
             this.classbooks.add(classbook.get());
             this.classbookSelectionBox.setItems(FXCollections.observableArrayList(this.classbooks));
@@ -247,7 +248,7 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Tries to displays a new {@link CreatePupilStage} to create a new
+     * Tries to displays a new {@link CreatePupilDialog} to create a new
      * {@link Pupil} at a {@link Classbook}.
      * <p>
      * If a Pupil is returned, that Pupil is addded to the selected Classbook.
@@ -257,16 +258,14 @@ public class MainController implements Initializable {
      */
     @FXML
     private void addPupil() {
-        Optional<Pupil> pupil = new CreatePupilStage().showAndWait();
-        System.out.println(pupil.orElse(null));
+        Optional<Pupil> pupil = new CreatePupilDialog().showAndWait();
         try {
-
             if (pupil.isPresent()) {
                 this.selectedClassbook.getPupils().add(pupil.get());
                 this.pupilsListView.setItems(FXCollections.observableArrayList(this.selectedClassbook.getPupils()));
             }
         } catch (NullPointerException e) {
-            Utilities.alertWarn("No classbook selected.\n\nException message:\n" + e.getMessage());
+            Utilities.alertWarn("No classbook selected.\n\n:\n" + e.getMessage());
         }
 
     }
@@ -338,12 +337,13 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Displays a new {@link ConfirmationStage} to confirm the close request.
-     * Closes the root {@link Stage} when the event is confirmed.
+     * Displays a new {@link Alert} to confirm the close request. Closes the
+     * root {@link Stage} when the event is confirmed.
      */
     @FXML
     private void close() {
-        if (new ConfirmationStage().confirm()) {
+        if (new Alert(Alert.AlertType.CONFIRMATION, "Wollen Sie die Anwendung wirklich beenden?")
+                .showAndWait().get() == ButtonType.OK) {
             Stage stage = (Stage) this.closeButton.getScene().getWindow();
             stage.close();
         }

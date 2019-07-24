@@ -19,7 +19,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mainClass>eu.ggnet.calculator.ui.MainStage</mainClass>
+        <mainClass>eu.ggnet.gradecalculator.ui.MainStage</mainClass>
     </properties>
 
     <build>
