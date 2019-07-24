@@ -1,4 +1,4 @@
 /**
- * Contains controller and stage classes for ui boxes to insert entities.
+ * Contains classes to insert entities.
  */
 package eu.ggnet.gradecalculator.ui.create;
