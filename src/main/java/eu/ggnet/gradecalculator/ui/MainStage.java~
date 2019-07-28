@@ -1,6 +1,10 @@
-package eu.ggnet.calculator.ui;
+package eu.ggnet.gradecalculator.ui;
 
+<<<<<<< HEAD:src/main/java/eu/ggnet/calculator/ui/MainStage.java
 import eu.ggnet.calculator.Utilities;
+=======
+import eu.ggnet.gradecalculator.Utilities;
+>>>>>>> 1.5:src/main/java/eu/ggnet/gradecalculator/ui/MainStage.java
 import java.io.IOException;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -16,7 +20,13 @@ import javafx.stage.Stage;
  * @author Mirko Schulze
  */
 public class MainStage extends Application {
+<<<<<<< HEAD:src/main/java/eu/ggnet/calculator/ui/MainStage.java
     
+=======
+
+    //TODO - threads, Platform. ... 
+    //TODO - css
+>>>>>>> 1.5:src/main/java/eu/ggnet/gradecalculator/ui/MainStage.java
     private static final String FXML_PATH = "/fxml/MainScene.fxml";
 
     /**
@@ -41,17 +51,23 @@ public class MainStage extends Application {
      */
     @Override
     public void start(Stage stage) {
-<<<<<<< HEAD
+<<<<<<< HEAD:src/main/java/eu/ggnet/calculator/ui/MainStage.java
         //TODO - threads, Platform. ... 
         //TODO - css
-=======
->>>>>>> origin/1.4
         try {
             stage.setScene(new Scene(new FXMLLoader(getClass().getResource(FXML_PATH)).load()));
             stage.show();
         } catch (IOException e) {
             Utilities.alertWarn("FXMLoader could not properly load opject graph.\nCheck value: "
                     + FXML_PATH + "\nException message:\n" + e.getMessage());
+=======
+        try {
+            stage.setScene(new Scene(new FXMLLoader(getClass().getResource(FXML_PATH)).load()));
+            stage.show();
+        } catch (IOException | IllegalStateException e) {
+            Utilities.alertError("Der FXMLLoader konnte den Objektgraphen nicht korrekt laden.\n\nÜberprüfe folgenden Wert:\n"
+                    + FXML_PATH + "\n\nException:\n" + e.getMessage());
+>>>>>>> 1.5:src/main/java/eu/ggnet/gradecalculator/ui/MainStage.java
         }
 
     }
