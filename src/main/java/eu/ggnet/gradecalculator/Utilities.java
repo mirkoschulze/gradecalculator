@@ -25,15 +25,22 @@ public class Utilities {
     }
 
     /**
-     * Displays a new {@link Alert} with a message to indicate failures.
+     * Displays a new {@link Alert} pane with a message to indicate a failure.
+     * <p>
+     * Probably wrong user input.
      *
-     * @param message String to give detailed information about the error.
+     * @param message String to give detailed information about the failure.
      */
     public static void alertWarn(String message) {
         new Alert(Alert.AlertType.WARNING, message).show();
     }
-    
-    public static void alertError(String message){
+
+    /**
+     * Displays a new {@link Alert} pane with a message to indicate an error.
+     *
+     * @param message String to give detailed information about the error.
+     */
+    public static void alertError(String message) {
         new Alert(Alert.AlertType.ERROR, message).show();
     }
 
