@@ -14,30 +14,33 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="627.0" prefWidth="918.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.ggnet.calculator.ui.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" 
+            minWidth="-Infinity" prefHeight="627.0" prefWidth="918.0" 
+            xmlns="http://javafx.com/javafx/8.0.201" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="eu.ggnet.gradecalculator.ui.MainController">
     <left>
         <VBox alignment="CENTER" prefHeight="600.0" prefWidth="180.0" spacing="10.0" BorderPane.alignment="CENTER">
             <children>
-                <Label alignment="CENTER" contentDisplay="CENTER" text="Selected classbook view:" />
+                <Label alignment="CENTER" contentDisplay="CENTER" text="Ausgewählte Klasse:" />
                 <ListView fx:id="pupilsListView" prefHeight="550.0" prefWidth="145.0" />
                 <MenuBar prefHeight="35.0" prefWidth="158.0">
                     <menus>
-                        <Menu mnemonicParsing="false" text="Insert">
+                        <Menu mnemonicParsing="false" text="Hinzufügen">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#addClassbook" text="Add a classbook" />
-                                <MenuItem mnemonicParsing="false" onAction="#addPupil" text="Add a pupil" />
+                                <MenuItem mnemonicParsing="false" onAction="#addClassbook" text="Klasse hinzufügen" />
+                                <MenuItem mnemonicParsing="false" onAction="#addPupil" text="Schüler hinzufügen" />
                             </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Modify">
+                        <Menu mnemonicParsing="false" text="Benoten">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#setCertificationAtSelectedPupil" text="Set a new certification" />
-                                <MenuItem mnemonicParsing="false" onAction="#setGradeAtSelectedPupil" text="Set a new grade" />
+                                <MenuItem mnemonicParsing="false" onAction="#setCertificationAtSelectedPupil" text="Neues Zeugnis vergeben" />
+                                <MenuItem mnemonicParsing="false" onAction="#setGradeAtSelectedPupil" text="Neue Note vergeben" />
                             </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Remove">
+                        <Menu mnemonicParsing="false" text="Entfernen">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#removeClassbook" text="Remove selected classbook" />
-                                <MenuItem mnemonicParsing="false" onAction="#removePupil" text="Remove selected pupil" />
+                                <MenuItem mnemonicParsing="false" onAction="#removeClassbook" text="Ausgewählte Klasse entfernen" />
+                                <MenuItem mnemonicParsing="false" onAction="#removePupil" text="Ausgewählten Schüler entfernen" />
                             </items>
                         </Menu>
                     </menus>
@@ -57,13 +60,13 @@
     <right>
         <VBox alignment="CENTER" prefHeight="600.0" prefWidth="245.0" spacing="10.0" BorderPane.alignment="CENTER">
             <children>
-                <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Selected pupil view:" textAlignment="RIGHT" />
+                <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Ausgewählter Schüler:" textAlignment="RIGHT" />
                 <ListView fx:id="gradesListView" prefHeight="550.0" prefWidth="245.0" />
-              <Button fx:id="closeButton" alignment="BOTTOM_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#close" text="Close">
-                  <padding>
-                      <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-                  </padding>
-              </Button>
+                <Button fx:id="closeButton" alignment="BOTTOM_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#close" text="Beenden">
+                    <padding>
+                        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                    </padding>
+                </Button>
             </children>
             <BorderPane.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -73,26 +76,26 @@
     <center>
         <VBox alignment="CENTER" prefHeight="600.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
             <children>
-                <Label alignment="CENTER" contentDisplay="CENTER" text="Calculation view:" textAlignment="CENTER" />
+                <Label alignment="CENTER" contentDisplay="CENTER" text="Berechnungen: " textAlignment="CENTER" />
                 <TextArea fx:id="presentation" editable="false" prefHeight="550.0" prefWidth="418.0" wrapText="true" />
                 <HBox alignment="CENTER" prefHeight="15.0" prefWidth="594.0" spacing="10.0">
                     <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#calculateAndPresent" text="Calculate">
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#calculateAndPresent" text="Berechnung durchführen">
                             <font>
                                 <Font size="10.0" />
                             </font>
                         </Button>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#calculateAndPresentForEachClassbook" text="Calculate q.q. classbook">
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#calculateAndPresentForEachClassbook" text="Für alle Klassen berechnen">
                             <font>
                                 <Font size="10.0" />
                             </font>
                         </Button>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#calculateAndPresentForEachSubject" text="Calculate q.q. subject">
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#calculateAndPresentForEachSubject" text="Für jedes Fach berechnen">
                             <font>
                                 <Font size="10.0" />
                             </font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#clear" text="Clear screen">
+                        <Button mnemonicParsing="false" onAction="#clear" text="Textfeld zurücksetzen">
                             <font>
                                 <Font size="10.0" />
                             </font>
@@ -113,7 +116,7 @@
             <children>
                 <HBox alignment="CENTER" prefHeight="23.0" prefWidth="873.0" spacing="5.0">
                     <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" text="Select a classbook, a subject and a type of calculation. Use the buttons at the bottom for actions." textAlignment="CENTER">
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="Wähle eine Klasse, ein Schulfach und eine Berechnungsmethode aus. Nutze die Knöpfe im unteren Teil um Aktionen durchzuführen." textAlignment="CENTER">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -134,7 +137,7 @@
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="34.0" prefWidth="400.0" spacing="10.0">
                     <children>
-                        <ComboBox fx:id="classbookSelectionBox" prefWidth="150.0" promptText="Select a classbook...">
+                        <ComboBox fx:id="classbookSelectionBox" prefWidth="150.0" promptText="Wähle eine Klasse aus...">
                             <HBox.margin>
                                 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                             </HBox.margin>
@@ -142,7 +145,7 @@
                                 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                             </padding>
                         </ComboBox>
-                        <ComboBox fx:id="subjectSelectionBox" prefWidth="150.0" promptText="Select a subject..">
+                        <ComboBox fx:id="subjectSelectionBox" prefWidth="150.0" promptText="Wähle ein Schulfach aus...">
                             <HBox.margin>
                                 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                             </HBox.margin>
@@ -150,7 +153,7 @@
                                 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                             </padding>
                         </ComboBox>
-                        <ComboBox fx:id="calculationSelectionBox" prefHeight="25.0" prefWidth="159.0" promptText="Select a calculation...">
+                        <ComboBox fx:id="calculationSelectionBox" prefHeight="25.0" prefWidth="159.0" promptText="Wähle eine Berechnungsmethode aus...">
                             <HBox.margin>
                                 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                             </HBox.margin>
