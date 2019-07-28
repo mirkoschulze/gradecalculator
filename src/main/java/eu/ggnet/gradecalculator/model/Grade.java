@@ -70,9 +70,9 @@ public class Grade {
     @Getter
     public enum Subject {
 
-        ENG("business english"), IT_S("it systems"),
-        IT_W("it workshop"), SOC("economics and society"),
-        DEV("software development"), ORGA("organization and business processes");
+        ENG("Fachenglisch"), IT_S("IT Systeme"),
+        IT_W("IT Workshop"), AE("Anwendungsentwicklung"),
+        WUG("Wirtschaft und Gesellschaft"), ORGA("Organisations- und Geschäftsprozesse");
 
         private final String theme;
 

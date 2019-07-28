@@ -11,8 +11,8 @@ import eu.ggnet.gradecalculator.model.Grade.Subject;
 import eu.ggnet.gradecalculator.model.Pupil;
 import eu.ggnet.gradecalculator.ui.create.CreateClassbookDialog;
 import eu.ggnet.gradecalculator.ui.create.CreatePupilDialog;
-import eu.ggnet.gradecalculator.ui.update.UpdateCertificationStage;
-import eu.ggnet.gradecalculator.ui.update.UpdateGradeStage;
+import eu.ggnet.gradecalculator.ui.update.UpdateCertificationDialog;
+import eu.ggnet.gradecalculator.ui.update.UpdateGradeDialog;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -103,7 +103,7 @@ public class MainController implements Initializable {
             this.selectedSubject = newValue;
         });
 
-        this.calculationSelectionBox.setItems(FXCollections.observableArrayList("Average", "Accumulation"));
+        this.calculationSelectionBox.setItems(FXCollections.observableArrayList("Durchschnittliche Note", "Häufigste Note"));
         this.calculationSelectionBox.getSelectionModel().selectedItemProperty().addListener((value, oldValue, newValue) -> {
             this.selectedCalculation = newValue;
         });
@@ -133,10 +133,10 @@ public class MainController implements Initializable {
      */
     private void calculate(Classbook classbook, Subject subject) {
         switch (this.selectedCalculation.toLowerCase()) {
-            case "average":
+            case "durchschnittliche note":
                 this.calculatedGrade = Calculator.calculateAverageGrade(classbook, subject);
                 break;
-            case "accumulation":
+            case "häufigste note":
                 this.calculatedGrade = Calculator.calculateAccumulatedGrade(classbook, subject);
                 break;
         }
@@ -233,8 +233,8 @@ public class MainController implements Initializable {
      * Tries to remove the selected {@link Classbook} from the list of available
      * Classbooks.
      * <p>
-     * Catches a {@link NullPointerException} by displaying a new
-     * {@link AlertStage} with a respective error message.
+     * Catches a {@link NullPointerException} by displaying a new {@link Alert}
+     * with a respective error message.
      */
     @FXML
     private void removeClassbook() {
@@ -243,7 +243,8 @@ public class MainController implements Initializable {
             this.classbookSelectionBox.setItems(FXCollections.observableArrayList(this.classbooks));
             this.pupilsListView.setItems(FXCollections.emptyObservableList());
         } catch (NullPointerException e) {
-            Utilities.alertWarn("No classbook selected.\n\nException message:\n" + e.getMessage());
+            Utilities.alertWarn("Bitte wählen Sie die zu entfernende Klasse aus.\n\n"
+                    + "Fehlermeldung:\n" + e.getMessage());
         }
     }
 
@@ -253,8 +254,8 @@ public class MainController implements Initializable {
      * <p>
      * If a Pupil is returned, that Pupil is addded to the selected Classbook.
      * <p>
-     * Catches a {@link NullPointerException} by dispülaying a new
-     * {@link AlertStage} with a respective error message.
+     * Catches a {@link NullPointerException} by dispülaying a new {@link Alert}
+     * with a respective error message.
      */
     @FXML
     private void addPupil() {
@@ -265,7 +266,8 @@ public class MainController implements Initializable {
                 this.pupilsListView.setItems(FXCollections.observableArrayList(this.selectedClassbook.getPupils()));
             }
         } catch (NullPointerException e) {
-            Utilities.alertWarn("No classbook selected.\n\n:\n" + e.getMessage());
+            Utilities.alertWarn("Bitte wählen Sie eine Klasse aus, um einen Schüler hinzuzufügen.\n\n"
+                    + "Fehlermeldung:\n" + e.getMessage());
         }
 
     }
@@ -283,7 +285,8 @@ public class MainController implements Initializable {
             this.selectedClassbook.getPupils().remove(this.pupilsListView.getSelectionModel().getSelectedItem());
             this.pupilsListView.setItems(FXCollections.observableArrayList(this.selectedClassbook.getPupils()));
         } catch (NullPointerException e) {
-            Utilities.alertWarn("No pupil selected.\n\nException message:\n" + e.getMessage());
+            Utilities.alertWarn("Bitte wählen Sie den zu entfernenden Schüler aus."
+                    + "\n\nFehlermeldung:\n" + e.getMessage());
         }
 
     }
@@ -301,13 +304,16 @@ public class MainController implements Initializable {
     @FXML
     private void setCertificationAtSelectedPupil() {
         try {
-            Optional<Certification> certification = new UpdateCertificationStage().createCertification();
+            Optional<Certification> certification = new UpdateCertificationDialog().showAndWait();
             if (certification.isPresent()) {
                 this.pupilsListView.getSelectionModel().getSelectedItem().setCertification(certification.get());
-                this.gradesListView.setItems(FXCollections.observableArrayList(this.pupilsListView.getSelectionModel().getSelectedItem().getCertification().getGrades()));
+                this.gradesListView.setItems(FXCollections
+                        .observableArrayList(this.pupilsListView.getSelectionModel()
+                                .getSelectedItem().getCertification().getGrades()));
             }
         } catch (NullPointerException e) {
-            Utilities.alertWarn("No pupil selected.\n\nException message:\n" + e.getMessage());
+            Utilities.alertWarn("Bitte wählen Sie den Schüler aus, der ein Zeugnis erhalten soll."
+                    + "\n\nFehlermeldung:\n" + e.getMessage());
         }
 
     }
@@ -324,14 +330,17 @@ public class MainController implements Initializable {
         try {
             Pupil pupil = this.pupilsListView.getSelectionModel().getSelectedItem();
             List<Grade> grades = pupil.getCertification().getGrades();
-            Optional<Grade> grade = new UpdateGradeStage().updateGrade();
+            Optional<Grade> grade = new UpdateGradeDialog().showAndWait();
             if (grade.isPresent()) {
                 grades.set(grade.get().getSubject().ordinal(), grade.get());
                 pupil.setCertification(new Certification(pupil, grades));
-                this.gradesListView.setItems(FXCollections.observableArrayList(this.pupilsListView.getSelectionModel().getSelectedItem().getCertification().getGrades()));
+                this.gradesListView.setItems(FXCollections
+                        .observableArrayList(this.pupilsListView.getSelectionModel()
+                                .getSelectedItem().getCertification().getGrades()));
             }
         } catch (NullPointerException e) {
-            Utilities.alertWarn("No pupil selected.\n\nException message:\n" + e.getMessage());
+            Utilities.alertWarn("Bitte wählen Sie den Schüler aus, dessen Note Sie bearbeiten möchten."
+                    + "\n\nFehlermeldung:\n" + e.getMessage());
         }
 
     }

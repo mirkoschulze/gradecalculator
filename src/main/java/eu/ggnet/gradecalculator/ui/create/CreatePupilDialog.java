@@ -31,26 +31,24 @@ public class CreatePupilDialog extends Dialog<Pupil> {
 
     String forename, surname;
     int age;
-    TextField forenameInput, surnameInput, ageInput;
-    ComboBox<Sex> selectSexBox;
 
     public CreatePupilDialog() {
         this.setTitle("Schüler hinzufügen");
         this.setHeaderText("Tragen Sie für alle Felder Werte ein,\num einen neuen Schüler zu einer Klasse hinzuzufügen.");
 
-        forenameInput = new TextField();
+        TextField forenameInput = new TextField();
         forenameInput.setPromptText("Max");
         forenameInput.setTooltip(new Tooltip("Trage einen Vornamen ein, wie z.b. \"Maria\""));
 
-        surnameInput = new TextField();
+        TextField surnameInput = new TextField();
         surnameInput.setPromptText("Mustermann");
         surnameInput.setTooltip(new Tooltip("Trage einen Nachnamen ein, wie z.B. \"Musterfrau\""));
 
-        ageInput = new TextField();
+        TextField ageInput = new TextField();
         ageInput.setPromptText("23");
         ageInput.setTooltip(new Tooltip("Trage ein gültiges Alter in Jahren ein, wie z.B. \"100\""));
 
-        selectSexBox = new ComboBox<>();
+        ComboBox<Sex> selectSexBox = new ComboBox<>();
         selectSexBox.setItems(FXCollections.observableArrayList(Arrays.asList(Sex.values())));
         selectSexBox.setValue(Sex.MALE);
         selectSexBox.setTooltip(new Tooltip("Wähle ein Geschlecht aus"));
@@ -68,38 +66,37 @@ public class CreatePupilDialog extends Dialog<Pupil> {
         grid.addColumn(1, ageInput);
         grid.addColumn(1, selectSexBox);
 
+        this.getDialogPane().setContent(grid);
         this.getDialogPane().getButtonTypes().addAll(ButtonType.FINISH, ButtonType.CANCEL);
         Button finishButton = (Button) this.getDialogPane().lookupButton(ButtonType.FINISH);
         finishButton.addEventFilter(ActionEvent.ACTION, eh -> {
-            if (this.forenameInput.getText().isEmpty()
-                    | this.surnameInput.getText().isEmpty()
-                    | this.ageInput.getText().isEmpty()) {
+            if (forenameInput.getText().isEmpty()
+                    | surnameInput.getText().isEmpty()
+                    | ageInput.getText().isEmpty()) {
                 eh.consume();
-                Utilities.alertWarn("Bitte füllen Sie alle Felder korrekt aus.");
+                Utilities.alertWarn("Bitte füllen Sie alle Felder aus.");
             } else {
-                String name = this.forenameInput.getText().trim().toLowerCase().replaceAll("\\W|\\d", "");
+                String name = forenameInput.getText().trim().toLowerCase().replaceAll("\\W|\\d", "");
                 this.forename = Character.toUpperCase(name.charAt(0)) + name.substring(1);
-                name = this.surnameInput.getText().trim().toLowerCase().replaceAll("\\W|\\d", "");
+                name = surnameInput.getText().trim().toLowerCase().replaceAll("\\W|\\d", "");
                 this.surname = Character.toUpperCase(name.charAt(0)) + name.substring(1);
                 try {
-                    this.age = Integer.parseInt(this.ageInput.getText().trim());
+                    this.age = Integer.parseInt(ageInput.getText().trim().replaceAll("\\D", ""));
                 } catch (NumberFormatException e) {
-                    Utilities.alertWarn("Bitte geben Sie ein Alter in Ganzzahlen an.");
                     eh.consume();
+                    Utilities.alertWarn("Bitte geben Sie ein Alter in Ganzzahlen an.");
                 }
             }
         });
 
         this.setResultConverter(type -> {
             if (type == ButtonType.FINISH) {
-                return new Pupil(this.selectSexBox.getSelectionModel().getSelectedItem(),
+                return new Pupil(selectSexBox.getSelectionModel().getSelectedItem(),
                         this.age, this.forename, this.surname);
             } else {
                 return null;
             }
         });
-
-        this.getDialogPane().setContent(grid);
     }
 
 }

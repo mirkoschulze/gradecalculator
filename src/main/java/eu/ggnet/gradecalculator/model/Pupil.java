@@ -84,7 +84,7 @@ public class Pupil implements Comparable<Pupil> {
      */
     public enum Sex {
 
-        MALE("male"), FEMALE("female");
+        MALE("Männlich"), FEMALE("Weiblich");
 
         private final String description;
 

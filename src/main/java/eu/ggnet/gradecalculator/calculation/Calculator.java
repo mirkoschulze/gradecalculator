@@ -30,7 +30,7 @@ public class Calculator {
      * @return CalculatedGrade
      */
     public static CalculatedGrade calculateAccumulatedGrade(Classbook classbook, Subject subject) {
-        String calculation = "Accumulated grade for " + classbook.toString() + " = ";
+        String calculation = "Äufiste Note in der " + classbook.toString() + " = ";
         int mostOccurencies = 0;
         int iterationStep = 0;
         if (classbook.getPupils() != null && (!classbook.getPupils().isEmpty())) {
@@ -49,7 +49,7 @@ public class Calculator {
                 }
             }
         }
-        String suffix = "(" + mostOccurencies + " times)";
+        String suffix = "(" + mostOccurencies + " mal)";
         return new CalculatedGrade(calculation, new Grade(subject, Mark.values()[iterationStep]), suffix);
     }
 
@@ -66,7 +66,7 @@ public class Calculator {
      * @return CalculatedGrade
      */
     public static CalculatedGrade calculateAverageGrade(Classbook classbook, Subject subject) {
-        String calculation = "Average grade for " + classbook.getClassbookTitle() + " = ";
+        String calculation = "Durchschnittliche Note in der " + classbook.getClassbookTitle() + " = ";
         int total = 0;
         int average = 0;
         if (classbook.getPupils() != null && (!classbook.getPupils().isEmpty())) {
