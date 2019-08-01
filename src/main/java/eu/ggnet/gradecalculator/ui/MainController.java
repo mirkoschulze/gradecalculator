@@ -42,23 +42,72 @@ import javafx.stage.Stage;
 public class MainController implements Initializable {
 
     private List<Classbook> classbooks;
+
+    /**
+     * The {@link Classbook} selected via {@link #classbookSelectionBox}.
+     */
     private Classbook selectedClassbook;
+
+    /**
+     * {@link Subject} selected via {@link #subjectSelectionBox}.
+     */
     private Subject selectedSubject;
+
+    /**
+     * Method to calculate selected via {@link #calculationSelectionBox}.
+     */
     private String selectedCalculation;
+
+    /**
+     * Result of a calculation.
+     */
     private CalculatedGrade calculatedGrade;
 
+    /**
+     * {@link ComboBox} to select a {@link Classbook} to do operations on that
+     * Classbook.
+     */
     @FXML
     private ComboBox<Classbook> classbookSelectionBox;
+
+    /**
+     * {@link ComboBox} to select a {@link Subject} to do calculations.
+     */
     @FXML
     private ComboBox<Subject> subjectSelectionBox;
+
+    /**
+     * {@link ComboBox} to select a method to calculate a
+     * {@link CalculatedGrade}.
+     */
     @FXML
     private ComboBox<String> calculationSelectionBox;
+
+    /**
+     * {@link TextArea} to present the results of calculations.
+     */
     @FXML
     private TextArea presentation;
+
+    /**
+     * {@link ListView}&lt;{@link Pupil}&gt; to display information about
+     * {@link #selectedClassbook} and to select a Pupil to do operations on that
+     * Pupil.
+     */
     @FXML
     private ListView<Pupil> pupilsListView;
+
+    /**
+     * {@link ListView}&lt;{@link Grade}&gt; to display the Grades of the
+     * {@link Pupil} selected via {@link #pupilsListView}.
+     */
     @FXML
     private ListView<Grade> gradesListView;
+
+    /**
+     * {@link Button} to close the main {@link Stage} and the entire
+     * application.
+     */
     @FXML
     private Button closeButton;
 
@@ -69,8 +118,8 @@ public class MainController implements Initializable {
      * <li>adding {@link ObservableList} to {@link ComboBox} components</li>
      * <li>adding {@link ChangeListener} to lists</li></ul>
      *
-     * @param url URL
-     * @param rb ResourceBundle
+     * @param url URL - is not used
+     * @param rb ResourceBundle - is not used
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -123,13 +172,15 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Checks {@link ComboBox} calculationSelection for the selected calculation
-     * and calls the respective method from {@link Calculator} to generate a
+     * Checks {@link #calculationSelectionBox} for the selected calculation and
+     * calls the respective method from {@link Calculator} to generate a
      * {@link CalculatedGrade} for the submitted {@link Classbook} and
      * {@link Subject}.
      *
-     * @param classbook Classbook
-     * @param subject Subject
+     * @param classbook Classbook - {@link Classbook} for which the
+     * {@link Grade} shall be calculated
+     * @param subject Subject - {@link Subject} for which the {@link Grade}
+     * shall be calculated
      */
     private void calculate(Classbook classbook, Subject subject) {
         switch (this.selectedCalculation.toLowerCase()) {
@@ -144,7 +195,7 @@ public class MainController implements Initializable {
 
     /**
      * Adds a String representation of a {@link CalculatedGrade} to
-     * {@link TextArea} presentation.
+     * {@link #presentation}.
      */
     private void present() {
         StringBuilder sb = new StringBuilder(this.presentation.getText());
@@ -153,9 +204,15 @@ public class MainController implements Initializable {
     }
 
     /**
-     * If all {@link ComboBox} are selected:
-     * <ul><li>generates a {@link CalculatedGrade} to set calculatedGrade</li>
-     * <li>calculatedGrade is added to {@link TextArea}</li></ul>
+     * If all {@link #classbookSelectionBox}, {@link #subjectSelectionBox} and
+     * {@link #calculationSelectionBox} are selected:
+     * <ul><li>generates a {@link CalculatedGrade} to set
+     * {@link #calculatedGrade}</li>
+     * <li>the CalculatedGrade is added to {@link #presentation}</li></ul>
+     *
+     * @see #calculate(eu.ggnet.gradecalculator.model.Classbook,
+     * eu.ggnet.gradecalculator.model.Grade.Subject)
+     * @see #present()
      */
     @FXML
     private void calculateAndPresent() {
@@ -168,12 +225,17 @@ public class MainController implements Initializable {
     }
 
     /**
-     * If {@link ComboBox} calculationSelection and subjectSelection are
+     * If {@link #calculationSelectionBox} and {@link #subjectSelectionBox} are
      * selected:
      * <p>
-     * For each {@link Classbook} in classbooks:
-     * <ul><li>generates a {@link CalculatedGrade} to set calculatedGrade</li>
-     * <li>calculatedGrade is added to {@link TextArea} presentation</li></ul>
+     * For each {@link Classbook}:
+     * <ul><li>generates a {@link CalculatedGrade} to set
+     * {@link #calculatedGrade}</li>
+     * <li>the CalculatedGrade is added to {@link #presentation}</li></ul>
+     *
+     * @see #calculate(eu.ggnet.gradecalculator.model.Classbook,
+     * eu.ggnet.gradecalculator.model.Grade.Subject)
+     * @see #present()
      */
     @FXML
     private void calculateAndPresentForEachClassbook() {
@@ -187,12 +249,17 @@ public class MainController implements Initializable {
     }
 
     /**
-     * If {@link ComboBox} calculationSelection and classbookSelection are
-     * selected:
+     * If {@link #calculationSelectionBox} and {@link #calculationSelectionBox}
+     * are selected:
      * <p>
      * For each {@link Subject}:
-     * <ul><li>generates a {@link CalculatedGrade} to set calculatedGrade</li>
-     * <li>calculatedGrade is added to {@link TextArea} </li></ul>
+     * <ul><li>generates a {@link CalculatedGrade} to set
+     * {@link #calculatedGrade}</li>
+     * <li>the CalculatedGrade is added to {@link #presentation}</li></ul>
+     *
+     * @see #calculate(eu.ggnet.gradecalculator.model.Classbook,
+     * eu.ggnet.gradecalculator.model.Grade.Subject)
+     * @see #present()
      */
     @FXML
     private void calculateAndPresentForEachSubject() {
@@ -206,7 +273,7 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Resets {@link TextArea} presentation.
+     * Resets {@link #presentation}.
      */
     @FXML
     private void clear() {
@@ -234,7 +301,7 @@ public class MainController implements Initializable {
      * Classbooks.
      * <p>
      * Catches a {@link NullPointerException} by displaying a new {@link Alert}
-     * with a respective error message.
+     * with a respective message.
      */
     @FXML
     private void removeClassbook() {
@@ -249,13 +316,13 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Tries to displays a new {@link CreatePupilDialog} to create a new
-     * {@link Pupil} at a {@link Classbook}.
+     * Tries to display a new {@link CreatePupilDialog} to create a new
+     * {@link Pupil} for a {@link Classbook}.
      * <p>
-     * If a Pupil is returned, that Pupil is addded to the selected Classbook.
+     * If a Pupil is returned, that Pupil is added to the selected Classbook.
      * <p>
-     * Catches a {@link NullPointerException} by dispülaying a new {@link Alert}
-     * with a respective error message.
+     * Catches a {@link NullPointerException} by displaying a new {@link Alert}
+     * with a respective message.
      */
     @FXML
     private void addPupil() {
@@ -276,8 +343,8 @@ public class MainController implements Initializable {
      * Tries to remove the selected {@link Pupil} from the selected
      * {@link Classbook}.
      * <p>
-     * Catches a {@link NullPointerException} by displaying a new
-     * {@link AlertStage} with a respective error message.
+     * Catches a {@link NullPointerException} by displaying a new {@link Alert}
+     * with a respective message.
      */
     @FXML
     private void removePupil() {
@@ -292,14 +359,14 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Tries to display a new {@link UpdateCertificationStage} to create a new
+     * Tries to display a new {@link UpdateCertificationDialog} to create a new
      * {@link Certification} at a {@link Pupil}.
      * <p>
      * If a Certification is returned, the Certification is set at the selected
      * Pupil.
      * <p>
-     * Catches a {@link NullPointerException} by displaying a new
-     * {@link AlertStage} with a respective error message.
+     * Catches a {@link NullPointerException} by displaying a new {@link Alert}
+     * with a respective message.
      */
     @FXML
     private void setCertificationAtSelectedPupil() {
@@ -319,11 +386,14 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Tries to display a new {@link UpdateGradeStage} to create a new
+     * Tries to display a new {@link UpdateGradeDialog} to create a new
      * {@link Grade} for a {@link Certification} at a {@link Pupil}.
      * <p>
      * If a Grade is returned, a new Certification with the old values and the
      * newly created Grade is set at the selected Pupil.
+     * <p>
+     * Catches a {@link NullPointerException} by displaying a new {@link Alert}
+     * with a respective message.
      */
     @FXML
     private void setGradeAtSelectedPupil() {
@@ -347,7 +417,7 @@ public class MainController implements Initializable {
 
     /**
      * Displays a new {@link Alert} to confirm the close request. Closes the
-     * root {@link Stage} when the event is confirmed.
+     * main {@link Stage} and the entire application if the event is confirmed.
      */
     @FXML
     private void close() {

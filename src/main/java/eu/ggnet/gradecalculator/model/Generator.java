@@ -9,50 +9,57 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Static class to generate random instances of
+ * Class with static methods to generate random instances of
  * {@link Certification}, {@link Pupil} and {@link Classbook}.
  * <p>
- * Contains methods to generate random attributes for instances..
+ * Contains supporting methods to generate random attributes for instances.
  *
  * @author Mirko Schulze
  */
 public class Generator {
 
     private static final Random R = new Random();
-    
-    private Generator(){
-        
+
+    /**
+     * Private constructor to prevent an instantiation.
+     */
+    private Generator() {
+
     }
 
     /**
-     * Generates an instance of {@link Pupil} with random values.
+     * Generates a {@link Pupil} with a random {@link Sex}, a random age and a
+     * random name.
      *
-     * @return Pupil
+     * @return Pupil - {@link Pupil} with random values
      */
     public static Pupil generatePupil() {
-        Sex s = generateSex();
+        Sex s = Generator.generateSex();
         return new Pupil(s, R.nextInt(10) + 18, generateForename(s), generateSurname());
     }
 
     /**
-     * Generates an instance of {@link Classbook} with random values.
+     * Generates a {@link Classbook} with a random title and a random amount of
+     * random {@link Pupil}.
      *
-     * @return Classbook
+     * @return Classbook - {@link Classbook} with random values
      */
     public static Classbook generateClassbook() {
         List<Pupil> pupils = new ArrayList<>();
         for (int i = 0; i < R.nextInt(20) + 10; i++) {
-            pupils.add(generatePupil());
+            pupils.add(Generator.generatePupil());
         }
-        return new Classbook(generateClassbookName(), pupils);
+        return new Classbook(Generator.generateClassbookName(), pupils);
     }
 
     /**
      * Generates a {@link Certification} with a random {@link Mark} for each
      * {@link Subject} for the submitted {@link Pupil}.
      *
-     * @param pupil Pupil
-     * @return Certification
+     * @param pupil Pupil - the {@link Pupil} that shall get the
+     * {@link Certification}
+     * @return Certification - random {@link Certification} for the submitted
+     * {@link Pupil}
      */
     public static Certification generateCertification(Pupil pupil) {
         List<Grade> listOfGrades = new ArrayList<>();
@@ -63,11 +70,11 @@ public class Generator {
     }
 
     /**
-     * Selects a random {@link Sex} for an instance of {@link Pupil}.
+     * Returns a random {@link Sex} for a {@link Pupil}.
      *
-     * @return Sex
+     * @return Sex - random {@link Sex} for a {@link Pupil}
      */
-    public static Pupil.Sex generateSex() {
+    private static Pupil.Sex generateSex() {
         if (R.nextInt(2) < 1) {
             return Pupil.Sex.MALE;
         } else {
@@ -76,13 +83,14 @@ public class Generator {
     }
 
     /**
-     * Selects a random forename for an instance of {@link Pupil}.
+     * Returns a random forename for a {@link Pupil}, depending on the submitted
+     * {@link Sex}.
      *
-     * @param gender Sex
-     * @return String
+     * @param sex Sex - {@link Sex} of the {@link Pupil}
+     * @return String - random forename for a {@link Pupil}
      */
-    public static String generateForename(Sex gender) {
-        if (gender == Pupil.Sex.FEMALE) {
+    private static String generateForename(Sex sex) {
+        if (sex == Pupil.Sex.FEMALE) {
             switch (R.nextInt(16)) {
                 case 0:
                     return "Anna";
@@ -152,11 +160,11 @@ public class Generator {
     }
 
     /**
-     * Selects a random surname for an instance of {@link Pupil}.
+     * Returns a random surname for a {@link Pupil}.
      *
-     * @return String
+     * @return String - random surname for a {@link Pupil}
      */
-    public static String generateSurname() {
+    private static String generateSurname() {
         switch (R.nextInt(10)) {
             case 0:
                 return "Burkhard";
@@ -200,16 +208,18 @@ public class Generator {
     }
 
     /**
-     * Selects a random name for an instance of {@link Classbook}.
+     * Joins and returns a random title for a {@link Classbook}, consisting of
+     * "IT" followed by a numver between 0 and 12, followed by a random vocal
+     * character.
      *
-     * @return String
+     * @return String - random title for a {@link Classbook}
      */
-    public static String generateClassbookName() {
+    private static String generateClassbookName() {
         return "IT " + R.nextInt(13) + ClassbookCharacter.values()[R.nextInt(ClassbookCharacter.values().length)].character;
     }
 
     /**
-     * Enum with characters for titles of a {@link Classbook}.
+     * Enum with vocal characters for titles of a {@link Classbook}.
      */
     public enum ClassbookCharacter {
         A('a'), E('e'), I('i'), O('o'), U('u');
@@ -219,11 +229,6 @@ public class Generator {
         private ClassbookCharacter(char character) {
             this.character = character;
         }
-
-        public char getCharacter() {
-            return this.character;
-        }
-
     }
 
 }

@@ -14,8 +14,8 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 
 /**
- * Invokes a specified Dialog pane with a {@link Label} and a {@link TextField}
- * to create a new Classbook.
+ * Invokes a specified {@link Dialog} pane with a {@link Label} and a
+ * {@link TextField} to create a new {@link Classbook}.
  * <p>
  * The created Classbook is the return value of the constructor, if a title is
  * entered and the finish button is clicked, else the return value is null.

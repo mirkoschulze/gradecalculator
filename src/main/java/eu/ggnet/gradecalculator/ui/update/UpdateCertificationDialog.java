@@ -20,11 +20,11 @@ import javafx.scene.layout.GridPane;
 import lombok.Setter;
 
 /**
- * Invokes a specified Dialog to change the Certification of a selected
- * {@link Pupil}.
+ * Invokes a specified {@link Dialog} to change the {@link Certification} of a
+ * selected {@link Pupil}.
  * <p>
- * The entered int values are resolved to a {@link Mark}. Creates a new
- * Certification with the entered values, which is the return value of the
+ * The entered int values are resolved to instances of {@link Mark}. Creates a
+ * new Certification with the entered values, which is the return value of the
  * constructor, if valid values are entered and the finish button is clicked,
  * else the return value is null.
  * <p>
@@ -109,50 +109,6 @@ public class UpdateCertificationDialog extends Dialog<Certification> {
                     Utilities.alertWarn("Bitte geben Sie eine Ganzzahl zwischen 0 und 15 ein."
                             + "\n\nFehlermeldung:\n" + e.getMessage());
                 }
-//                try {
-//                    this.grades.add(new Grade(Grade.Subject.IT_S,
-//                            Utilities.createMark(Integer.parseInt(itsInput.getText().trim().replaceAll("\\D", "")))));
-//                } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-//                    eh.consume();
-//                    Utilities.alertWarn("Bitte geben Sie eine Ganzzahl zwischen 0 und 15 ein."
-//                            + "\n\nFehlermeldung:\n" + e.getMessage());
-//                }
-//
-//                try {
-//                    this.grades.add(new Grade(Grade.Subject.IT_W,
-//                            Utilities.createMark(Integer.parseInt(itwInput.getText().trim().replaceAll("\\D", "")))));
-//                } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-//                    eh.consume();
-//                    Utilities.alertWarn("Bitte geben Sie eine Ganzzahl zwischen 0 und 15 ein."
-//                            + "\n\nFehlermeldung:\n" + e.getMessage());
-//                }
-//
-//                try {
-//                    this.grades.add(new Grade(Grade.Subject.WUG,
-//                            Utilities.createMark(Integer.parseInt(wugInput.getText().trim().replaceAll("\\D", "")))));
-//                } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-//                    eh.consume();
-//                    Utilities.alertWarn("Bitte geben Sie eine Ganzzahl zwischen 0 und 15 ein."
-//                            + "\n\nFehlermeldung:\n" + e.getMessage());
-//                }
-//
-//                try {
-//                    this.grades.add(new Grade(Grade.Subject.AE,
-//                            Utilities.createMark(Integer.parseInt(aeInput.getText().trim().replaceAll("\\D", "")))));
-//                } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-//                    eh.consume();
-//                    Utilities.alertWarn("Bitte geben Sie eine Ganzzahl zwischen 0 und 15 ein."
-//                            + "\n\nFehlermeldung:\n" + e.getMessage());
-//                }
-//
-//                try {
-//                    this.grades.add(new Grade(Grade.Subject.ORGA,
-//                            Utilities.createMark(Integer.parseInt(orgaInput.getText().trim().replaceAll("\\D", "")))));
-//                } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-//                    eh.consume();
-//                    Utilities.alertWarn("Bitte geben Sie eine Ganzzahl zwischen 0 und 15 ein."
-//                            + "\n\nFehlermeldung:\n" + e.getMessage());
-//                }
             }
         });
 

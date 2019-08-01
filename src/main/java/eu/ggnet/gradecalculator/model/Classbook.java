@@ -11,8 +11,9 @@ import lombok.Getter;
  * Contains a String to hold the name of a schoolclass and a list with instances
  * of {@link Pupil}.
  * <p>
- * Contains methods to present data in a human-readable format. Overrides
- * {@link Object#toString()} for presentation purposes.
+ * Contains methods to present data in a human-readable format.
+ * <p>
+ * Overrides {@link Object#toString()} for gui presentation purposes.
  *
  * @author Mirko Schulze
  */
@@ -20,13 +21,17 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Classbook {
 
+    /**
+     * Title of a {@link Classbook}, e.g. "IT 8i".
+     */
     private final String classbookTitle;
     private final List<Pupil> pupils;
 
     /**
      * {@link ComboBox} uses {@link Object#toString()} to display data.
      *
-     * @return String
+     * @return String - {@link #classbookTitle} of this {@link Classbook}
+     * @see #toSimpleLine()
      */
     @Override
     public String toString() {
@@ -34,18 +39,19 @@ public class Classbook {
     }
 
     /**
-     * Returns the classbookTitle of this instance.
+     * Returns the {@link #classbookTitle} of this {@link Classbook}.
      *
-     * @return String
+     * @return String - {@link #classbookTitle} of this {@link Classbook}
      */
     public String toSimpleLine() {
         return this.classbookTitle;
     }
 
     /**
-     * Joins and returns a human-readable String with all data in this instance.
+     * Joins and returns a human-readable String with the data of this
+     * {@link Classbook}.
      *
-     * @return String
+     * @return String - human-readable representation of thi s {@link Classbook}
      */
     public String toEnhancedLine() {
         StringBuilder sb = new StringBuilder();

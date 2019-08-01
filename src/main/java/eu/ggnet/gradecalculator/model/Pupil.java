@@ -9,26 +9,35 @@ import lombok.Setter;
  * Represents a pupil at school.
  * <p>
  * Contains {@link Sex} sex, int age, Strings forename and surname, and a
- * {@link Certification}.
+ * {@link Certification}. Pupil can be sorted by comparing the first letter of
+ * their surnames.
  * <p>
- * Contains methods to present data in a human-readable format. Overrides
- * {@link Object#toString()} for presentation purposes.
+ * Contains methods to present data in a human-readable format.
+ * <p>
+ * Overrides {@link Object#toString()} for gui presentation purposes.
  *
  * @author Mirko Schulze
  */
+@Getter
 @AllArgsConstructor
 public class Pupil implements Comparable<Pupil> {
 
     private final Sex sex;
     private final int age;
-    @Getter
     private final String forename;
-    @Getter
     private final String surname;
-    @Getter
     @Setter
     private Certification certification;
 
+    /**
+     * Constructor to instantiate a new {@link Pupil} with the submitted values
+     * and no {@link Certification}.
+     *
+     * @param sex Sex - {@link Sex} of the Pupil
+     * @param age int - age of the Pupil
+     * @param forename - String - forename of the Pupil
+     * @param surname - String - surname of the Pupil
+     */
     public Pupil(Sex sex, int age, String forename, String surname) {
         this.sex = sex;
         this.age = age;
@@ -39,7 +48,8 @@ public class Pupil implements Comparable<Pupil> {
     /**
      * {@link ComboBox} uses {@link Object#toString()} to display data.
      *
-     * @return String
+     * @return String - the full name of this {@link Pupil}
+     * @see #toSimpleLine()
      */
     @Override
     public String toString() {
@@ -48,9 +58,12 @@ public class Pupil implements Comparable<Pupil> {
 
     /**
      * Implements {@link Comparable} by comparing the first letter of surename.
+     * Returns -1 if the first letter of the compared {@link Pupil} has a bigger
+     * alphanumerical value, 1 if otherwise.
      *
-     * @param p Pupil
-     * @return int
+     * @param p Pupil - the {@link Pupil} this Pupil shall be compared to
+     * @return int - the result of the alphanumerical comparison between two
+     * instances of {@link Pupil}
      */
     @Override
     public int compareTo(Pupil p) {
@@ -58,19 +71,20 @@ public class Pupil implements Comparable<Pupil> {
     }
 
     /**
-     * Joins and returns a human-readable String with most data in this
-     * instance.
+     * Joins and returns a human-readable String with the full name of this
+     * {@link Pupil}.
      *
-     * @return String
+     * @return String - the full name of this {@link Pupil}
      */
     public String toSimpleLine() {
         return this.forename + " " + this.surname;
     }
 
     /**
-     * Joins and returns a human-readable String with the data in this instance.
+     * Joins and returns a human-readable String with the data of this
+     * {@link Pupil}.
      *
-     * @return String
+     * @return String - human-readable representation of this {@link Pupil}
      */
     public String toEnhancedLine() {
         return this.forename + " " + this.surname
@@ -93,11 +107,6 @@ public class Pupil implements Comparable<Pupil> {
         }
 
         public String getDescription() {
-            return this.description;
-        }
-
-        @Override
-        public String toString() {
             return this.description;
         }
 

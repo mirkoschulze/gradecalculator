@@ -7,27 +7,33 @@ import eu.ggnet.gradecalculator.model.Grade.Subject;
 import eu.ggnet.gradecalculator.model.Pupil;
 
 /**
- * Static class to generate new instances of {@link CalculatedGrade}.
+ * Class with static methods to generate new instances of
+ * {@link CalculatedGrade}.
  *
  * @author Mirko Schulze
  */
 public class Calculator {
 
+    /**
+     * Private constructor to prevent an instantiation.
+     */
     private Calculator() {
 
     }
 
     /**
      * Counts how often each individual {@link Mark} is given for the submitted
-     * {@link Subject} in the submitted {@link Classbook}. Saves the mark with
-     * the most occurencies.
+     * {@link Subject} in the submitted {@link Classbook}. Saves the first Mark
+     * with the most occurencies.
      * <p>
      * Generates and returns a new {@link CalculatedGrade} with the calculated
-     * mark and its occurencies as suffix.
+     * {@link Grade} and its occurencies as suffix.
      *
-     * @param classbook Classbook
-     * @param subject Subject
-     * @return CalculatedGrade
+     * @param classbook Classbook - {@link Classbook} for which the
+     * {@link Grade} shall be calculated
+     * @param subject Subject - {@link Subject} for which the {@link Grade}
+     * shall be calculated
+     * @return CalculatedGrade - the wrapped {@link Grade}
      */
     public static CalculatedGrade calculateAccumulatedGrade(Classbook classbook, Subject subject) {
         String calculation = "Äufiste Note in der " + classbook.toString() + " = ";
@@ -38,7 +44,8 @@ public class Calculator {
                 int occurencies = 0;
                 for (Pupil pupil : classbook.getPupils()) {
                     if (pupil.getCertification() != null) {
-                        if (Mark.values()[i].getHighschoolMark() == pupil.getCertification().getGrades().get(subject.ordinal()).getMark().getHighschoolMark()) {
+                        if (Mark.values()[i].getHighschoolMark() == pupil.getCertification()
+                                .getGrades().get(subject.ordinal()).getMark().getHighschoolMark()) {
                             occurencies++;
                         }
                     }
@@ -61,9 +68,11 @@ public class Calculator {
      * Generates and returns a new {@link CalculatedGrade} with the calculated
      * number as mark.
      *
-     * @param classbook Classbook
-     * @param subject Subject
-     * @return CalculatedGrade
+     * @param classbook Classbook - {@link Classbook} for which the
+     * {@link Grade} shall be calculated
+     * @param subject Subject - {@link Subject} for which the {@link Grade}
+     * shall be calculated
+     * @return CalculatedGrade - the wrapped {@link Grade}
      */
     public static CalculatedGrade calculateAverageGrade(Classbook classbook, Subject subject) {
         String calculation = "Durchschnittliche Note in der " + classbook.getClassbookTitle() + " = ";

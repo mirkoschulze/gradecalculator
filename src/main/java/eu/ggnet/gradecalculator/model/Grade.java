@@ -3,24 +3,23 @@ package eu.ggnet.gradecalculator.model;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javafx.scene.control.ComboBox;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * Represents the evaluation for a finished course or module.
+ * Represents the evaluation for a finished course or module at a school.
  * <p>
- * Combines a {@link Mark} with a {@link Subject} and adds the {@link LocalDate}
- * at which it was created.
+ * Combines a {@link Mark} with a {@link Subject} and the {@link LocalDate} at
+ * which it was created.
  * <p>
- * Contains methods to present data in a human-readable format. Overrides
- * {@link Object#toString()} for presentation purposes.
+ * Contains methods to present data in a human-readable format.
+ * <p>
+ * Overrides {@link Object#toString()} for gui presentation purposes.
  * <p>
  * Contains enums for the different subjects and values of a mark.
  *
  * @author Mirko Schulze
  */
 @Getter
-@AllArgsConstructor
 public class Grade {
 
     private final Subject subject;
@@ -36,7 +35,8 @@ public class Grade {
     /**
      * {@link ComboBox} uses {@link Object#toString()} to display data.
      *
-     * @return String
+     * @return String - human-readable representation of this {@link Grade}
+     * @see #toSimpleLine()
      */
     @Override
     public String toString() {
@@ -45,18 +45,19 @@ public class Grade {
 
     /**
      * Joins and returns a human-readable String with most data of this
-     * instance.
+     * {@link Grade}.
      *
-     * @return String
+     * @return String - human-readable representation of this {@link Grade}
      */
     public String toSimpleLine() {
         return this.subject.getTheme() + ": " + this.mark.getMiddleschoolMark();
     }
 
     /**
-     * Joins and returns a human-readable String with the data of this instance.
+     * Joins and returns a human-readable String with the data of this
+     * {@link Grade}.
      *
-     * @return String
+     * @return String - human-readable representation of this {@link Grade}
      */
     public String toEnhancedLine() {
         return this.subject.getTheme() + ": " + this.mark.getMiddleschoolMark()
@@ -64,8 +65,9 @@ public class Grade {
     }
 
     /**
-     * Enumeration of courses given at a school. Overrides
-     * {@link Object#toString()} for presentation purposes.
+     * Enumeration of courses given at an IT school.
+     * <p>
+     * Overrides {@link Object#toString()} for gui presentation purposes.
      */
     @Getter
     public enum Subject {
@@ -83,7 +85,7 @@ public class Grade {
         /**
          * {@link ComboBox} uses {@link Object#toString()} to display data.
          *
-         * @return String
+         * @return String - the theme of this {@link Subject}
          */
         @Override
         public String toString() {
@@ -93,7 +95,7 @@ public class Grade {
     }
 
     /**
-     * Enumeration of ratings for a {@link Subject}, from 0 to 15.
+     * Enumeration of ratings for a {@link Subject}, from 0 to 15 / 6 to 1+.
      */
     @Getter
     public enum Mark {

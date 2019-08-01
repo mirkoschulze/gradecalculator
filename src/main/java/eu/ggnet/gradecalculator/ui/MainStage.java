@@ -6,6 +6,7 @@ import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 /**
@@ -27,19 +28,19 @@ public class MainStage extends Application {
      * launched through deployment artifacts, e.g., in IDEs with limited FX
      * support. NetBeans ignores main().
      *
-     * @param args the command line arguments
+     * @param args String[] - the command line arguments
      */
     public static void main(String[] args) {
         launch(args);
     }
 
     /**
-     * Tries to show the primary application {@link Stage}.
+     * Tries to show the primary application Stage.
      * <p>
-     * Catches an {@link IOException} by displaying a new {@link AlertStage}
+     * Catches an {@link IOException} or {@link IllegalStateException} by displaying a new {@link Alert}
      * with a respective error message.
      *
-     * @param stage Stage
+     * @param stage Stage - the main application Stage
      */
     @Override
     public void start(Stage stage) {
@@ -47,7 +48,8 @@ public class MainStage extends Application {
             stage.setScene(new Scene(new FXMLLoader(getClass().getResource(FXML_PATH)).load()));
             stage.show();
         } catch (IOException | IllegalStateException e) {
-            Utilities.alertError("Der FXMLLoader konnte den Objektgraphen nicht korrekt laden.\n\nÜberprüfe folgenden Wert:\n"
+            Utilities.alertError("Der FXMLLoader konnte den Objektgraphen nicht korrekt laden."
+                    + "\n\nÜberprüfe folgende Ressource:\n"
                     + FXML_PATH + "\n\nException:\n" + e.getMessage());
         }
 

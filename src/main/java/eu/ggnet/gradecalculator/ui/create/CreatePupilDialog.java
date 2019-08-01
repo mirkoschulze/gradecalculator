@@ -17,8 +17,8 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 
 /**
- * Invokes a specified Dialog pane with {@link Label} and {@link TextField}
- * components to create a new Pupil.
+ * Invokes a specified {@link Dialog} pane with {@link Label} and {@link TextField}
+ * components to create a new {@link Pupil}.
  * <p>
  * The created Pupil is the return value of the constructor, if valid values are
  * entered and the finish button is clicked, else the return value is null.
@@ -29,8 +29,8 @@ import javafx.scene.layout.GridPane;
  */
 public class CreatePupilDialog extends Dialog<Pupil> {
 
-    String forename, surname;
-    int age;
+    private String forename, surname;
+    private int age;
 
     public CreatePupilDialog() {
         this.setTitle("Schüler hinzufügen");

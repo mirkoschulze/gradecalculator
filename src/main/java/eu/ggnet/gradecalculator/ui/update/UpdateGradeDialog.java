@@ -18,7 +18,8 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 
 /**
- * Invokes a specified Dialog to change the Grade of a selected {@link Pupil}.
+ * Invokes a specified {@link Dialog} to change the {@link Grade} of a selected
+ * {@link Pupil}.
  * <p>
  * The entered int value is resolved to a {@link Mark}.This mark plus the chosen
  * {@link Subject} are used to create a new Grade, which is the return value of

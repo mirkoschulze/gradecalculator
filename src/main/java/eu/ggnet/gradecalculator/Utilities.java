@@ -4,21 +4,24 @@ import eu.ggnet.gradecalculator.model.Grade.Mark;
 import javafx.scene.control.Alert;
 
 /**
- * Static class with useful methods for multiple situations.
+ * Class with static methods, useful for multiple situations.
  *
  * @author Mirko Schulze
  */
 public class Utilities {
 
+    /**
+     * Private constructor to prevent an instantiation.
+     */
     private Utilities() {
 
     }
 
     /**
-     * Converts an integer value into a {@link Mark}.
+     * Converts an integer value into a {@link Mark}, which is then returned.
      *
-     * @param value integer
-     * @return Mark
+     * @param value int - {@link Integer} value that shall be converted
+     * @return Mark - a converted {@link Integer} value
      */
     public static Mark createMark(int value) {
         return Mark.values()[value];
@@ -29,7 +32,7 @@ public class Utilities {
      * <p>
      * Probably wrong user input.
      *
-     * @param message String to give detailed information about the failure.
+     * @param message String - additional information about the failure
      */
     public static void alertWarn(String message) {
         new Alert(Alert.AlertType.WARNING, message).show();
@@ -38,7 +41,7 @@ public class Utilities {
     /**
      * Displays a new {@link Alert} pane with a message to indicate an error.
      *
-     * @param message String to give detailed information about the error.
+     * @param message String - additional information about the error
      */
     public static void alertError(String message) {
         new Alert(Alert.AlertType.ERROR, message).show();
