@@ -37,7 +37,7 @@ public class UpdateGradeDialog extends Dialog<Grade> {
     public UpdateGradeDialog() {
         this.setTitle("Note ändern");
         this.setHeaderText("Wählen Sie ein Fach aus und tragen Sie einen Wert zwischen 0 und 15 ein.\n"
-                + "Eine 0 entspricht einer 6, 15 entpsicht einer 1+.");
+                + "Eine 0 entspricht einer 6, 15 entpricht einer 1+.");
 
         ComboBox<Subject> selectSubjectBox = new ComboBox<>();
         selectSubjectBox.setItems(FXCollections.observableArrayList(Subject.values()));
@@ -82,7 +82,13 @@ public class UpdateGradeDialog extends Dialog<Grade> {
 
         this.setResultConverter(type -> {
             if (type == ButtonType.FINISH) {
-                return new Grade(selectSubjectBox.getSelectionModel().getSelectedItem(), Utilities.createMark(markValue));
+                try {
+                    return new Grade(selectSubjectBox.getSelectionModel().getSelectedItem(), Utilities.createMark(markValue));
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    Utilities.alertWarn("Bitte tragen Sie einen Wert zwischen 0 und 15 ein."
+                            + "\n\nFehlermeldung:\n" + e.getMessage());
+                    return null;
+                }
             } else {
                 return null;
             }
