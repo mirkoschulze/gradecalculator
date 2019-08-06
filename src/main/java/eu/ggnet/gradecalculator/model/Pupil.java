@@ -95,6 +95,8 @@ public class Pupil implements Comparable<Pupil> {
 
     /**
      * Enumeration of biological genders.
+     * <p>
+     * Overrides {@link Object#toString()} for gui presentation purposes.
      */
     public enum Sex {
 
@@ -107,6 +109,16 @@ public class Pupil implements Comparable<Pupil> {
         }
 
         public String getDescription() {
+            return this.description;
+        }
+
+        /**
+         * {@link ComboBox} uses {@link Object#toString()} to display data.
+         *
+         * @return String - the description of this {@link Sex}
+         */
+        @Override
+        public String toString() {
             return this.description;
         }
 
