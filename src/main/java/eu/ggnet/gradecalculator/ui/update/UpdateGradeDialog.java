@@ -12,10 +12,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 /**
  * Invokes a specified {@link Dialog} to change the {@link Grade} of a selected
@@ -32,63 +33,55 @@ import javafx.scene.layout.GridPane;
  */
 public class UpdateGradeDialog extends Dialog<Grade> {
 
-    private int markValue;
+    private Mark mark;
 
     public UpdateGradeDialog() {
         this.setTitle("Note ändern");
-        this.setHeaderText("Wählen Sie ein Fach aus und tragen Sie einen Wert zwischen 0 und 15 ein.\n"
-                + "Eine 0 entspricht einer 6, 15 entpricht einer 1+.");
+        this.setHeaderText("Wählen Sie ein Fach und eine Note aus.");
 
         ComboBox<Subject> selectSubjectBox = new ComboBox<>();
         selectSubjectBox.setItems(FXCollections.observableArrayList(Subject.values()));
         selectSubjectBox.setTooltip(new Tooltip("Wähle ein Schulfach aus."));
 
-        TextField markInput = new TextField();
-        markInput.setPromptText("7");
-        markInput.setTooltip(new Tooltip("Tragen einen gültigen Wert ein, wie z.B. \"12\"."));
+        HBox hbox = new HBox(5);
+        VBox vbox = new VBox(5);
+        vbox.setPadding(new Insets(5));
+        vbox.getChildren().add(selectSubjectBox);
 
-        GridPane grid = new GridPane();
-        grid.setHgap(5);
-        grid.setVgap(5);
-        grid.setPadding(new Insets(5));
-        grid.add(new Label("Schulfach: "), 0, 0);
-        grid.add(new Label("Notenwert: "), 0, 1);
-        grid.add(selectSubjectBox, 1, 0);
-        grid.add(markInput, 1, 1);
+        ToggleGroup tg = new ToggleGroup();
+        int count = 0;
+        for (Mark value : Mark.values()) {
+            RadioButton rb = new RadioButton(value.getMiddleschoolMark());
+            rb.setToggleGroup(tg);
+            hbox.getChildren().add(rb);
+            count++;
+            if (count == 4 || count == 8 || count == 12) {
+                vbox.getChildren().add(hbox);
+                hbox = new HBox(5);
+            } else if (count == 16) {
+                vbox.getChildren().add(hbox);
+            }
+        }
+        this.getDialogPane().setContent(vbox);
 
-        this.getDialogPane().setContent(grid);
         this.getDialogPane().getButtonTypes().addAll(ButtonType.FINISH, ButtonType.CANCEL);
         Button finishButton = (Button) this.getDialogPane().lookupButton(ButtonType.FINISH);
         finishButton.addEventFilter(ActionEvent.ACTION, eh -> {
             if (selectSubjectBox.getSelectionModel().getSelectedItem() == null) {
                 eh.consume();
                 Utilities.alertWarn("Bitte wählen Sie ein Schulfach aus.");
-            } else if (markInput.getText().isEmpty()) {
+            } else if (tg.getSelectedToggle() == null) {
                 eh.consume();
-                Utilities.alertWarn("Bitte tragen Sie einen Wert für die Note ein.");
+                Utilities.alertWarn("Bitte wählen Sie einen Wert für die Note aus.");
             } else {
-                try {
-                    markValue = Integer.parseInt(markInput.getText().trim().replaceAll("\\D", ""));
-                } catch (NumberFormatException e) {
-                    Utilities.alertWarn("Bitte tragen Sie nur Ganzzahlen ein.\n\n"
-                            + "Fehlermeldung:\n" + e.getMessage());
-                } catch (ArrayIndexOutOfBoundsException ex) {
-                    //FIXME - exception wird trotzdem geschmissen
-                    Utilities.alertWarn("Bitte tragen Sie einen Wert zwischen 0 und 15 ein."
-                            + "\n\nFehlermeldung:\n" + ex.getMessage());
-                }
+                RadioButton rb = (RadioButton) tg.getSelectedToggle();
+                this.mark = Utilities.findByMiddleschoolMark(rb.getText());
             }
         });
-
+        
         this.setResultConverter(type -> {
             if (type == ButtonType.FINISH) {
-                try {
-                    return new Grade(selectSubjectBox.getSelectionModel().getSelectedItem(), Utilities.createMark(markValue));
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    Utilities.alertWarn("Bitte tragen Sie einen Wert zwischen 0 und 15 ein."
-                            + "\n\nFehlermeldung:\n" + e.getMessage());
-                    return null;
-                }
+                return new Grade(selectSubjectBox.getSelectionModel().getSelectedItem(), this.mark);
             } else {
                 return null;
             }
