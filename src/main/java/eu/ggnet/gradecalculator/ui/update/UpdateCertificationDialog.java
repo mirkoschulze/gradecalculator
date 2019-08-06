@@ -39,11 +39,11 @@ public class UpdateCertificationDialog extends Dialog<Certification> {
     private List<Grade> grades;
 
     public UpdateCertificationDialog() {
+         this.grades = new ArrayList<>();
+         
         setTitle("Zeugnis ändern");
         setHeaderText("Tragen Sie für jedes Schulfach einen Wert zwischen 0 und 15 ein.\n"
                 + "Eine 0 entspricht einer 6, 15 entpsicht einer 1+");
-
-        this.grades = new ArrayList<>();
 
         TextField engInput = new TextField();
         engInput.setPromptText("15");
@@ -80,10 +80,11 @@ public class UpdateCertificationDialog extends Dialog<Certification> {
         grid.add(aeInput, 1, 3);
         grid.add(wugInput, 1, 4);
         grid.add(orgaInput, 1, 5);
-
         this.getDialogPane().setContent(grid);
+        
         this.getDialogPane().getButtonTypes().addAll(ButtonType.FINISH, ButtonType.CANCEL);
         Button finishButton = (Button) this.getDialogPane().lookupButton(ButtonType.FINISH);
+        
         finishButton.addEventFilter(ActionEvent.ACTION, eh -> {
             if (engInput.getText().isEmpty() | itsInput.getText().isEmpty()
                     | itwInput.getText().isEmpty() | aeInput.getText().isEmpty()
@@ -93,25 +94,25 @@ public class UpdateCertificationDialog extends Dialog<Certification> {
             } else {
                 try {
                     this.grades.add(new Grade(Grade.Subject.ENG,
-                            Utilities.createMark(Integer.parseInt(engInput.getText().trim().replaceAll("\\D", "")))));
+                            Utilities.findByHighschoolMark(Integer.parseInt(engInput.getText().trim().replaceAll("\\D", "")))));
                     this.grades.add(new Grade(Grade.Subject.IT_S,
-                            Utilities.createMark(Integer.parseInt(itsInput.getText().trim().replaceAll("\\D", "")))));
+                            Utilities.findByHighschoolMark(Integer.parseInt(itsInput.getText().trim().replaceAll("\\D", "")))));
                     this.grades.add(new Grade(Grade.Subject.IT_W,
-                            Utilities.createMark(Integer.parseInt(itwInput.getText().trim().replaceAll("\\D", "")))));
+                            Utilities.findByHighschoolMark(Integer.parseInt(itwInput.getText().trim().replaceAll("\\D", "")))));
                     this.grades.add(new Grade(Grade.Subject.AE,
-                            Utilities.createMark(Integer.parseInt(aeInput.getText().trim().replaceAll("\\D", "")))));
+                            Utilities.findByHighschoolMark(Integer.parseInt(aeInput.getText().trim().replaceAll("\\D", "")))));
                     this.grades.add(new Grade(Grade.Subject.WUG,
-                            Utilities.createMark(Integer.parseInt(wugInput.getText().trim().replaceAll("\\D", "")))));
+                            Utilities.findByHighschoolMark(Integer.parseInt(wugInput.getText().trim().replaceAll("\\D", "")))));
                     this.grades.add(new Grade(Grade.Subject.ORGA,
-                            Utilities.createMark(Integer.parseInt(orgaInput.getText().trim().replaceAll("\\D", "")))));
-                } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                            Utilities.findByHighschoolMark(Integer.parseInt(orgaInput.getText().trim().replaceAll("\\D", "")))));
+                } catch (NumberFormatException | NullPointerException e) {
                     eh.consume();
                     Utilities.alertWarn("Bitte geben Sie eine Ganzzahl zwischen 0 und 15 ein."
                             + "\n\nFehlermeldung:\n" + e.getMessage());
                 }
             }
         });
-
+        
         this.setResultConverter(type -> {
             if (type == ButtonType.FINISH) {
                 return new Certification(this.pupil, this.grades);
