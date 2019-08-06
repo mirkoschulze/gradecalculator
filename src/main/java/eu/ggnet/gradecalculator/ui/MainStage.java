@@ -17,10 +17,9 @@ import javafx.stage.Stage;
  * @author Mirko Schulze
  */
 public class MainStage extends Application {
-    //TODO - threads, Platform. ... 
-    //TODO - css
 
     private static final String FXML_PATH = "/fxml/MainScene.fxml";
+    private static final String CSS_PATH = "/css/mainScene.css";
 
     /**
      * The main() method is ignored in correctly deployed JavaFX application.
@@ -46,6 +45,7 @@ public class MainStage extends Application {
     public void start(Stage stage) {
         try {
             stage.setScene(new Scene(new FXMLLoader(getClass().getResource(FXML_PATH)).load()));
+//            stage.getScene().getStylesheets().add(CSS_PATH);
             stage.show();
         } catch (IOException | IllegalStateException e) {
             Utilities.alertError("Der FXMLLoader konnte den Objektgraphen nicht korrekt laden."
