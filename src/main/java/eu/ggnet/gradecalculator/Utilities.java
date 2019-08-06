@@ -16,15 +16,42 @@ public class Utilities {
     private Utilities() {
 
     }
+    
+    /**
+     * Compares the submitted String to the values of {@link Mark} and returns
+     * the matching Mark.
+     * <p>
+     * Returns null if no matching Mark can be found.
+     *
+     * @param middleschoolMark the value for which the matching Mark is looked
+     * for
+     * @return Mark - the matching Mark or null
+     */
+    public static Mark findByMiddleschoolMark(String middleschoolMark) {
+        for (Mark value : Mark.values()) {
+            if (value.getMiddleschoolMark().equalsIgnoreCase(middleschoolMark)) {
+                return value;
+            }
+        }
+        return null;
+    }
 
     /**
-     * Converts an integer value into a {@link Mark}, which is then returned.
+     * Compares the submitted integer to the values of {@link Mark} and returns
+     * the matching Mark.
+     * <p>
+     * Returns null if no matching Mark can be found.
      *
-     * @param value int - {@link Integer} value that shall be converted
-     * @return Mark - a converted {@link Integer} value
+     * @param highschoolMark the value for which the matching Mark is looked for
+     * @return Mark - the matching Mark or null
      */
-    public static Mark createMark(int value) {
-        return Mark.values()[value];
+    public static Mark findByHighschoolMark(int highschoolMark) {
+        for (Mark value : Mark.values()) {
+            if (value.getHighschoolMark() == highschoolMark) {
+                return value;
+            }
+        }
+        return null;
     }
 
     /**
