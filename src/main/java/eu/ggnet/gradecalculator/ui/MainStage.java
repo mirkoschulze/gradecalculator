@@ -27,7 +27,7 @@ public class MainStage extends Application {
      * launched through deployment artifacts, e.g., in IDEs with limited FX
      * support. NetBeans ignores main().
      *
-     * @param args String[] - the command line arguments
+     * @param args the command line arguments
      */
     public static void main(String[] args) {
         launch(args);
@@ -36,10 +36,10 @@ public class MainStage extends Application {
     /**
      * Tries to show the primary application Stage.
      * <p>
-     * Catches an {@link IOException} or {@link IllegalStateException} by displaying a new {@link Alert}
-     * with a respective error message.
+     * Catches an {@link IOException} or {@link IllegalStateException} by
+     * displaying a new {@link Alert} with a respective error message.
      *
-     * @param stage Stage - the main application Stage
+     * @param stage the main application Stage
      */
     @Override
     public void start(Stage stage) {

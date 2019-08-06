@@ -29,9 +29,9 @@ public class Calculator {
      * Generates and returns a new {@link CalculatedGrade} with the calculated
      * {@link Grade} and its occurencies as suffix.
      *
-     * @param classbook Classbook - {@link Classbook} for which the
+     * @param classbook {@link Classbook} for which the
      * {@link Grade} shall be calculated
-     * @param subject Subject - {@link Subject} for which the {@link Grade}
+     * @param subject {@link Subject} for which the {@link Grade}
      * shall be calculated
      * @return CalculatedGrade - the wrapped {@link Grade}
      */
@@ -68,9 +68,9 @@ public class Calculator {
      * Generates and returns a new {@link CalculatedGrade} with the calculated
      * number as mark.
      *
-     * @param classbook Classbook - {@link Classbook} for which the
+     * @param classbook {@link Classbook} for which the
      * {@link Grade} shall be calculated
-     * @param subject Subject - {@link Subject} for which the {@link Grade}
+     * @param subject {@link Subject} for which the {@link Grade}
      * shall be calculated
      * @return CalculatedGrade - the wrapped {@link Grade}
      */

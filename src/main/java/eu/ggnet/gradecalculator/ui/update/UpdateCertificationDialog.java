@@ -86,9 +86,9 @@ public class UpdateCertificationDialog extends Dialog<Certification> {
         Button finishButton = (Button) this.getDialogPane().lookupButton(ButtonType.FINISH);
         
         finishButton.addEventFilter(ActionEvent.ACTION, eh -> {
-            if (engInput.getText().isEmpty() | itsInput.getText().isEmpty()
-                    | itwInput.getText().isEmpty() | aeInput.getText().isEmpty()
-                    | wugInput.getText().isEmpty() | orgaInput.getText().isEmpty()) {
+            if (engInput.getText().isEmpty() || itsInput.getText().isEmpty()
+                    || itwInput.getText().isEmpty() || aeInput.getText().isEmpty()
+                    || wugInput.getText().isEmpty() || orgaInput.getText().isEmpty()) {
                 eh.consume();
                 Utilities.alertWarn("Bitten tragen Sie für alle Felder Werte ein.");
             } else {

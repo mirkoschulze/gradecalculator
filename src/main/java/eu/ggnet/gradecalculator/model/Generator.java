@@ -56,7 +56,7 @@ public class Generator {
      * Generates a {@link Certification} with a random {@link Mark} for each
      * {@link Subject} for the submitted {@link Pupil}.
      *
-     * @param pupil Pupil - the {@link Pupil} that shall get the
+     * @param pupil the {@link Pupil} that shall get the
      * {@link Certification}
      * @return Certification - random {@link Certification} for the submitted
      * {@link Pupil}
@@ -86,7 +86,7 @@ public class Generator {
      * Returns a random forename for a {@link Pupil}, depending on the submitted
      * {@link Sex}.
      *
-     * @param sex Sex - {@link Sex} of the {@link Pupil}
+     * @param sex {@link Sex} of the {@link Pupil}
      * @return String - random forename for a {@link Pupil}
      */
     private static String generateForename(Sex sex) {

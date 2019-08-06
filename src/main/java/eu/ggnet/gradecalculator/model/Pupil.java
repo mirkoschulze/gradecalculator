@@ -33,10 +33,10 @@ public class Pupil implements Comparable<Pupil> {
      * Constructor to instantiate a new {@link Pupil} with the submitted values
      * and no {@link Certification}.
      *
-     * @param sex Sex - {@link Sex} of the Pupil
-     * @param age int - age of the Pupil
-     * @param forename - String - forename of the Pupil
-     * @param surname - String - surname of the Pupil
+     * @param sex  {@link Sex} of the Pupil
+     * @param age  age of the Pupil
+     * @param forename  forename of the Pupil
+     * @param surname  surname of the Pupil
      */
     public Pupil(Sex sex, int age, String forename, String surname) {
         this.sex = sex;
@@ -61,7 +61,7 @@ public class Pupil implements Comparable<Pupil> {
      * Returns -1 if the first letter of the compared {@link Pupil} has a bigger
      * alphanumerical value, 1 if otherwise.
      *
-     * @param p Pupil - the {@link Pupil} this Pupil shall be compared to
+     * @param p  the {@link Pupil} this Pupil shall be compared to
      * @return int - the result of the alphanumerical comparison between two
      * instances of {@link Pupil}
      */

@@ -34,9 +34,9 @@ public class CalculatedGrade {
      * Constructor for a {@link CalculatedGrade} with information about the
      * calculation and a null {@link #suffix}.
      *
-     * @param calculation String - information about the method to calculate
+     * @param calculation information about the method to calculate
      * this {@link CalculatedGrade}
-     * @param grade Grade - the wrapped {@link Grade}
+     * @param grade the wrapped {@link Grade}
      */
     public CalculatedGrade(String calculation, Grade grade) {
         this.calculation = calculation;

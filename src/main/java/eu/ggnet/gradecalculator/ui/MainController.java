@@ -118,8 +118,8 @@ public class MainController implements Initializable {
      * <li>adding {@link ObservableList} to {@link ComboBox} components</li>
      * <li>adding {@link ChangeListener} to lists</li></ul>
      *
-     * @param url URL - is not used
-     * @param rb ResourceBundle - is not used
+     * @param url is not used
+     * @param rb is not used
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -177,9 +177,9 @@ public class MainController implements Initializable {
      * {@link CalculatedGrade} for the submitted {@link Classbook} and
      * {@link Subject}.
      *
-     * @param classbook Classbook - {@link Classbook} for which the
+     * @param classbook {@link Classbook} for which the
      * {@link Grade} shall be calculated
-     * @param subject Subject - {@link Subject} for which the {@link Grade}
+     * @param subject {@link Subject} for which the {@link Grade}
      * shall be calculated
      */
     private void calculate(Classbook classbook, Subject subject) {

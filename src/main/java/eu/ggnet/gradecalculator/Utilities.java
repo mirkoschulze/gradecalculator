@@ -59,7 +59,7 @@ public class Utilities {
      * <p>
      * Probably wrong user input.
      *
-     * @param message String - additional information about the failure
+     * @param message additional information about the failure
      */
     public static void alertWarn(String message) {
         new Alert(Alert.AlertType.WARNING, message).show();
@@ -68,7 +68,7 @@ public class Utilities {
     /**
      * Displays a new {@link Alert} pane with a message to indicate an error.
      *
-     * @param message String - additional information about the error
+     * @param message additional information about the error
      */
     public static void alertError(String message) {
         new Alert(Alert.AlertType.ERROR, message).show();
