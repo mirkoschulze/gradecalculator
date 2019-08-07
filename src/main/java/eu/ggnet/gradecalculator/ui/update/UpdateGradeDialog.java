@@ -8,6 +8,7 @@ import eu.ggnet.gradecalculator.model.Pupil;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
@@ -44,8 +45,10 @@ public class UpdateGradeDialog extends Dialog<Grade> {
         selectSubjectBox.setTooltip(new Tooltip("Wähle ein Schulfach aus."));
 
         HBox hbox = new HBox(5);
+        hbox.setAlignment(Pos.CENTER);
         VBox vbox = new VBox(5);
         vbox.setPadding(new Insets(5));
+        vbox.setAlignment(Pos.CENTER);
         vbox.getChildren().add(selectSubjectBox);
 
         ToggleGroup tg = new ToggleGroup();
@@ -58,6 +61,7 @@ public class UpdateGradeDialog extends Dialog<Grade> {
             if (count == 4 || count == 8 || count == 12) {
                 vbox.getChildren().add(hbox);
                 hbox = new HBox(5);
+                hbox.setAlignment(Pos.CENTER);
             } else if (count == 16) {
                 vbox.getChildren().add(hbox);
             }
